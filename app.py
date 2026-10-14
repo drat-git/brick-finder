@@ -65,7 +65,11 @@ def load_example(name):
 
 
 def change_quantity(code):
-    st.session_state.collection[code] = int(st.session_state[f"qty_{code}"])
+    quantity = st.session_state[f"qty_{code}"]
+    if quantity is None:
+        st.session_state[f"qty_{code}"] = st.session_state.collection[code]
+        return
+    st.session_state.collection[code] = int(quantity)
     invalidate_results()
 
 
@@ -131,8 +135,10 @@ with left:
                 st.caption(f"{code} · {lego_set.num_parts:,} pieces per copy")
                 count_col, remove_col = st.columns([1, 1])
                 with count_col:
-                    st.number_input("Copies", min_value=1, value=quantity, step=1,
-                                    key=f"qty_{code}", on_change=change_quantity, args=(code,))
+                    quantity_key = f"qty_{code}"
+                    st.session_state.setdefault(quantity_key, quantity)
+                    st.number_input("Copies", min_value=1, value=None, step=1,
+                                    key=quantity_key, on_change=change_quantity, args=(code,))
                 with remove_col:
                     st.button("Remove", key=f"remove_{code}", on_click=remove_set, args=(code,), width="stretch")
         st.button("Clear collection", on_click=clear_collection)
