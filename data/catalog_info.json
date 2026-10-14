@@ -1,32 +1,163 @@
 {
-  "schema_version": 1,
-  "built_at": "2026-10-14T15:00:47.691060+00:00",
+  "schema_version": 2,
+  "built_at": "2026-10-14T16:54:48.998086+00:00",
   "source": "https://rebrickable.com/downloads/",
   "families": [
+    "4 Juniors",
+    "Adventurers",
+    "Agents",
+    "Alpha Team",
+    "Angry Birds",
+    "Animal Crossing",
+    "Aquazone",
     "Architecture",
+    "Atlantis",
+    "Avatar",
+    "Avatar: The Last Airbender",
+    "Belville",
+    "Ben 10",
+    "Bionicle",
+    "Bluey",
+    "Boat",
+    "Books",
     "Botanicals",
+    "Brick Sketches",
+    "BrickLink Designer Program",
     "Brickheadz",
+    "Building Set with People",
+    "Bulk Bricks",
+    "Cars",
     "Castle",
+    "Chinese Traditional Festivals",
     "City",
     "Classic",
+    "Clikits",
+    "Collectible Minifigures",
     "Creator",
+    "DC Super Hero Girls",
+    "DOTS",
+    "Despicable Me 4",
+    "Dimensions",
+    "Dino",
+    "Dino Attack / Dino 2010",
+    "Dinosaurs",
+    "Discovery",
+    "Disney",
+    "Dreamzzz",
+    "Duplo",
+    "Editions",
+    "Educational and Dacta",
+    "Elves",
+    "Exo-Force",
+    "FIRST LEGO League",
+    "Fabuland",
+    "Factory",
+    "Forma",
+    "Fortnite",
+    "Freestyle",
     "Friends",
+    "Fusion",
+    "Gabby's Dollhouse",
+    "Galidor",
+    "Games",
+    "Gear",
+    "Ghostbusters",
+    "Harry Potter",
+    "Hero Factory",
+    "Hidden Side",
+    "Hobby Sets",
+    "Homemaker",
+    "Horizon Adventures",
     "Icons",
+    "Indiana Jones",
+    "Island Xtreme Stunts",
+    "Juniors",
+    "Jurassic World",
+    "KPop Demon Hunters",
+    "LEGO Art",
+    "LEGO Brand Store",
+    "LEGO Exclusive",
     "LEGO Ideas and CUUSOO",
+    "LEGO Originals",
+    "Legends of Chima",
+    "Legoland",
+    "Legoland Parks",
+    "Make & Create",
+    "Master Builder Academy",
+    "Mindstorms",
+    "Minecraft",
+    "Minions",
+    "Minitalia",
+    "Mixels",
+    "Model Team",
+    "Modular Buildings",
+    "Modulex",
+    "Monkie Kid",
+    "Monster Fighters",
+    "Nexo Knights",
+    "Nike",
+    "Ninja",
     "Ninjago",
+    "One Piece",
+    "Other",
+    "Overwatch",
+    "Pharaoh's Quest",
     "Pirates",
+    "Pok\u00e9mon",
+    "Power Functions",
+    "Power Miners",
+    "Primo",
+    "Promotional",
+    "Quatro",
     "Racers",
+    "Rock Raiders",
+    "Scala",
+    "Scooby-Doo",
+    "Sculptures",
     "Seasonal",
+    "Service Packs",
+    "Shrek",
+    "Sonic The Hedgehog",
     "Space",
     "Speed Champions",
+    "Speed Racer",
+    "SpongeBob SquarePants",
+    "Sports",
+    "Spybotics",
     "Star Wars",
+    "Stranger Things",
+    "Studios",
+    "Super Heroes DC",
+    "Super Heroes Marvel",
+    "Super Mario",
+    "System",
     "Technic",
+    "Teenage Mutant Ninja Turtles",
+    "The Hobbit and Lord of the Rings",
+    "The LEGO Movie",
+    "The Legend of Zelda",
+    "The Lone Ranger",
+    "The Powerpuff Girls",
+    "Time Cruisers",
     "Town",
-    "Train"
+    "Train",
+    "Trolls: World Tour",
+    "Unikitty!",
+    "Universal Building Set",
+    "Universe",
+    "VIDIYO",
+    "Vikings",
+    "Wednesday",
+    "Western",
+    "Wicked",
+    "Xtra",
+    "Znap"
   ],
-  "owned_sets": 6058,
-  "candidate_sets": 4194,
-  "skipped_sets": 312,
+  "source_sets": 28537,
+  "owned_sets": 19702,
+  "candidate_sets": 10116,
+  "skipped_sets": 8704,
+  "excluded_by_policy": 131,
   "candidate_years": [
     2000,
     2026
@@ -34,6 +165,1509 @@
   "candidate_pieces": [
     20,
     1000
+  ],
+  "theme_policy": "All source themes qualify, subject to inventory validation and category policy.",
+  "set_number_policy": "All source set identifiers and variants qualify; no length restriction.",
+  "owned_set_policy": "No year or piece-count limits; requires a valid nonempty inventory.",
+  "category_coverage": [
+    {
+      "category": "Building sets",
+      "policy": "Eligible for recommendations within the year and piece limits.",
+      "source_sets": 16154,
+      "owned_sets": 14722,
+      "candidate_sets": 8945,
+      "invalid_sets": 1432,
+      "excluded_by_policy": 0
+    },
+    {
+      "category": "Preschool systems",
+      "policy": "Included; DUPLO, Primo, and Quatro part IDs remain distinct.",
+      "source_sets": 1912,
+      "owned_sets": 1802,
+      "candidate_sets": 676,
+      "invalid_sets": 110,
+      "excluded_by_policy": 0
+    },
+    {
+      "category": "Specialty systems",
+      "policy": "Included; specialty part IDs must match like any other part.",
+      "source_sets": 863,
+      "owned_sets": 722,
+      "candidate_sets": 495,
+      "invalid_sets": 141,
+      "excluded_by_policy": 0
+    },
+    {
+      "category": "Bulk parts and accessories",
+      "policy": "Owned sets only: supplies pieces rather than a model to build.",
+      "source_sets": 1426,
+      "owned_sets": 1412,
+      "candidate_sets": 0,
+      "invalid_sets": 14,
+      "excluded_by_policy": 0
+    },
+    {
+      "category": "Books and merchandise",
+      "policy": "Owned sets only: contributes its validated inventory, not a build recommendation.",
+      "source_sets": 8014,
+      "owned_sets": 1044,
+      "candidate_sets": 0,
+      "invalid_sets": 6970,
+      "excluded_by_policy": 0
+    },
+    {
+      "category": "Multipacks",
+      "policy": "Owned sets only: combines inventories rather than describing one build.",
+      "source_sets": 37,
+      "owned_sets": 0,
+      "candidate_sets": 0,
+      "invalid_sets": 37,
+      "excluded_by_policy": 0
+    },
+    {
+      "category": "Database records",
+      "policy": "Excluded: source reference inventories, not physical sets to own or build.",
+      "source_sets": 131,
+      "owned_sets": 0,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 131
+    }
+  ],
+  "theme_coverage": [
+    {
+      "family": "4 Juniors",
+      "category": "Building sets",
+      "source_sets": 54,
+      "owned_sets": 48,
+      "candidate_sets": 35,
+      "invalid_sets": 6,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Adventurers",
+      "category": "Building sets",
+      "source_sets": 83,
+      "owned_sets": 73,
+      "candidate_sets": 35,
+      "invalid_sets": 10,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Agents",
+      "category": "Building sets",
+      "source_sets": 28,
+      "owned_sets": 27,
+      "candidate_sets": 24,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Alpha Team",
+      "category": "Building sets",
+      "source_sets": 32,
+      "owned_sets": 31,
+      "candidate_sets": 29,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Angry Birds",
+      "category": "Building sets",
+      "source_sets": 6,
+      "owned_sets": 6,
+      "candidate_sets": 6,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Animal Crossing",
+      "category": "Building sets",
+      "source_sets": 19,
+      "owned_sets": 19,
+      "candidate_sets": 19,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Aquazone",
+      "category": "Building sets",
+      "source_sets": 37,
+      "owned_sets": 35,
+      "candidate_sets": 7,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Architecture",
+      "category": "Building sets",
+      "source_sets": 66,
+      "owned_sets": 64,
+      "candidate_sets": 48,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Atlantis",
+      "category": "Building sets",
+      "source_sets": 24,
+      "owned_sets": 23,
+      "candidate_sets": 21,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Avatar",
+      "category": "Building sets",
+      "source_sets": 9,
+      "owned_sets": 9,
+      "candidate_sets": 8,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Avatar: The Last Airbender",
+      "category": "Building sets",
+      "source_sets": 2,
+      "owned_sets": 2,
+      "candidate_sets": 2,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Belville",
+      "category": "Specialty systems",
+      "source_sets": 88,
+      "owned_sets": 83,
+      "candidate_sets": 44,
+      "invalid_sets": 5,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Ben 10",
+      "category": "Building sets",
+      "source_sets": 6,
+      "owned_sets": 6,
+      "candidate_sets": 4,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Bionicle",
+      "category": "Specialty systems",
+      "source_sets": 468,
+      "owned_sets": 360,
+      "candidate_sets": 304,
+      "invalid_sets": 108,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Bluey",
+      "category": "Building sets",
+      "source_sets": 9,
+      "owned_sets": 9,
+      "candidate_sets": 9,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Boat",
+      "category": "Building sets",
+      "source_sets": 21,
+      "owned_sets": 21,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Books",
+      "category": "Books and merchandise",
+      "source_sets": 1475,
+      "owned_sets": 487,
+      "candidate_sets": 0,
+      "invalid_sets": 988,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Botanicals",
+      "category": "Building sets",
+      "source_sets": 55,
+      "owned_sets": 51,
+      "candidate_sets": 48,
+      "invalid_sets": 4,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Brick Sketches",
+      "category": "Building sets",
+      "source_sets": 8,
+      "owned_sets": 8,
+      "candidate_sets": 8,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "BrickLink Designer Program",
+      "category": "Building sets",
+      "source_sets": 73,
+      "owned_sets": 63,
+      "candidate_sets": 14,
+      "invalid_sets": 10,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Brickheadz",
+      "category": "Building sets",
+      "source_sets": 201,
+      "owned_sets": 196,
+      "candidate_sets": 196,
+      "invalid_sets": 5,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Building Set with People",
+      "category": "Building sets",
+      "source_sets": 30,
+      "owned_sets": 30,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Bulk Bricks",
+      "category": "Bulk parts and accessories",
+      "source_sets": 136,
+      "owned_sets": 135,
+      "candidate_sets": 0,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Cars",
+      "category": "Building sets",
+      "source_sets": 28,
+      "owned_sets": 24,
+      "candidate_sets": 24,
+      "invalid_sets": 4,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Castle",
+      "category": "Building sets",
+      "source_sets": 271,
+      "owned_sets": 247,
+      "candidate_sets": 119,
+      "invalid_sets": 24,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Chinese Traditional Festivals",
+      "category": "Building sets",
+      "source_sets": 37,
+      "owned_sets": 35,
+      "candidate_sets": 21,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "City",
+      "category": "Building sets",
+      "source_sets": 1020,
+      "owned_sets": 889,
+      "candidate_sets": 801,
+      "invalid_sets": 131,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Classic",
+      "category": "Building sets",
+      "source_sets": 79,
+      "owned_sets": 76,
+      "candidate_sets": 56,
+      "invalid_sets": 3,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Clikits",
+      "category": "Specialty systems",
+      "source_sets": 83,
+      "owned_sets": 76,
+      "candidate_sets": 53,
+      "invalid_sets": 7,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Collectible Minifigures",
+      "category": "Building sets",
+      "source_sets": 1005,
+      "owned_sets": 825,
+      "candidate_sets": 38,
+      "invalid_sets": 180,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Creator",
+      "category": "Building sets",
+      "source_sets": 637,
+      "owned_sets": 600,
+      "candidate_sets": 526,
+      "invalid_sets": 37,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "DC Super Hero Girls",
+      "category": "Building sets",
+      "source_sets": 12,
+      "owned_sets": 12,
+      "candidate_sets": 10,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "DOTS",
+      "category": "Building sets",
+      "source_sets": 94,
+      "owned_sets": 89,
+      "candidate_sets": 82,
+      "invalid_sets": 5,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Despicable Me 4",
+      "category": "Building sets",
+      "source_sets": 5,
+      "owned_sets": 5,
+      "candidate_sets": 5,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Dimensions",
+      "category": "Building sets",
+      "source_sets": 68,
+      "owned_sets": 68,
+      "candidate_sets": 66,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Dino",
+      "category": "Building sets",
+      "source_sets": 7,
+      "owned_sets": 7,
+      "candidate_sets": 7,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Dino Attack / Dino 2010",
+      "category": "Building sets",
+      "source_sets": 12,
+      "owned_sets": 12,
+      "candidate_sets": 10,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Dinosaurs",
+      "category": "Building sets",
+      "source_sets": 17,
+      "owned_sets": 16,
+      "candidate_sets": 16,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Discovery",
+      "category": "Building sets",
+      "source_sets": 8,
+      "owned_sets": 6,
+      "candidate_sets": 6,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Disney",
+      "category": "Building sets",
+      "source_sets": 294,
+      "owned_sets": 287,
+      "candidate_sets": 252,
+      "invalid_sets": 7,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Dreamzzz",
+      "category": "Building sets",
+      "source_sets": 67,
+      "owned_sets": 61,
+      "candidate_sets": 44,
+      "invalid_sets": 6,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Duplo",
+      "category": "Preschool systems",
+      "source_sets": 1464,
+      "owned_sets": 1393,
+      "candidate_sets": 562,
+      "invalid_sets": 71,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Editions",
+      "category": "Building sets",
+      "source_sets": 25,
+      "owned_sets": 23,
+      "candidate_sets": 16,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Educational and Dacta",
+      "category": "Building sets",
+      "source_sets": 429,
+      "owned_sets": 297,
+      "candidate_sets": 115,
+      "invalid_sets": 132,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Educational and Dacta",
+      "category": "Bulk parts and accessories",
+      "source_sets": 399,
+      "owned_sets": 394,
+      "candidate_sets": 0,
+      "invalid_sets": 5,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Educational and Dacta",
+      "category": "Preschool systems",
+      "source_sets": 300,
+      "owned_sets": 262,
+      "candidate_sets": 103,
+      "invalid_sets": 38,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Elves",
+      "category": "Building sets",
+      "source_sets": 42,
+      "owned_sets": 41,
+      "candidate_sets": 36,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Exo-Force",
+      "category": "Building sets",
+      "source_sets": 52,
+      "owned_sets": 41,
+      "candidate_sets": 37,
+      "invalid_sets": 11,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "FIRST LEGO League",
+      "category": "Building sets",
+      "source_sets": 136,
+      "owned_sets": 60,
+      "candidate_sets": 29,
+      "invalid_sets": 76,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Fabuland",
+      "category": "Building sets",
+      "source_sets": 107,
+      "owned_sets": 107,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Factory",
+      "category": "Building sets",
+      "source_sets": 7,
+      "owned_sets": 7,
+      "candidate_sets": 4,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Forma",
+      "category": "Building sets",
+      "source_sets": 4,
+      "owned_sets": 4,
+      "candidate_sets": 4,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Fortnite",
+      "category": "Building sets",
+      "source_sets": 15,
+      "owned_sets": 15,
+      "candidate_sets": 10,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Freestyle",
+      "category": "Building sets",
+      "source_sets": 67,
+      "owned_sets": 64,
+      "candidate_sets": 0,
+      "invalid_sets": 3,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Friends",
+      "category": "Building sets",
+      "source_sets": 683,
+      "owned_sets": 654,
+      "candidate_sets": 596,
+      "invalid_sets": 29,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Fusion",
+      "category": "Building sets",
+      "source_sets": 4,
+      "owned_sets": 4,
+      "candidate_sets": 4,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Gabby's Dollhouse",
+      "category": "Building sets",
+      "source_sets": 12,
+      "owned_sets": 12,
+      "candidate_sets": 12,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Galidor",
+      "category": "Specialty systems",
+      "source_sets": 21,
+      "owned_sets": 19,
+      "candidate_sets": 2,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Games",
+      "category": "Building sets",
+      "source_sets": 47,
+      "owned_sets": 44,
+      "candidate_sets": 41,
+      "invalid_sets": 3,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Gear",
+      "category": "Books and merchandise",
+      "source_sets": 6539,
+      "owned_sets": 557,
+      "candidate_sets": 0,
+      "invalid_sets": 5982,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Ghostbusters",
+      "category": "Building sets",
+      "source_sets": 2,
+      "owned_sets": 2,
+      "candidate_sets": 1,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Harry Potter",
+      "category": "Building sets",
+      "source_sets": 214,
+      "owned_sets": 202,
+      "candidate_sets": 174,
+      "invalid_sets": 12,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Hero Factory",
+      "category": "Specialty systems",
+      "source_sets": 111,
+      "owned_sets": 92,
+      "candidate_sets": 81,
+      "invalid_sets": 19,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Hidden Side",
+      "category": "Building sets",
+      "source_sets": 32,
+      "owned_sets": 24,
+      "candidate_sets": 14,
+      "invalid_sets": 8,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Hobby Sets",
+      "category": "Building sets",
+      "source_sets": 9,
+      "owned_sets": 9,
+      "candidate_sets": 1,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Homemaker",
+      "category": "Building sets",
+      "source_sets": 32,
+      "owned_sets": 32,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Horizon Adventures",
+      "category": "Building sets",
+      "source_sets": 1,
+      "owned_sets": 1,
+      "candidate_sets": 1,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Icons",
+      "category": "Building sets",
+      "source_sets": 90,
+      "owned_sets": 88,
+      "candidate_sets": 26,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Indiana Jones",
+      "category": "Building sets",
+      "source_sets": 23,
+      "owned_sets": 20,
+      "candidate_sets": 19,
+      "invalid_sets": 3,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Island Xtreme Stunts",
+      "category": "Building sets",
+      "source_sets": 13,
+      "owned_sets": 13,
+      "candidate_sets": 7,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Juniors",
+      "category": "Building sets",
+      "source_sets": 68,
+      "owned_sets": 68,
+      "candidate_sets": 68,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Jurassic World",
+      "category": "Building sets",
+      "source_sets": 130,
+      "owned_sets": 126,
+      "candidate_sets": 110,
+      "invalid_sets": 4,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "KPop Demon Hunters",
+      "category": "Building sets",
+      "source_sets": 1,
+      "owned_sets": 1,
+      "candidate_sets": 1,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "LEGO Art",
+      "category": "Building sets",
+      "source_sets": 26,
+      "owned_sets": 26,
+      "candidate_sets": 5,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "LEGO Brand Store",
+      "category": "Building sets",
+      "source_sets": 565,
+      "owned_sets": 536,
+      "candidate_sets": 354,
+      "invalid_sets": 29,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "LEGO Exclusive",
+      "category": "Building sets",
+      "source_sets": 83,
+      "owned_sets": 79,
+      "candidate_sets": 44,
+      "invalid_sets": 4,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "LEGO Ideas and CUUSOO",
+      "category": "Building sets",
+      "source_sets": 105,
+      "owned_sets": 105,
+      "candidate_sets": 54,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "LEGO Originals",
+      "category": "Building sets",
+      "source_sets": 21,
+      "owned_sets": 1,
+      "candidate_sets": 1,
+      "invalid_sets": 20,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Legends of Chima",
+      "category": "Building sets",
+      "source_sets": 144,
+      "owned_sets": 131,
+      "candidate_sets": 108,
+      "invalid_sets": 13,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Legoland",
+      "category": "Building sets",
+      "source_sets": 160,
+      "owned_sets": 158,
+      "candidate_sets": 0,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Legoland Parks",
+      "category": "Building sets",
+      "source_sets": 58,
+      "owned_sets": 57,
+      "candidate_sets": 51,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Make & Create",
+      "category": "Building sets",
+      "source_sets": 119,
+      "owned_sets": 107,
+      "candidate_sets": 90,
+      "invalid_sets": 12,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Master Builder Academy",
+      "category": "Building sets",
+      "source_sets": 21,
+      "owned_sets": 14,
+      "candidate_sets": 14,
+      "invalid_sets": 7,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Mindstorms",
+      "category": "Building sets",
+      "source_sets": 85,
+      "owned_sets": 73,
+      "candidate_sets": 12,
+      "invalid_sets": 12,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Minecraft",
+      "category": "Building sets",
+      "source_sets": 210,
+      "owned_sets": 199,
+      "candidate_sets": 172,
+      "invalid_sets": 11,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Minions",
+      "category": "Building sets",
+      "source_sets": 9,
+      "owned_sets": 7,
+      "candidate_sets": 7,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Minitalia",
+      "category": "Building sets",
+      "source_sets": 19,
+      "owned_sets": 18,
+      "candidate_sets": 0,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Mixels",
+      "category": "Building sets",
+      "source_sets": 123,
+      "owned_sets": 81,
+      "candidate_sets": 81,
+      "invalid_sets": 42,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Model Team",
+      "category": "Building sets",
+      "source_sets": 16,
+      "owned_sets": 16,
+      "candidate_sets": 1,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Modular Buildings",
+      "category": "Building sets",
+      "source_sets": 22,
+      "owned_sets": 22,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Modulex",
+      "category": "Building sets",
+      "source_sets": 35,
+      "owned_sets": 35,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Monkie Kid",
+      "category": "Building sets",
+      "source_sets": 58,
+      "owned_sets": 57,
+      "candidate_sets": 38,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Monster Fighters",
+      "category": "Building sets",
+      "source_sets": 14,
+      "owned_sets": 13,
+      "candidate_sets": 11,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Nexo Knights",
+      "category": "Building sets",
+      "source_sets": 110,
+      "owned_sets": 109,
+      "candidate_sets": 81,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Nike",
+      "category": "Building sets",
+      "source_sets": 5,
+      "owned_sets": 5,
+      "candidate_sets": 3,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Ninja",
+      "category": "Building sets",
+      "source_sets": 37,
+      "owned_sets": 34,
+      "candidate_sets": 2,
+      "invalid_sets": 3,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Ninjago",
+      "category": "Building sets",
+      "source_sets": 681,
+      "owned_sets": 656,
+      "candidate_sets": 417,
+      "invalid_sets": 25,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "One Piece",
+      "category": "Building sets",
+      "source_sets": 17,
+      "owned_sets": 17,
+      "candidate_sets": 13,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Other",
+      "category": "Building sets",
+      "source_sets": 186,
+      "owned_sets": 178,
+      "candidate_sets": 152,
+      "invalid_sets": 8,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Other",
+      "category": "Database records",
+      "source_sets": 131,
+      "owned_sets": 0,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 131
+    },
+    {
+      "family": "Overwatch",
+      "category": "Building sets",
+      "source_sets": 13,
+      "owned_sets": 11,
+      "candidate_sets": 10,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Pharaoh's Quest",
+      "category": "Building sets",
+      "source_sets": 9,
+      "owned_sets": 9,
+      "candidate_sets": 9,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Pirates",
+      "category": "Building sets",
+      "source_sets": 92,
+      "owned_sets": 82,
+      "candidate_sets": 22,
+      "invalid_sets": 10,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Pok\u00e9mon",
+      "category": "Building sets",
+      "source_sets": 31,
+      "owned_sets": 31,
+      "candidate_sets": 23,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Power Functions",
+      "category": "Bulk parts and accessories",
+      "source_sets": 43,
+      "owned_sets": 42,
+      "candidate_sets": 0,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Power Miners",
+      "category": "Building sets",
+      "source_sets": 23,
+      "owned_sets": 21,
+      "candidate_sets": 17,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Primo",
+      "category": "Preschool systems",
+      "source_sets": 137,
+      "owned_sets": 137,
+      "candidate_sets": 3,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Promotional",
+      "category": "Building sets",
+      "source_sets": 390,
+      "owned_sets": 371,
+      "candidate_sets": 263,
+      "invalid_sets": 19,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Quatro",
+      "category": "Preschool systems",
+      "source_sets": 11,
+      "owned_sets": 10,
+      "candidate_sets": 8,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Racers",
+      "category": "Building sets",
+      "source_sets": 283,
+      "owned_sets": 266,
+      "candidate_sets": 215,
+      "invalid_sets": 17,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Rock Raiders",
+      "category": "Building sets",
+      "source_sets": 17,
+      "owned_sets": 15,
+      "candidate_sets": 6,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Scala",
+      "category": "Specialty systems",
+      "source_sets": 73,
+      "owned_sets": 73,
+      "candidate_sets": 11,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Scooby-Doo",
+      "category": "Building sets",
+      "source_sets": 10,
+      "owned_sets": 8,
+      "candidate_sets": 7,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Sculptures",
+      "category": "Building sets",
+      "source_sets": 10,
+      "owned_sets": 10,
+      "candidate_sets": 2,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Seasonal",
+      "category": "Building sets",
+      "source_sets": 554,
+      "owned_sets": 529,
+      "candidate_sets": 469,
+      "invalid_sets": 25,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Service Packs",
+      "category": "Bulk parts and accessories",
+      "source_sets": 505,
+      "owned_sets": 504,
+      "candidate_sets": 0,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Shrek",
+      "category": "Building sets",
+      "source_sets": 1,
+      "owned_sets": 1,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Sonic The Hedgehog",
+      "category": "Building sets",
+      "source_sets": 25,
+      "owned_sets": 25,
+      "candidate_sets": 25,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Space",
+      "category": "Building sets",
+      "source_sets": 318,
+      "owned_sets": 294,
+      "candidate_sets": 72,
+      "invalid_sets": 24,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Space",
+      "category": "Bulk parts and accessories",
+      "source_sets": 15,
+      "owned_sets": 14,
+      "candidate_sets": 0,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Speed Champions",
+      "category": "Building sets",
+      "source_sets": 106,
+      "owned_sets": 102,
+      "candidate_sets": 102,
+      "invalid_sets": 4,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Speed Racer",
+      "category": "Building sets",
+      "source_sets": 4,
+      "owned_sets": 4,
+      "candidate_sets": 4,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "SpongeBob SquarePants",
+      "category": "Building sets",
+      "source_sets": 14,
+      "owned_sets": 14,
+      "candidate_sets": 14,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Sports",
+      "category": "Building sets",
+      "source_sets": 174,
+      "owned_sets": 154,
+      "candidate_sets": 72,
+      "invalid_sets": 20,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Spybotics",
+      "category": "Building sets",
+      "source_sets": 4,
+      "owned_sets": 4,
+      "candidate_sets": 4,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Star Wars",
+      "category": "Building sets",
+      "source_sets": 1103,
+      "owned_sets": 990,
+      "candidate_sets": 780,
+      "invalid_sets": 113,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Stranger Things",
+      "category": "Building sets",
+      "source_sets": 3,
+      "owned_sets": 3,
+      "candidate_sets": 1,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Studios",
+      "category": "Building sets",
+      "source_sets": 55,
+      "owned_sets": 51,
+      "candidate_sets": 24,
+      "invalid_sets": 4,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Super Heroes DC",
+      "category": "Building sets",
+      "source_sets": 266,
+      "owned_sets": 252,
+      "candidate_sets": 170,
+      "invalid_sets": 14,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Super Heroes Marvel",
+      "category": "Building sets",
+      "source_sets": 413,
+      "owned_sets": 387,
+      "candidate_sets": 309,
+      "invalid_sets": 26,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Super Mario",
+      "category": "Building sets",
+      "source_sets": 190,
+      "owned_sets": 143,
+      "candidate_sets": 112,
+      "invalid_sets": 47,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "System",
+      "category": "Building sets",
+      "source_sets": 282,
+      "owned_sets": 253,
+      "candidate_sets": 0,
+      "invalid_sets": 29,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "System",
+      "category": "Bulk parts and accessories",
+      "source_sets": 220,
+      "owned_sets": 215,
+      "candidate_sets": 0,
+      "invalid_sets": 5,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Technic",
+      "category": "Building sets",
+      "source_sets": 602,
+      "owned_sets": 567,
+      "candidate_sets": 276,
+      "invalid_sets": 35,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Technic",
+      "category": "Bulk parts and accessories",
+      "source_sets": 16,
+      "owned_sets": 16,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Teenage Mutant Ninja Turtles",
+      "category": "Building sets",
+      "source_sets": 23,
+      "owned_sets": 22,
+      "candidate_sets": 19,
+      "invalid_sets": 1,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "The Hobbit and Lord of the Rings",
+      "category": "Building sets",
+      "source_sets": 42,
+      "owned_sets": 39,
+      "candidate_sets": 33,
+      "invalid_sets": 3,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "The LEGO Movie",
+      "category": "Building sets",
+      "source_sets": 75,
+      "owned_sets": 72,
+      "candidate_sets": 59,
+      "invalid_sets": 3,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "The Legend of Zelda",
+      "category": "Building sets",
+      "source_sets": 2,
+      "owned_sets": 2,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "The Lone Ranger",
+      "category": "Building sets",
+      "source_sets": 8,
+      "owned_sets": 8,
+      "candidate_sets": 8,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "The Powerpuff Girls",
+      "category": "Building sets",
+      "source_sets": 2,
+      "owned_sets": 2,
+      "candidate_sets": 2,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Time Cruisers",
+      "category": "Building sets",
+      "source_sets": 9,
+      "owned_sets": 9,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Town",
+      "category": "Building sets",
+      "source_sets": 679,
+      "owned_sets": 638,
+      "candidate_sets": 79,
+      "invalid_sets": 41,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Train",
+      "category": "Building sets",
+      "source_sets": 243,
+      "owned_sets": 207,
+      "candidate_sets": 30,
+      "invalid_sets": 36,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Trolls: World Tour",
+      "category": "Building sets",
+      "source_sets": 9,
+      "owned_sets": 9,
+      "candidate_sets": 9,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Unikitty!",
+      "category": "Building sets",
+      "source_sets": 26,
+      "owned_sets": 22,
+      "candidate_sets": 10,
+      "invalid_sets": 4,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Universal Building Set",
+      "category": "Building sets",
+      "source_sets": 326,
+      "owned_sets": 317,
+      "candidate_sets": 2,
+      "invalid_sets": 9,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Universal Building Set",
+      "category": "Bulk parts and accessories",
+      "source_sets": 92,
+      "owned_sets": 92,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Universe",
+      "category": "Building sets",
+      "source_sets": 2,
+      "owned_sets": 2,
+      "candidate_sets": 1,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "VIDIYO",
+      "category": "Building sets",
+      "source_sets": 50,
+      "owned_sets": 37,
+      "candidate_sets": 13,
+      "invalid_sets": 13,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Value Packs",
+      "category": "Multipacks",
+      "source_sets": 37,
+      "owned_sets": 0,
+      "candidate_sets": 0,
+      "invalid_sets": 37,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Vikings",
+      "category": "Building sets",
+      "source_sets": 9,
+      "owned_sets": 9,
+      "candidate_sets": 8,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Wednesday",
+      "category": "Building sets",
+      "source_sets": 7,
+      "owned_sets": 7,
+      "candidate_sets": 6,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Western",
+      "category": "Building sets",
+      "source_sets": 22,
+      "owned_sets": 20,
+      "candidate_sets": 3,
+      "invalid_sets": 2,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Wicked",
+      "category": "Building sets",
+      "source_sets": 11,
+      "owned_sets": 11,
+      "candidate_sets": 9,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Xtra",
+      "category": "Building sets",
+      "source_sets": 19,
+      "owned_sets": 19,
+      "candidate_sets": 13,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    },
+    {
+      "family": "Znap",
+      "category": "Specialty systems",
+      "source_sets": 19,
+      "owned_sets": 19,
+      "candidate_sets": 0,
+      "invalid_sets": 0,
+      "excluded_by_policy": 0
+    }
+  ],
+  "number_format_coverage": [
+    {
+      "format": "4\u20135 digit",
+      "source_sets": 16009,
+      "owned_sets": 14562,
+      "candidate_sets": 8487
+    },
+    {
+      "format": "Alphanumeric",
+      "source_sets": 2724,
+      "owned_sets": 974,
+      "candidate_sets": 466
+    },
+    {
+      "format": "Other numeric",
+      "source_sets": 9804,
+      "owned_sets": 4166,
+      "candidate_sets": 1163
+    }
   ],
   "source_sha256": {
     "sets": "58778bb86a11c32b6cc03aaa03c2818f6d1d2bfe944e86760f5db84f1367addb",
@@ -46,7 +1680,7 @@
     "inventory_sets": "0b7c4923150b54eab759dfc30b72d7a16c4c35fe4bf3ad7bcb671885d21963ad",
     "minifigs": "8216766f56fd34258210da37336c29c834da730aeebdb3e83a415f20b7a898e9"
   },
-  "database_bytes": 17440768,
-  "compressed_bytes": 5439968,
-  "archive_sha256": "4fd88ebd9315a3eeb29be8e1f63aeb0c6d4bba228efd2058f2b11a3a343c1e41"
+  "database_bytes": 37552128,
+  "compressed_bytes": 11605065,
+  "archive_sha256": "687fc0504e4351b2d603cf5d5b6250af88a7eb47c38b46282cd79fbf975bbbe1"
 }

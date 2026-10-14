@@ -1,147 +1,65 @@
 {
   "python": "3.13.16",
   "architecture": "arm64",
-  "candidate_sets": 4194,
-  "catalog_load_seconds": 0.0329,
+  "candidate_sets": 10116,
+  "catalog_load_seconds": 0.1653,
   "examples": [
     {
-      "collection": "Classic",
+      "collection": "Example 1",
       "set_numbers": [
-        "11021-1",
-        "11036-1"
+        "76042-1",
+        "6864-1",
+        "76029-1",
+        "6863-1",
+        "76001-1",
+        "76081-1"
       ],
       "mode": "flexible",
-      "seconds": 0.5347,
-      "complete": 1,
-      "at_least_90_percent": 23,
+      "seconds": 1.0728,
+      "complete": 48,
+      "at_least_90_percent": 329,
       "top": [
         {
-          "set_num": "40014-1",
-          "name": "Halloween Bat",
+          "set_num": "DALLAS-1",
+          "name": "LEGO Store Grand Opening Exclusive Set, NorthPark Center, Dallas, TX",
           "percent": 100.0,
           "missing": 0
         },
         {
-          "set_num": "40055-1",
-          "name": "Pumpkin",
-          "percent": 98.08,
-          "missing": 1
+          "set_num": "6411320-1",
+          "name": "Book",
+          "percent": 100.0,
+          "missing": 0
         },
         {
-          "set_num": "4026-1",
-          "name": "Create Your Dreams",
-          "percent": 98.0,
-          "missing": 2
+          "set_num": "COLUMBUS-1",
+          "name": "LEGO Store Grand Opening Exclusive Set, Easton Town Center, Columbus, OH",
+          "percent": 100.0,
+          "missing": 0
         }
       ]
     },
     {
-      "collection": "Classic",
+      "collection": "Example 1",
       "set_numbers": [
-        "11021-1",
-        "11036-1"
+        "76042-1",
+        "6864-1",
+        "76029-1",
+        "6863-1",
+        "76001-1",
+        "76081-1"
       ],
       "mode": "exact",
-      "seconds": 0.0363,
-      "complete": 0,
-      "at_least_90_percent": 0,
+      "seconds": 0.0836,
+      "complete": 1,
+      "at_least_90_percent": 2,
       "top": [
         {
-          "set_num": "10080-1",
-          "name": "Angel",
-          "percent": 66.67,
-          "missing": 11
+          "set_num": "30162-1",
+          "name": "Quinjet",
+          "percent": 100.0,
+          "missing": 0
         },
-        {
-          "set_num": "30510-1",
-          "name": "90 Years of Cars",
-          "percent": 64.79,
-          "missing": 25
-        },
-        {
-          "set_num": "7603-1",
-          "name": "Dump Truck",
-          "percent": 60.61,
-          "missing": 13
-        }
-      ]
-    },
-    {
-      "collection": "Creator",
-      "set_numbers": [
-        "31124-1",
-        "31125-1",
-        "31128-1"
-      ],
-      "mode": "flexible",
-      "seconds": 0.1186,
-      "complete": 0,
-      "at_least_90_percent": 0,
-      "top": [
-        {
-          "set_num": "30574-1",
-          "name": "Cat",
-          "percent": 89.09,
-          "missing": 6
-        },
-        {
-          "set_num": "30550-1",
-          "name": "Easter Bunny",
-          "percent": 77.61,
-          "missing": 15
-        },
-        {
-          "set_num": "7807-1",
-          "name": "Airliner",
-          "percent": 73.53,
-          "missing": 9
-        }
-      ]
-    },
-    {
-      "collection": "Creator",
-      "set_numbers": [
-        "31124-1",
-        "31125-1",
-        "31128-1"
-      ],
-      "mode": "exact",
-      "seconds": 0.0381,
-      "complete": 0,
-      "at_least_90_percent": 0,
-      "top": [
-        {
-          "set_num": "30476-1",
-          "name": "Happy Turtle",
-          "percent": 51.52,
-          "missing": 16
-        },
-        {
-          "set_num": "30574-1",
-          "name": "Cat",
-          "percent": 34.55,
-          "missing": 36
-        },
-        {
-          "set_num": "71761-1",
-          "name": "Zane's Power Up Mech EVO",
-          "percent": 33.68,
-          "missing": 63
-        }
-      ]
-    },
-    {
-      "collection": "City",
-      "set_numbers": [
-        "60312-1",
-        "60333-1",
-        "60337-1"
-      ],
-      "mode": "flexible",
-      "seconds": 0.1187,
-      "complete": 0,
-      "at_least_90_percent": 1,
-      "top": [
         {
           "set_num": "40014-1",
           "name": "Halloween Bat",
@@ -149,48 +67,150 @@
           "missing": 2
         },
         {
-          "set_num": "10080-1",
-          "name": "Angel",
-          "percent": 84.85,
-          "missing": 5
-        },
-        {
-          "set_num": "41043-1",
-          "name": "Penguin's Playground",
-          "percent": 78.26,
-          "missing": 10
+          "set_num": "AUSTIN-1",
+          "name": "LEGO Store Grand Opening Exclusive Set, Barton Creek Square, Austin, TX",
+          "percent": 86.59,
+          "missing": 11
         }
       ]
     },
     {
-      "collection": "City",
+      "collection": "Example 2",
       "set_numbers": [
-        "60312-1",
-        "60333-1",
-        "60337-1"
+        "7939-1",
+        "60380-1",
+        "60292-1",
+        "60316-1",
+        "60330-1",
+        "60321-1"
       ],
-      "mode": "exact",
-      "seconds": 0.0377,
-      "complete": 0,
-      "at_least_90_percent": 0,
+      "mode": "flexible",
+      "seconds": 0.2472,
+      "complete": 50,
+      "at_least_90_percent": 431,
       "top": [
         {
-          "set_num": "60205-1",
-          "name": "Tracks",
-          "percent": 60.0,
-          "missing": 8
+          "set_num": "30478-1",
+          "name": "Jolly Santa",
+          "percent": 100.0,
+          "missing": 0
         },
+        {
+          "set_num": "TRUCAPAM-1",
+          "name": "Captain America Mosaic",
+          "percent": 100.0,
+          "missing": 0
+        },
+        {
+          "set_num": "30550-1",
+          "name": "Easter Bunny",
+          "percent": 100.0,
+          "missing": 0
+        }
+      ]
+    },
+    {
+      "collection": "Example 2",
+      "set_numbers": [
+        "7939-1",
+        "60380-1",
+        "60292-1",
+        "60316-1",
+        "60330-1",
+        "60321-1"
+      ],
+      "mode": "exact",
+      "seconds": 0.0865,
+      "complete": 2,
+      "at_least_90_percent": 2,
+      "top": [
         {
           "set_num": "7499-1",
           "name": "Flexible Rails",
-          "percent": 33.33,
-          "missing": 16
+          "percent": 100.0,
+          "missing": 0
         },
         {
-          "set_num": "30276-1",
-          "name": "First Order Special Forces TIE Fighter",
-          "percent": 29.27,
-          "missing": 29
+          "set_num": "60205-1",
+          "name": "Tracks",
+          "percent": 100.0,
+          "missing": 0
+        },
+        {
+          "set_num": "6271101-1",
+          "name": "Christmas Heart",
+          "percent": 86.96,
+          "missing": 3
+        }
+      ]
+    },
+    {
+      "collection": "Example 3",
+      "set_numbers": [
+        "7939-1",
+        "11021-1",
+        "31120-1",
+        "75301-1",
+        "41395-1",
+        "42128-1"
+      ],
+      "mode": "flexible",
+      "seconds": 0.2517,
+      "complete": 72,
+      "at_least_90_percent": 516,
+      "top": [
+        {
+          "set_num": "8465934-1",
+          "name": "Muji Christmas Set",
+          "percent": 100.0,
+          "missing": 0
+        },
+        {
+          "set_num": "e1a1404-1",
+          "name": "MUJI Christmas Set",
+          "percent": 100.0,
+          "missing": 0
+        },
+        {
+          "set_num": "5006291-1",
+          "name": "Buildable 2x4 Teal Brick",
+          "percent": 100.0,
+          "missing": 0
+        }
+      ]
+    },
+    {
+      "collection": "Example 3",
+      "set_numbers": [
+        "7939-1",
+        "11021-1",
+        "31120-1",
+        "75301-1",
+        "41395-1",
+        "42128-1"
+      ],
+      "mode": "exact",
+      "seconds": 0.0843,
+      "complete": 6,
+      "at_least_90_percent": 7,
+      "top": [
+        {
+          "set_num": "6422233-1",
+          "name": "Royal Coach",
+          "percent": 100.0,
+          "missing": 0
+        },
+        {
+          "set_num": "6422237-1",
+          "name": "Pineapple Pencil Pot",
+          "percent": 100.0,
+          "missing": 0
+        },
+        {
+          "set_num": "6422236-1",
+          "name": "Police Station",
+          "percent": 100.0,
+          "missing": 0
         }
       ]
     }

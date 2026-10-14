@@ -16,6 +16,8 @@ from functools import lru_cache
 from pathlib import Path
 from urllib.parse import urlparse
 
+from brickfinder.coverage import category_for_themes
+
 ROOT = Path(__file__).resolve().parents[1]
 
 
@@ -29,10 +31,17 @@ class LegoSet:
     img_url: str
     inventory_version: int
     candidate: bool
+    coverage_category: str = ""
 
     @property
     def instructions_url(self):
-        return "https://www.lego.com/en-us/service/building-instructions/" + self.set_num.split("-")[0]
+        base = "https://www.lego.com/en-us/service/building-instructions"
+        number = self.set_num.rsplit("-", 1)[0]
+        return base + "/" + number if number.isascii() and number.isdigit() else base
+
+    @property
+    def category(self):
+        return self.coverage_category or category_for_themes((self.family,))
 
     @property
     def safe_image_url(self):
@@ -67,9 +76,9 @@ class Catalog:
         self.database = database.resolve()
         with closing(self.connect()) as connection:
             self.metadata = {key: json.loads(value) for key, value in connection.execute("SELECT key,value FROM metadata")}
-            if self.metadata.get("schema_version") != 1:
+            if self.metadata.get("schema_version") != 2:
                 raise ValueError("Unsupported catalog version. Rebuild the catalog with this app version.")
-            self.sets = {row[0]: LegoSet(*row[:7], bool(row[7]))
+            self.sets = {row[0]: LegoSet(*row[:7], bool(row[7]), row[8])
                          for row in connection.execute("SELECT * FROM sets ORDER BY name,set_num")}
             self.parts = dict(connection.execute("SELECT part_num,name FROM parts"))
             self.colors = {row[0]: {"name": row[1], "rgb": row[2]}
@@ -86,7 +95,7 @@ class Catalog:
         terms = query.split()
         result = [s for s in self.sets.values()
                   if all(t in f"{s.set_num} {s.name}".casefold() for t in terms)]
-        return sorted(result, key=lambda s: (s.set_num != query and s.set_num.split("-")[0] != query,
+        return sorted(result, key=lambda s: (s.set_num.casefold() != query and s.set_num.rsplit("-", 1)[0].casefold() != query,
                                             not s.name.casefold().startswith(query), s.name, s.set_num))[:limit]
 
     @lru_cache(maxsize=128)

@@ -11,13 +11,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from brickfinder.catalog import Catalog, unpack_catalog
+from brickfinder.examples import EXAMPLE_COLLECTIONS
 from brickfinder.matching import recommend
-
-PRESETS = {
-    "Classic": ["11021-1", "11036-1"],
-    "Creator": ["31124-1", "31125-1", "31128-1"],
-    "City": ["60312-1", "60333-1", "60337-1"],
-}
 
 
 def main():
@@ -29,7 +24,7 @@ def main():
     report = {"python": platform.python_version(), "architecture": platform.machine(),
               "candidate_sets": len(catalog.candidates), "catalog_load_seconds": round(perf_counter() - began, 4),
               "examples": []}
-    for name, codes in PRESETS.items():
+    for name, codes in EXAMPLE_COLLECTIONS.items():
         for mode in ("flexible", "exact"):
             start = perf_counter()
             results = recommend(catalog, dict.fromkeys(codes, 1), mode)

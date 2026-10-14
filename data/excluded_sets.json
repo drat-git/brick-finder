@@ -1,0 +1,919 @@
+[
+  {
+    "set_num": "113-2-DBASE-1",
+    "name": "Database Set for Various 3009 prints For Set 113-2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "1307-1-DBASE-1",
+    "name": "Database Set for 1307-1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "1308-1-DBASE-1",
+    "name": "Database Set for 1308-1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "210-2-DBASE-1",
+    "name": "Database Set for 210-2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "226-1-DBASE-1",
+    "name": "Database Set for Various 3009 prints For Set 226-1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "259-1-DBASE-1",
+    "name": "Database Set for 259-1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "307-2-DBASE-1",
+    "name": "Database Set for 307-2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "308-3-DBASE-1",
+    "name": "Database Set for 308-3",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "310-5-DBASE-1",
+    "name": "Database Set for 310-5",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "8748-1-DBASE-1",
+    "name": "Database Set for 8748-1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "BIONICLE-MASKS-1",
+    "name": "Database Set for Bionicle Trading Card Game",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "BIONICLE-QFTM-1",
+    "name": "Bionicle Trading Card Game - Quest for the Mask - All Cards",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-0",
+    "name": "Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-2018",
+    "name": "2018 Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-2019",
+    "name": "2019 Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-2020",
+    "name": "2020 Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-2021",
+    "name": "2021 Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-2022",
+    "name": "2022 Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-2023",
+    "name": "2023 Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-2024",
+    "name": "2024 Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-2025",
+    "name": "2025 Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Build-a-Mini-2026",
+    "name": "2026 Build-A-Minifigure Station Exclusive Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "CREATOR-1",
+    "name": "Database Set for 4562-1 - Creator Box",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-0",
+    "name": "Unsorted Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-1",
+    "name": "Unused Parts Database Set - Pre-1965",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2",
+    "name": "Unused Parts Database Set -1966 to 200\ufeff0",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2001",
+    "name": "2001 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2002",
+    "name": "2002 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2003",
+    "name": "2003 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2004",
+    "name": "2004 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2005",
+    "name": "2005 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2006",
+    "name": "2006 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2007",
+    "name": "2007 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2008",
+    "name": "2008 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2009",
+    "name": "2009 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2010",
+    "name": "2010 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2011",
+    "name": "2011 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2012",
+    "name": "2012 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2013",
+    "name": "2013 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2014",
+    "name": "2014 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2015",
+    "name": "2015 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2016",
+    "name": "2016 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2017",
+    "name": "2017 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2018",
+    "name": "2018 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2019",
+    "name": "2019 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2020",
+    "name": "2020 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2021",
+    "name": "2021 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2022",
+    "name": "2022 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2023",
+    "name": "2023 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2024",
+    "name": "2024 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2025",
+    "name": "2025 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-2026",
+    "name": "2026 - Unused Parts Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-HO-1",
+    "name": "Database Set for 1:87 Mercedes Sport",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-HO-2",
+    "name": "Database Set for 1:87 VW Vans",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-HO-3",
+    "name": "Database Set for 1:87 VW Beetles (Short)",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-HO-4",
+    "name": "Database Set for 1:87 VW Beetles (Long)",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-HO-5",
+    "name": "Database Set for 1:38 VW Beetles",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-HO-6",
+    "name": "Database Set for HO Bikes",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DATABASE-HO-8",
+    "name": "Database Set for 699-2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DBASE-1",
+    "name": "Database Set for Set 491-2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DBASE-2",
+    "name": "Database Set for Set 426-1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DBASE-3",
+    "name": "Database Set for 1210-2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DBASE-4",
+    "name": "Database Set for Various 3009 prints For Set 1224.1-1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DBASE-4696-1",
+    "name": "Database Set for 4696-1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DBASE-5",
+    "name": "Database Set for Various prints For Set 1224-2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DBASE-6",
+    "name": "Database Set for Set 700.0-1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOSSIER-1",
+    "name": "One Piece Dossier Tiles",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-HP-1",
+    "name": "DOTS Collectible 41808-1 Tiles Hogwarts Accessories Pack",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-HP-2",
+    "name": "DOTS Collectible Tiles 41811-1 Hogwarts Desktop Kit",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-MEGA-PACK-1",
+    "name": "DOTS Collectible Tiles 41913-1 Mega Pack",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-MEGA-PACK-2",
+    "name": "DOTS Collectible Tiles 41949-1 Bag Tag Mega Pack - Messaging",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-MEGA-PACK-3",
+    "name": "DOTS Collectible Tiles 41957-1 Mega Pack",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-MEGA-PACK-4",
+    "name": "DOTS Collectible Tiles 41947-1 Mega Pack",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-MEGA-PACK-5",
+    "name": "DOTS Collectible Tiles 41947-1 / 41964-1 Mega Pack",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-MEGA-PACK-6",
+    "name": "DOTS Collectible Tiles 41807-1 Bracelet Designer Mega Pack",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-PROMO-1",
+    "name": "DOTS Promotional Packs",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-SERIES-1",
+    "name": "DOTS Collectible Tiles Series 1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-SERIES-2",
+    "name": "DOTS Collectible Tiles Series 2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-SERIES-3",
+    "name": "DOTS Collectible Tiles Series 3",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-SERIES-4",
+    "name": "DOTS Collectible Tiles Series 4",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-SERIES-5",
+    "name": "DOTS Collectible Tiles Series 5",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-SERIES-6",
+    "name": "DOTS Collectible Tiles Series 6",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-SERIES-7",
+    "name": "DOTS Collectible Tiles Series 7",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "DOTS-SERIES-8",
+    "name": "DOTS Collectible Tiles Series 8",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "KANOHI-1",
+    "name": "Database Set for Kanohi Masks",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "KANOHI-MASK-1",
+    "name": "Database Set for 8525-1 Kanohi Mask Pack - US Version",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "KANOKA-1",
+    "name": "Database Set for 8613-1 Kanoka Disk Launcher Pack",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "KRAATA-1",
+    "name": "Database Set for Kraata",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "KRANA-1",
+    "name": "Database Set for Krana Masks",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "LEGO-Modulex-1",
+    "name": "Unused Modulex parts sold by LEGO",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "LEGOWORLD-DBASE-1",
+    "name": "Database Set for LEGO World Letter Tiles",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "MODULEX-DBASE-1",
+    "name": "Modulex Foil Sheets Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NBA-1",
+    "name": "NBA Collectors Cards #1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NBA-2",
+    "name": "NBA Collectors Cards #2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NBA-3",
+    "name": "NBA Collectors Cards #3",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NBA-4",
+    "name": "NBA Collectors Cards #4",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NBA-5",
+    "name": "NBA Collectors Cards #5",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NBA-6",
+    "name": "NBA Collectors Cards #6",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NBA-7",
+    "name": "NBA Collectors Cards #7",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NBA-8",
+    "name": "NBA Collectors Cards #8",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NEXOKNIGHTS-1",
+    "name": "Nexo Powers Wave 1 Power Shields",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NEXOKNIGHTS-2",
+    "name": "Nexo Powers Wave 2 Power Shields",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NKTCG-2",
+    "name": "Nexo Knights Trading Card Game - Series 2 Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NTCG-1",
+    "name": "Ninjago Trading Card Game - Series 1 Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NTCG-2",
+    "name": "Ninjago Trading Card Game - Series 2 Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "NUVA-1",
+    "name": "Database Set for Nuva Masks",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Pick-a-Brick-1",
+    "name": "Pre-2021 Pick-a-Brick and Bricks & Pieces Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Pick-a-Brick-2022",
+    "name": "2022 Pick-a-Brick and Bricks & Pieces Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Pick-a-Brick-2023",
+    "name": "2023 Pick-a-Brick and Bricks & Pieces Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Pick-a-Brick-2024",
+    "name": "2024 Pick-a-Brick and Bricks & Pieces Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Pick-a-Brick-2025",
+    "name": "2025 Pick-a-Brick and Bricks & Pieces Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "Pick-a-Brick-2026",
+    "name": "2026 Pick-a-Brick and Bricks & Pieces Parts",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "ROBORIDER-1",
+    "name": "RoboRider Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "ROBORIDER-2",
+    "name": "RoboRider Database Set - Golden Wheels",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "SLIZER-1",
+    "name": "Database Set for 8508-1 Supplementary Disks",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "SLIZER-5",
+    "name": "Database Set for 1061-1 Single Disk Pack",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-1",
+    "name": "Create the World Trading Cards",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-12",
+    "name": "Create the World Trading Cards (Danish/French Version)",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-15",
+    "name": "Minecraft Trading Cards Series 1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-2",
+    "name": "Create the World Trading Cards: Incredible Inventions",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-3",
+    "name": "Create the World Trading Cards: Living Amazingly",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-4",
+    "name": "Knights Kingdom II Trading Cards",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-5",
+    "name": "Toys R Us Trading Cards",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-6",
+    "name": "Harry Potter Trading Cards Series 1",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-7",
+    "name": "Harry Potter Trading Cards Series 2",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCARD-9",
+    "name": "Vytv\u00e1raj Svet N\u00e1lepiek: \u00da\u017easn\u00fd \u017divot (Slovak Version)",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "TRADINGCOIN-1",
+    "name": "The LEGO Movie 2 (Coins)",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "VIDIYO-TILES-1",
+    "name": "VIDIYO Tiles - Database Set",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "WANTED-1",
+    "name": "One Piece Wanted Poster Tiles",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "WIZARD-CARDS-1",
+    "name": "Wizard Cards Tiles",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  },
+  {
+    "set_num": "WIZARD-PORTRAITS-1",
+    "name": "Wizard Portraits Tiles",
+    "family": "Other",
+    "category": "Database records",
+    "reason": "Excluded: source reference inventories, not physical sets to own or build."
+  }
+]

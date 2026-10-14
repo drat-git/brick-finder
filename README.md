@@ -36,18 +36,33 @@ Catalog prepared from the user's Rebrickable downloads on October 14, 2026:
 
 | Measure | Count |
 | --- | ---: |
-| Selectable owned sets | 6,058 |
-| Recommendation candidates | 4,194 |
-| Eligible sets excluded by validation | 312 |
-| Compressed database | 5.4 MB |
+| Source records audited | 28,537 |
+| Selectable owned sets/items | 19,702 |
+| Recommendation candidates | 10,116 |
+| Included root themes | 149 |
+| Inventories excluded by validation | 8,704 |
+| Synthetic reference records excluded | 131 |
+| Compressed database | 11.6 MB |
 
-Supported families: Creator, Classic, City, Town, Space, Pirates, Castle, Technic, Racers, Train, Seasonal, Star Wars, Friends, Ninjago, Speed Champions, BrickHeadz, Ideas, Architecture, Icons, and Botanicals.
+All source themes qualify without a theme allowlist. This includes Harry Potter, Minecraft, Disney, Jurassic World, Lord of the Rings, Marvel, DC, DUPLO, and specialty systems alongside the original themes. The app's Catalog & assumptions section shows selectable and recommendation counts by category and theme.
 
-Owned sets may come from any year or size within these families. Candidates use four- or five-digit set numbers, variant `-1`, years 2000–2026, and 20–1,000 pieces. This is a bounded catalog, not every official LEGO set.
+Owned sets/items have no year or piece-count limits and require a valid, nonempty inventory. Recommendations remain limited to 2000–2026 and 20–1,000 pieces. Source identifiers of any length, alphanumeric promotional IDs, magazine sets, and set variants are supported; there is no four-/five-digit or `-1` restriction. Set variants are separate source entries; inventory versions are alternative inventories for the same entry.
 
-The importer selects the highest inventory version, expands minifigures and nested sets with quantities, excludes spare pieces, and checks part/color references and totals. Missing, empty, cyclic, or inconsistent inventories are excluded and recorded in `data/unsupported_sets.json`. Inventory versions are alternatives; they are never added together.
+| Category | Selectable owned inventories | Recommendations | Treatment |
+| --- | ---: | ---: | --- |
+| Building sets | 14,722 | 8,945 | All building themes qualify within recommendation limits. |
+| Preschool systems | 1,802 | 676 | DUPLO, Primo, Quatro, and educational preschool sets are included. |
+| Specialty systems | 722 | 495 | Bionicle, Hero Factory, and other specialty systems are included. |
+| Bulk parts and accessories | 1,412 | 0 | Usable as owned inventory, including educational service packs and supplemental parts. |
+| Books and merchandise | 1,044 | 0 | Validated inventoried pieces can contribute to other builds. |
+| Multipacks | 0 | 0 | Owned inventory only; none in this snapshot pass validation. |
+| Database records | 0 | 0 | Synthetic reference entries do not describe physical sets and are excluded. |
 
-Source fingerprints, schema version, coverage, and archive checksum are in `data/catalog_info.json`. Raw downloads and the uncompressed database are excluded from Git. Instructions link to LEGO's set-specific pages; availability varies and multiple booklets are handled on LEGO's website. Set images use the source CDN URLs and depict the original colors.
+Part IDs remain distinct across building systems; including DUPLO or specialty themes does not imply that their parts substitute for ordinary bricks. Category rules inspect the full theme hierarchy, so an educational service pack is classified as parts rather than as a build. This is coverage of the supplied snapshot, not a live catalog of every LEGO product.
+
+The importer selects the highest inventory version, expands minifigures and nested sets with quantities, excludes spare pieces, and checks part/color references and totals. Missing, empty, cyclic, or inconsistent inventories are excluded and recorded in `data/unsupported_sets.json`. Synthetic database reference records and their exclusion reasons are recorded separately in `data/excluded_sets.json`. Every source record is accounted for as selectable, invalid, or excluded by policy. Inventory versions are alternatives; they are never added together.
+
+Source fingerprints, schema version, coverage by theme/category/identifier format, and archive checksum are in `data/catalog_info.json`. Raw downloads and the uncompressed database are excluded from Git. Numeric set IDs link to LEGO's set-specific instruction pages; alphanumeric IDs open its instruction search page. Instruction availability varies, especially for promotional sets, and multiple booklets are handled on LEGO's website. Set images use the source CDN URLs and depict the original colors.
 
 ## Rebuild the catalog
 
@@ -58,7 +73,7 @@ python -m brickfinder.build_catalog
 python scripts/benchmark.py --output data/demo_results.json
 ```
 
-Importing and benchmarking are explicit development steps. The running app never downloads new archives or scrapes Rebrickable pages. Changing the compressed catalog changes its cache fingerprint, so the next app startup unpacks the new snapshot.
+Importing and benchmarking are explicit development steps. The running app never downloads new archives or scrapes Rebrickable pages. Changing the compressed catalog changes its cache fingerprint, so the next app run unpacks and loads the new snapshot rather than reusing a cached older catalog.
 
 ## Tests and measured results
 
@@ -67,24 +82,24 @@ python -m unittest discover -s tests -v
 python scripts/benchmark.py
 ```
 
-Tests cover quantities, duplicate sets, color allocation, printed parts, ranking, rounded percentages, version selection, nested inventories, spare exclusion, invalid inventories, read-only catalog access, and the Streamlit collection/search/results flow.
+Tests cover quantities, duplicate sets, color allocation, printed parts, ranking, rounded percentages, version selection, nested inventories, spare exclusion, invalid inventories, read-only catalog access, expanded themes and identifier formats, recommendation boundaries, category/exclusion accounting, complete example builds in both color modes, and the Streamlit collection/search/results flow.
 
-Local measurements on Python 3.13.16 / Apple Silicon: the first flexible search including candidate loading took approximately 0.53 seconds; subsequent flexible searches approximately 0.12 seconds; exact searches approximately 0.04 seconds. These are local measurements, not a hosted latency guarantee. Reproduce them with the benchmark script; recorded results are in `data/demo_results.json`.
+Local measurements on Python 3.13.16 / Apple Silicon: the first flexible search including candidate loading took approximately 1.07 seconds; subsequent flexible searches approximately 0.25 seconds; exact searches approximately 0.08 seconds. These are local measurements, not a hosted latency guarantee. Reproduce them with the benchmark script; recorded results are in `data/demo_results.json`.
 
-| Example collection | Flexible-color result | Exact-color result |
-| --- | --- | --- |
-| Classic: 11021 + 11036 | 1 complete build; 23 at least 90% complete | No complete builds; best 66.7% |
-| Creator: 31124 + 31125 + 31128 | Best 89.1%, missing 6 pieces | Best 51.5% |
-| City: 60312 + 60333 + 60337 | Best 92%, missing 2 pieces | Best 60% |
+| Example collection | Theme | Owned sets | Complete flexible-color builds | Complete exact-color builds |
+| --- | --- | ---: | ---: | ---: |
+| Example 1 | Superheroes | 6 | 48 | 1 |
+| Example 2 | City | 6 | 50 | 2 |
+| Example 3 | Mixed themes | 6 | 72 | 6 |
 
-The Classic example fully covers the inventory for Halloween Bat (40014) when colors can change. Exact-color matches can be scarce; the app shows that honestly.
+Collections are defined once in `brickfinder/examples.py` and shared by the UI and benchmark. Each has at least two complete builds that need color changes as well as at least one complete exact-color build. Example 1 can build Quinjet (30162) in exact colors; Examples 2 and 3 can build Flexible Rails (7499) and Tracks (60205) in exact colors. Flexible-color counts include exact-color builds. Each result is evaluated independently, and owned sets are excluded.
 
 ## Deploy
 
 1. Push the app, package, tests, configuration, dependency file, and generated compressed catalog to GitHub. Do not push raw CSVs, virtual environments, caches, or credentials.
 2. In [Streamlit Community Cloud](https://share.streamlit.io/), select **Create app**, the repository's `main` branch, and `app.py`.
 3. In **Advanced settings**, choose **Python 3.13**. No secrets are required.
-4. Deploy, then verify a fresh browser session: load Classic, find builds, open a piece breakdown, switch to exact colors, and follow an instruction link.
+4. Deploy, then verify a fresh browser session: load Example 1, find builds, open a piece breakdown, switch to exact colors, and follow an instruction link.
 5. Make the deployed app viewable publicly if Community Cloud initially creates it as private.
 
 GitHub Actions runs the tests on Python 3.13. To roll back, revert the relevant app/catalog commit in GitHub and redeploy the previous working state. Runtime exceptions appear in Streamlit's app logs.

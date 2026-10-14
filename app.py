@@ -9,6 +9,8 @@ from html import escape
 import streamlit as st
 
 from brickfinder.catalog import Catalog, unpack_catalog
+from brickfinder.coverage import OWNED_ONLY_CATEGORIES
+from brickfinder.examples import EXAMPLE_COLLECTIONS
 from brickfinder.matching import color_change_rows, filter_matches, recommend, shortage_rows
 
 st.set_page_config(page_title="Brick Finder · Build something new", page_icon="🧱", layout="wide")
@@ -34,21 +36,16 @@ h1,h2,h3 {letter-spacing:-.035em;}
 
 
 @st.cache_resource(show_spinner="Opening the piece catalog…")
-def load_catalog():
-    return Catalog(unpack_catalog())
+def load_catalog(database):
+    return Catalog(database)
 
 
 try:
-    catalog = load_catalog()
+    catalog = load_catalog(unpack_catalog())
 except (OSError, ValueError, sqlite3.Error) as error:
     st.error(f"We couldn't open the set catalog. {error}")
     st.stop()
 
-PRESETS = {
-    "Classic": ["11021-1", "11036-1"],
-    "Creator": ["31124-1", "31125-1", "31128-1"],
-    "City": ["60312-1", "60333-1", "60337-1"],
-}
 st.session_state.setdefault("collection", {})
 st.session_state.setdefault("results", None)
 st.session_state.setdefault("result_page", 1)
@@ -61,7 +58,7 @@ def invalidate_results():
 
 
 def load_example(name):
-    st.session_state.collection = {code: 1 for code in PRESETS[name]}
+    st.session_state.collection = {code: 1 for code in EXAMPLE_COLLECTIONS[name]}
     invalidate_results()
 
 
@@ -116,10 +113,10 @@ st.markdown('<div class="intro">Choose the LEGO sets you own. Discover other off
 with st.container(border=True):
     st.markdown("**No sets handy? Try an example collection.**")
     buttons = st.columns(3)
-    for column, name in zip(buttons, PRESETS):
+    for column, name in zip(buttons, EXAMPLE_COLLECTIONS):
         with column:
-            st.button(f"Load {name} example", on_click=load_example, args=(name,),
-                      width="stretch", disabled=not all(c in catalog.sets for c in PRESETS[name]))
+            st.button(name, on_click=load_example, args=(name,),
+                      width="stretch", disabled=not all(c in catalog.sets for c in EXAMPLE_COLLECTIONS[name]))
     st.caption("Loading an example replaces the current selection.")
 
 left, right = st.columns([1, 1.6], gap="large")
@@ -134,6 +131,10 @@ with left:
                                   format_func=lambda code: f"{catalog.sets[code].name} · {code}",
                                   key="selected_search_set")
             st.caption(f"{catalog.sets[chosen].num_parts:,} pieces · {catalog.sets[chosen].year} · {catalog.sets[chosen].family}")
+            if catalog.sets[chosen].category in OWNED_ONLY_CATEGORIES:
+                st.caption("Owned sets only: this item's inventoried pieces can contribute to other builds.")
+            elif catalog.sets[chosen].category != "Building sets":
+                st.caption(catalog.sets[chosen].category + " · Part IDs remain distinct across building systems.")
             st.form_submit_button("Add to collection", type="primary", width="stretch", on_click=add_set)
     elif query.strip():
         st.info("No supported set matches that search. Try a shorter name or a set number. See Catalog & assumptions below for coverage.")
@@ -149,6 +150,8 @@ with left:
                 st.markdown(f'<div class="selected-set-name"><strong>{escape(lego_set.name)}</strong>{badge}</div>',
                             unsafe_allow_html=True)
                 st.caption(f"{code} · {lego_set.num_parts:,} pieces")
+                if lego_set.category != "Building sets":
+                    st.caption(lego_set.category)
                 st.button("Remove", key=f"remove_{code}", on_click=remove_set, args=(code,), width="stretch")
         if st.button("Clear collection"):
             st.session_state.show_clear_confirmation = True
@@ -209,6 +212,8 @@ with right:
                         st.markdown('<div class="placeholder" aria-label="Set image unavailable">🧱</div>', unsafe_allow_html=True)
                 with details:
                     st.caption(f"{lego_set.set_num} · {lego_set.family} · {lego_set.year}")
+                    if lego_set.category != "Building sets":
+                        st.caption(lego_set.category)
                     st.markdown(f"### {lego_set.name}")
                     st.markdown(f"**{match.display_percent}** of required pieces available · **{match.missing:,} missing**")
                     st.caption(f"{match.matched:,} / {match.required:,} required pieces")
@@ -219,7 +224,9 @@ with right:
                             st.success("All required part IDs available; colors may differ.")
                         else:
                             st.success("All required part IDs and colors available.")
-                    st.link_button("Find official instructions ↗", lego_set.instructions_url)
+                    instructions_label = ("Search official instructions ↗" if lego_set.instructions_url.endswith("building-instructions")
+                                          else "Find official instructions ↗")
+                    st.link_button(instructions_label, lego_set.instructions_url)
                 if st.checkbox("Show piece breakdown", key=f"breakdown_{mode}_{lego_set.set_num}"):
                     shortages = shortage_rows(catalog, collection, match)
                     if shortages:
@@ -240,13 +247,30 @@ st.divider()
 with st.expander("Catalog & assumptions"):
     st.markdown(f"""
     - **Coverage:** {len(catalog.sets):,} owned-set inventories and {len(catalog.candidates):,} recommendation candidates.
-    - **Families:** {', '.join(catalog.metadata['families'])}.
-    - **Candidates:** regular four- or five-digit set numbers, 2000–2026, 20–1,000 pieces. Owned sets can be older or larger.
+    - **Themes:** all themes qualify, subject to inventory validation and the category rules below.
+    - **Candidates:** 2000–2026, 20–1,000 pieces. Owned sets have no year or piece-count limits.
+    - **Set numbers:** promotional, magazine, alphanumeric IDs, and set variants are supported without a length restriction.
+    - Source reference inventories ("Database Sets") are excluded because they do not describe physical sets.
     - Selected sets are assumed complete and available to dismantle. Minifigure parts count; spare pieces do not.
     - Every match uses the latest catalog inventory version. Printed parts, stickers, and mold variants are kept distinct.
     - Unsupported or inconsistent inventories are excluded. A catalog match does not independently verify building geometry.
-    - Instructions open on LEGO's website; availability varies. Set images describe the original colors.
+    - Instructions open on LEGO's website; availability varies, especially for promotional sets. Alphanumeric IDs open the instruction search page. Set images describe the original colors.
     - Your collection lasts for this browser session. No account or API key is required.
     """)
-    st.caption(f"Catalog prepared {catalog.metadata['built_at'][:10]}. {catalog.metadata['skipped_sets']:,} eligible inventories excluded by validation.")
+    st.markdown("**Category coverage**")
+    st.dataframe([
+        {"Category": row["category"], "Selectable owned sets": row["owned_sets"],
+         "Recommendations": row["candidate_sets"], "Treatment": row["policy"]}
+        for row in catalog.metadata["category_coverage"]
+    ], hide_index=True, width="stretch")
+    st.markdown("**Coverage by theme**")
+    st.dataframe([
+        {"Theme": row["family"], "Category": row["category"],
+         "Selectable owned sets": row["owned_sets"], "Recommendations": row["candidate_sets"],
+         "Invalid inventories": row["invalid_sets"], "Excluded reference records": row["excluded_by_policy"]}
+        for row in catalog.metadata["theme_coverage"]
+    ], hide_index=True, width="stretch")
+    st.caption(f"Catalog prepared {catalog.metadata['built_at'][:10]}. {len(catalog.metadata['families']):,} included themes. "
+               f"{catalog.metadata['skipped_sets']:,} source inventories excluded by validation; "
+               f"{catalog.metadata['excluded_by_policy']:,} database reference records excluded.")
     st.markdown("Data and set images: [Rebrickable](https://rebrickable.com/downloads/). Instructions: [LEGO](https://www.lego.com/en-us/service/building-instructions). Independent portfolio project; not affiliated with the LEGO Group or Rebrickable.")

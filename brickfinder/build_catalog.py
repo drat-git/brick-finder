@@ -14,14 +14,10 @@ from contextlib import closing
 from datetime import datetime, timezone
 from pathlib import Path
 
+from brickfinder.coverage import CATEGORY_POLICIES, OWNED_ONLY_CATEGORIES, category_for_themes
+
 ROOT = Path(__file__).resolve().parents[1]
-FAMILIES = frozenset({
-    "Creator", "Classic", "City", "Town", "Space", "Pirates", "Castle",
-    "Technic", "Racers", "Train", "Seasonal", "Star Wars", "Friends",
-    "Ninjago", "Speed Champions", "Brickheadz", "LEGO Ideas and CUUSOO",
-    "Architecture", "Icons", "Botanicals",
-})
-SCHEMA_VERSION = 1
+SCHEMA_VERSION = 2
 
 
 def file_sha256(path: Path) -> str:
@@ -35,6 +31,10 @@ def read_csv(directory: Path, name: str):
 
 
 class InventoryError(ValueError):
+    pass
+
+
+class PolicyExclusion(ValueError):
     pass
 
 
@@ -106,34 +106,55 @@ def build_catalog(source: Path, output: Path, last_year: int = 2026) -> dict:
         resolved[code] = result
         return result
 
-    def root_theme(theme_id: str):
+    def theme_path(theme_id: str):
         seen = set()
+        names = []
         while True:
             if theme_id in seen or theme_id not in themes:
                 raise InventoryError("Unresolved theme hierarchy")
             seen.add(theme_id)
             theme = themes[theme_id]
+            names.append(theme["name"])
             if not theme["parent_id"]:
-                return theme["name"]
+                return names
             theme_id = theme["parent_id"]
 
-    accepted, skipped = [], []
+    accepted, skipped, excluded = [], [], []
+    theme_counts = defaultdict(Counter)
+    number_counts = defaultdict(Counter)
     for code, row in sorted(sets.items()):
-        if not re.fullmatch(r"\d{4,5}-\d+", code):
-            continue
+        family = "Unresolved theme"
+        category = "Building sets"
+        number_format = ("4–5 digit" if re.fullmatch(r"\d{4,5}-\d+", code)
+                         else "Other numeric" if re.fullmatch(r"\d+-\d+", code)
+                         else "Alphanumeric")
+        number_counts[number_format]["source_sets"] += 1
         try:
-            family = root_theme(row["theme_id"])
-            if family not in FAMILIES:
-                continue
+            lineage = theme_path(row["theme_id"])
+            family = lineage[-1]
+            category = category_for_themes(lineage)
+            if category == "Database records":
+                raise PolicyExclusion(CATEGORY_POLICIES[category])
             inventory = flatten(code)
             count = sum(inventory.values())
             if count != int(row["num_parts"]):
                 raise InventoryError(f"Expanded total {count} differs from listed {row['num_parts']}")
-            candidate = (code.endswith("-1") and 2000 <= int(row["year"]) <= last_year
-                         and 20 <= count <= 1000)
-            accepted.append((code, row, family, inventory, candidate))
+            candidate = (2000 <= int(row["year"]) <= last_year and 20 <= count <= 1000
+                         and category not in OWNED_ONLY_CATEGORIES)
+            accepted.append((code, row, family, category, inventory, candidate))
+            theme_counts[family, category]["owned_sets"] += 1
+            theme_counts[family, category]["candidate_sets"] += int(candidate)
+            number_counts[number_format]["owned_sets"] += 1
+            number_counts[number_format]["candidate_sets"] += int(candidate)
         except InventoryError as error:
-            skipped.append({"set_num": code, "name": row["name"], "reason": str(error)})
+            skipped.append({"set_num": code, "name": row["name"], "family": family,
+                            "reason": str(error)})
+            theme_counts[family, category]["invalid_sets"] += 1
+        except PolicyExclusion as error:
+            excluded.append({"set_num": code, "name": row["name"], "family": family,
+                             "category": category, "reason": str(error)})
+            theme_counts[family, category]["excluded_by_policy"] += 1
+        theme_counts[family, category]["source_sets"] += 1
 
     if not accepted:
         raise ValueError("No usable inventories found; refusing to produce an empty catalog")
@@ -142,7 +163,7 @@ def build_catalog(source: Path, output: Path, last_year: int = 2026) -> dict:
     temporary = output / "catalog.building.sqlite"
     if temporary.exists():
         temporary.unlink()
-    used_parts = {p for _, _, _, bag, _ in accepted for p, _ in bag}
+    used_parts = {p for _, _, _, _, bag, _ in accepted for p, _ in bag}
     with closing(sqlite3.connect(temporary)) as connection:
         connection.executescript("""
             PRAGMA foreign_keys=ON;
@@ -150,7 +171,8 @@ def build_catalog(source: Path, output: Path, last_year: int = 2026) -> dict:
             CREATE TABLE colors (color_id INTEGER PRIMARY KEY, name TEXT NOT NULL, rgb TEXT NOT NULL);
             CREATE TABLE sets (set_num TEXT PRIMARY KEY, name TEXT NOT NULL, year INTEGER NOT NULL,
                 family TEXT NOT NULL, num_parts INTEGER NOT NULL, img_url TEXT NOT NULL,
-                inventory_version INTEGER NOT NULL, candidate INTEGER NOT NULL);
+                inventory_version INTEGER NOT NULL, candidate INTEGER NOT NULL,
+                category TEXT NOT NULL);
             CREATE TABLE requirements (set_num TEXT NOT NULL REFERENCES sets,
                 part_num TEXT NOT NULL REFERENCES parts, color_id INTEGER NOT NULL REFERENCES colors,
                 quantity INTEGER NOT NULL CHECK(quantity > 0),
@@ -161,22 +183,46 @@ def build_catalog(source: Path, output: Path, last_year: int = 2026) -> dict:
                                ((p, parts[p]["name"]) for p in sorted(used_parts)))
         connection.executemany("INSERT INTO colors VALUES (?,?,?)",
                                ((int(c), r["name"], r["rgb"]) for c, r in colors.items()))
-        for code, row, family, inventory, candidate in accepted:
-            connection.execute("INSERT INTO sets VALUES (?,?,?,?,?,?,?,?)", (
+        for code, row, family, category, inventory, candidate in accepted:
+            connection.execute("INSERT INTO sets VALUES (?,?,?,?,?,?,?,?,?)", (
                 code, row["name"], int(row["year"]), family, sum(inventory.values()),
-                row.get("img_url", ""), int(latest[code]["version"]), int(candidate)))
+                row.get("img_url", ""), int(latest[code]["version"]), int(candidate), category))
             connection.executemany("INSERT INTO requirements VALUES (?,?,?,?)",
                                    ((code, p, c, n) for (p, c), n in sorted(inventory.items())))
+        theme_coverage = [
+            {"family": family, "category": category,
+             **{key: counts[key] for key in ("source_sets", "owned_sets", "candidate_sets", "invalid_sets", "excluded_by_policy")}}
+            for (family, category), counts in sorted(theme_counts.items())
+        ]
+        category_coverage = []
+        for category, policy in CATEGORY_POLICIES.items():
+            rows = [r for r in theme_coverage if r["category"] == category]
+            category_coverage.append({
+                "category": category, "policy": policy,
+                **{key: sum(r[key] for r in rows)
+                   for key in ("source_sets", "owned_sets", "candidate_sets", "invalid_sets", "excluded_by_policy")},
+            })
         metadata = {
             "schema_version": SCHEMA_VERSION,
             "built_at": datetime.now(timezone.utc).isoformat(),
             "source": "https://rebrickable.com/downloads/",
-            "families": sorted(FAMILIES),
+            "families": sorted({family for _, _, family, _, _, _ in accepted}),
+            "source_sets": len(sets),
             "owned_sets": len(accepted),
             "candidate_sets": sum(candidate for *_, candidate in accepted),
             "skipped_sets": len(skipped),
+            "excluded_by_policy": len(excluded),
             "candidate_years": [2000, last_year],
             "candidate_pieces": [20, 1000],
+            "theme_policy": "All source themes qualify, subject to inventory validation and category policy.",
+            "set_number_policy": "All source set identifiers and variants qualify; no length restriction.",
+            "owned_set_policy": "No year or piece-count limits; requires a valid nonempty inventory.",
+            "category_coverage": category_coverage,
+            "theme_coverage": theme_coverage,
+            "number_format_coverage": [
+                {"format": name, **{key: counts[key] for key in ("source_sets", "owned_sets", "candidate_sets")}}
+                for name, counts in sorted(number_counts.items())
+            ],
             "source_sha256": {name: file_sha256(source / f"{name}.csv")
                               for name in required},
         }
@@ -199,6 +245,7 @@ def build_catalog(source: Path, output: Path, last_year: int = 2026) -> dict:
     metadata["archive_sha256"] = file_sha256(archive)
     (output / "catalog_info.json").write_text(json.dumps(metadata, indent=2) + "\n")
     (output / "unsupported_sets.json").write_text(json.dumps(skipped, indent=2) + "\n")
+    (output / "excluded_sets.json").write_text(json.dumps(excluded, indent=2) + "\n")
     return metadata
 
 
