@@ -14,7 +14,7 @@ st.set_page_config(page_title="Brick Finder · Build something new", page_icon="
 
 st.markdown("""
 <style>
-.block-container {max-width:1180px;padding-top:2.2rem;padding-bottom:3rem;}
+.block-container {max-width:1180px;padding-top:5rem;padding-bottom:3rem;}
 h1,h2,h3 {letter-spacing:-.035em;}
 .eyebrow {color:#006D77;font-size:.78rem;font-weight:750;letter-spacing:.15em;margin-bottom:.8rem;}
 .hero {font-size:clamp(2rem,5vw,3.5rem);line-height:1.08;font-weight:800;letter-spacing:-.05em;margin:0 0 1rem;}
