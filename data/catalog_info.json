@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "built_at": "2026-10-14T15:00:47.691060+00:00",
+  "source": "https://rebrickable.com/downloads/",
+  "families": [
+    "Architecture",
+    "Botanicals",
+    "Brickheadz",
+    "Castle",
+    "City",
+    "Classic",
+    "Creator",
+    "Friends",
+    "Icons",
+    "LEGO Ideas and CUUSOO",
+    "Ninjago",
+    "Pirates",
+    "Racers",
+    "Seasonal",
+    "Space",
+    "Speed Champions",
+    "Star Wars",
+    "Technic",
+    "Town",
+    "Train"
+  ],
+  "owned_sets": 6058,
+  "candidate_sets": 4194,
+  "skipped_sets": 312,
+  "candidate_years": [
+    2000,
+    2026
+  ],
+  "candidate_pieces": [
+    20,
+    1000
+  ],
+  "source_sha256": {
+    "sets": "58778bb86a11c32b6cc03aaa03c2818f6d1d2bfe944e86760f5db84f1367addb",
+    "themes": "828f0d8b3152c462c8436927c77a543beedea744635b2a0daf1869ceb7758a32",
+    "parts": "004170006095f125d0263c333eb9017cf11cb9fee011dfc237b5b51a8d664f36",
+    "colors": "8060a7866114edfa31b7f2c4d658084fb10b3e7818b079597a1a6391c7b2cdc6",
+    "inventories": "400b8c987047621a8e6554a8b92ebc1b3b846115cc026437b5e3377047191344",
+    "inventory_parts": "76266391f857c0f0eeb516e0d35b4b42eb40f169d07f0e73a3b3be25ab3433a2",
+    "inventory_minifigs": "9bf8cfdd5236b6d663a5cfccb78da7b366e9ce9406c81dd7a882b3a9064d9fc9",
+    "inventory_sets": "0b7c4923150b54eab759dfc30b72d7a16c4c35fe4bf3ad7bcb671885d21963ad",
+    "minifigs": "8216766f56fd34258210da37336c29c834da730aeebdb3e83a415f20b7a898e9"
+  },
+  "database_bytes": 17440768,
+  "compressed_bytes": 5439968,
+  "archive_sha256": "4fd88ebd9315a3eeb29be8e1f63aeb0c6d4bba228efd2058f2b11a3a343c1e41"
+}
