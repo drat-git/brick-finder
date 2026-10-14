@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import sqlite3
 import time
+from html import escape
 
 import streamlit as st
 
@@ -22,6 +23,8 @@ h1,h2,h3 {letter-spacing:-.035em;}
 .intro {color:#516469;font-size:1.05rem;max-width:680px;line-height:1.6;margin-bottom:1.3rem;}
 .step {color:#006D77;font-size:.76rem;font-weight:750;letter-spacing:.13em;margin-bottom:.4rem;}
 .result-label {font-weight:700;color:#006D77;}
+.selected-set-name {display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;}
+.copy-count {font-size:.8rem;font-weight:500;color:#516469;background:#EEEDE5;padding:.1rem .4rem;border-radius:5px;}
 [data-testid="stMetric"] {background:#EEEDE5;padding:1rem;border-radius:12px;}
 [data-testid="stImage"] img {border-radius:10px;max-height:180px;object-fit:contain;}
 [data-testid="stVerticalBlockBorderWrapper"] {border-radius:14px;}
@@ -49,6 +52,7 @@ PRESETS = {
 st.session_state.setdefault("collection", {})
 st.session_state.setdefault("results", None)
 st.session_state.setdefault("result_page", 1)
+st.session_state.setdefault("show_clear_confirmation", False)
 
 
 def invalidate_results():
@@ -58,18 +62,13 @@ def invalidate_results():
 
 def load_example(name):
     st.session_state.collection = {code: 1 for code in PRESETS[name]}
-    for key in list(st.session_state):
-        if key.startswith("qty_"):
-            del st.session_state[key]
     invalidate_results()
 
 
-def change_quantity(code):
-    quantity = st.session_state[f"qty_{code}"]
-    if quantity is None:
-        st.session_state[f"qty_{code}"] = st.session_state.collection[code]
-        return
-    st.session_state.collection[code] = int(quantity)
+def add_set():
+    code = st.session_state.selected_search_set
+    st.session_state.collection[code] = st.session_state.collection.get(code, 0) + 1
+    st.session_state.search_query = ""
     invalidate_results()
 
 
@@ -80,7 +79,26 @@ def remove_set(code):
 
 def clear_collection():
     st.session_state.collection = {}
+    st.session_state.show_clear_confirmation = False
     invalidate_results()
+
+
+def dismiss_clear_confirmation():
+    st.session_state.show_clear_confirmation = False
+
+
+@st.dialog("Clear collection?", on_dismiss=dismiss_clear_confirmation)
+def confirm_clear_collection():
+    st.write("Are you sure you want to remove all selected sets?")
+    cancel, confirm = st.columns(2)
+    with cancel:
+        if st.button("Cancel", width="stretch"):
+            dismiss_clear_confirmation()
+            st.rerun()
+    with confirm:
+        if st.button("Yes, clear collection", type="primary", width="stretch"):
+            clear_collection()
+            st.rerun()
 
 
 def reset_page():
@@ -102,7 +120,7 @@ with st.container(border=True):
         with column:
             st.button(f"Load {name} example", on_click=load_example, args=(name,),
                       width="stretch", disabled=not all(c in catalog.sets for c in PRESETS[name]))
-    st.caption("Loading an example replaces the current selection. These are sample collections, not sets you need to purchase.")
+    st.caption("Loading an example replaces the current selection.")
 
 left, right = st.columns([1, 1.6], gap="large")
 with left:
@@ -113,14 +131,10 @@ with left:
     if choices:
         with st.form("add_set_form"):
             chosen = st.selectbox("Matching sets", options=[s.set_num for s in choices],
-                                  format_func=lambda code: f"{catalog.sets[code].name} · {code}")
+                                  format_func=lambda code: f"{catalog.sets[code].name} · {code}",
+                                  key="selected_search_set")
             st.caption(f"{catalog.sets[chosen].num_parts:,} pieces · {catalog.sets[chosen].year} · {catalog.sets[chosen].family}")
-            copies = st.number_input("Copies to add", min_value=1, max_value=99, value=1, step=1)
-            if st.form_submit_button("Add to collection", type="primary", width="stretch"):
-                st.session_state.collection[chosen] = st.session_state.collection.get(chosen, 0) + int(copies)
-                st.session_state[f"qty_{chosen}"] = st.session_state.collection[chosen]
-                invalidate_results()
-                st.rerun()
+            st.form_submit_button("Add to collection", type="primary", width="stretch", on_click=add_set)
     elif query.strip():
         st.info("No supported set matches that search. Try a shorter name or a set number. See Catalog & assumptions below for coverage.")
     else:
@@ -131,17 +145,15 @@ with left:
         for code, quantity in list(st.session_state.collection.items()):
             lego_set = catalog.sets[code]
             with st.container(border=True):
-                st.markdown(f"**{lego_set.name}**")
-                st.caption(f"{code} · {lego_set.num_parts:,} pieces per copy")
-                count_col, remove_col = st.columns([1, 1])
-                with count_col:
-                    quantity_key = f"qty_{code}"
-                    st.session_state.setdefault(quantity_key, quantity)
-                    st.number_input("Copies", min_value=1, value=None, step=1,
-                                    key=quantity_key, on_change=change_quantity, args=(code,))
-                with remove_col:
-                    st.button("Remove", key=f"remove_{code}", on_click=remove_set, args=(code,), width="stretch")
-        st.button("Clear collection", on_click=clear_collection)
+                badge = f'<span class="copy-count">x{quantity}</span>' if quantity > 1 else ""
+                st.markdown(f'<div class="selected-set-name"><strong>{escape(lego_set.name)}</strong>{badge}</div>',
+                            unsafe_allow_html=True)
+                st.caption(f"{code} · {lego_set.num_parts:,} pieces")
+                st.button("Remove", key=f"remove_{code}", on_click=remove_set, args=(code,), width="stretch")
+        if st.button("Clear collection"):
+            st.session_state.show_clear_confirmation = True
+        if st.session_state.show_clear_confirmation:
+            confirm_clear_collection()
     else:
         st.caption("Your collection is empty. Add a set or load an example above.")
 
