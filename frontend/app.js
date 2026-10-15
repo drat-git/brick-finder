@@ -351,6 +351,10 @@ $$('dialog').forEach(dialog => {
 document.addEventListener('error', event => {if(event.target.tagName==='IMG'&&!event.target.src.endsWith('/favicon.svg')){event.target.src='/favicon.svg';event.target.alt='Set photo unavailable';}},true);
 
 async function init() {
+  if (location.protocol === 'file:') {
+    document.body.innerHTML = `<main class="empty-results"><span class="eyebrow">BRICK FINDER</span><h1>Open the running preview.</h1><p>This HTML file needs the local app server to load the catalog and find builds.</p><div class="empty-actions"><a class="primary-button" href="http://127.0.0.1:8502/">Open Brick Finder ↗</a></div></main>`;
+    return;
+  }
   $('#search-icon').innerHTML=icon('search');$('#privacy-icon').innerHTML=icon('shield');$('#stamp-icon').innerHTML=icon('brick');$('#filter-icon').innerHTML=icon('sliders');$('#clear-button').innerHTML=icon('trash');
   $$('.dialog-close').forEach(button => {button.innerHTML=icon('close');});
   renderCollection();renderToolbar();
