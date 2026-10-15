@@ -19,7 +19,7 @@
     <nav aria-label="Main navigation"><button class="text-button" id="how-button">What is Rebuilt? <span aria-hidden="true">↗</span></button><span class="nav-rule"></span><button class="catalog-button" id="catalog-button"><span class="status-dot"></span><span id="catalog-count">Opening catalog</span></button></nav>
   </header>
   <main class="workspace">
-    <aside class="collection-panel" aria-labelledby="collection-heading">
+    <aside class="collection-panel" id="collection-panel" aria-labelledby="collection-heading">
       <div class="panel-heading"><div><span class="eyebrow">THE STARTING POINT</span><h1 id="collection-heading">Your collection<span class="collection-count" id="collection-count">0</span></h1></div><button class="icon-button" id="clear-button" aria-label="Clear collection" title="Clear collection" hidden></button></div>
       <p class="panel-description">Start with the sets you already own.</p>
       <div class="search-area">
@@ -36,6 +36,7 @@
       <details class="examples" id="examples"><summary>No sets handy? Try an example <span aria-hidden="true">+</span></summary><div id="example-list"></div><p class="quiet">An example replaces your current collection.</p></details>
       <div class="collection-note"><span id="privacy-icon" aria-hidden="true"></span><span>No account. No uploads.<br>Just your bricks and a little possibility.</span></div>
     </aside>
+    <div class="panel-resizer" id="panel-resizer" role="separator" aria-label="Resize collection panel" aria-orientation="vertical" aria-controls="collection-panel" aria-valuemin="260" aria-valuemax="520" aria-valuenow="326" tabindex="0" title="Drag to resize. Use Left and Right arrows, or double-click to reset."><span aria-hidden="true"></span></div>
     <section class="discovery" id="discovery" aria-labelledby="discovery-heading" tabindex="-1">
       <div class="discovery-header"><div><div class="header-kicker"><span class="eyebrow">MORE BUILDS. SAME BRICKS.</span><button id="edit-collection" class="mobile-collection-link">↑ Your collection</button></div><h2 id="discovery-heading">Find your next <span>“I made that.”</span></h2><p id="discovery-subtitle">There’s more hiding in your collection than you think.</p></div><span class="catalog-stamp"><span id="stamp-icon" aria-hidden="true"></span><span>Official sets.<br>New possibilities.</span></span></div>
       <div class="results-toolbar" id="results-toolbar"><div class="result-tabs"><button id="complete-tab" class="active">Buildable now <span id="result-count">—</span></button><button id="almost-tab">Almost there</button></div><div class="toolbar-actions"><select id="sort" aria-label="Sort builds"><option value="match">Best match</option><option value="pieces">Most pieces</option></select><button class="filter-button" id="filters-button" aria-expanded="false"><span id="filter-icon" aria-hidden="true"></span>Filters<span class="filter-dot" id="filter-dot" hidden></span></button></div></div>

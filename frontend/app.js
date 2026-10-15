@@ -18,6 +18,72 @@ const photo = (set, extra = '') => `<img src="${escapeHTML(set.image || './favic
 const state = {catalog:null, collection:new Map(), mode:'exact', minimum:100, sizes:[20,1000], tab:'ready', sort:'match', page:1, results:null, loading:false, searched:false};
 let searchTimer, searchRequest, matchRequest, requestVersion = 0, modalVersion = 0, toastTimer, searchItems = [];
 
+function setupPanelResize() {
+  const workspace = $('.workspace'), panel = $('#collection-panel'), handle = $('#panel-resizer');
+  const desktop = window.matchMedia('(min-width:721px)');
+  const storageKey = 'rebuilt-collection-width';
+  let preferred = null, pointer = null, grabOffset = 0;
+  try {const saved=sessionStorage.getItem(storageKey);if(saved!==null&&Number.isFinite(Number(saved)))preferred=Number(saved);} catch {}
+
+  function limits() {
+    const width = workspace.getBoundingClientRect().width;
+    return {min:260, max:Math.max(260, Math.floor(Math.min(520, width * .45, width - 420)))};
+  }
+
+  function apply(width) {
+    const {min, max} = limits();
+    const value = Math.round(Math.max(min, Math.min(max, width)));
+    workspace.style.setProperty('--collection-width', `${value}px`);
+    handle.setAttribute('aria-valuemin', min);
+    handle.setAttribute('aria-valuemax', max);
+    handle.setAttribute('aria-valuenow', value);
+    handle.setAttribute('aria-valuetext', `${value} pixels`);
+    return value;
+  }
+
+  function remember() {
+    try {preferred===null ? sessionStorage.removeItem(storageKey) : sessionStorage.setItem(storageKey, preferred);} catch {}
+  }
+
+  function finish() {
+    if (pointer===null) return;
+    const released = pointer;pointer=null;
+    document.body.classList.remove('resizing-panels');
+    if (handle.hasPointerCapture(released)) handle.releasePointerCapture(released);
+    remember();
+  }
+
+  function sync() {
+    if (!desktop.matches) {finish();return;}
+    const defaultWidth = parseFloat(getComputedStyle(workspace).getPropertyValue('--collection-default-width'));
+    apply(preferred ?? defaultWidth);
+  }
+
+  handle.addEventListener('pointerdown', event => {
+    if (!desktop.matches || event.button!==0) return;
+    event.preventDefault();
+    pointer=event.pointerId;grabOffset=event.clientX-panel.getBoundingClientRect().right;
+    handle.setPointerCapture(pointer);handle.focus({preventScroll:true});
+    document.body.classList.add('resizing-panels');
+  });
+  handle.addEventListener('pointermove', event => {
+    if (event.pointerId===pointer) preferred=apply(event.clientX-panel.getBoundingClientRect().left-grabOffset);
+  });
+  for (const event of ['pointerup','pointercancel','lostpointercapture']) handle.addEventListener(event, finish);
+  handle.addEventListener('keydown', event => {
+    if (!desktop.matches || !['ArrowLeft','ArrowRight','Home','End'].includes(event.key)) return;
+    event.preventDefault();
+    const {min,max}=limits(), step=event.shiftKey?40:10;
+    const width=panel.getBoundingClientRect().width;
+    preferred=apply(event.key==='Home'?min:event.key==='End'?max:width+(event.key==='ArrowRight'?step:-step));
+    remember();
+  });
+  handle.addEventListener('dblclick', () => {preferred=null;remember();sync();});
+  desktop.addEventListener('change', sync);
+  new ResizeObserver(sync).observe(workspace);
+  sync();
+}
+
 async function api(path, body, signal) {
   if (window.brickfinderTransport) return window.brickfinderTransport(path, body, signal);
   const response = await fetch(path, body === undefined ? {signal} : {
@@ -356,6 +422,7 @@ async function init() {
     document.body.innerHTML = `<main class="empty-results"><span class="eyebrow">REBUILT</span><h1>Open the running preview.</h1><p>This HTML file needs the local app server to load the catalog and find builds.</p><div class="empty-actions"><a class="primary-button" href="http://127.0.0.1:8502/">Open Rebuilt ↗</a></div></main>`;
     return;
   }
+  setupPanelResize();
   $('#search-icon').innerHTML=icon('search');$('#privacy-icon').innerHTML=icon('shield');$('#stamp-icon').innerHTML=icon('brick');$('#filter-icon').innerHTML=icon('sliders');$('#clear-button').innerHTML=icon('trash');
   $$('.dialog-close').forEach(button => {button.innerHTML=icon('close');});
   renderCollection();renderToolbar();

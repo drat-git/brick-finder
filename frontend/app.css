@@ -49,3 +49,17 @@ dialog{border:1px solid var(--line);border-radius:19px;padding:34px;background:v
 @media(max-width:720px){.build-actions{display:block}.build-actions>span{display:block;margin-bottom:8px}.view-build{width:100%;justify-content:space-between;white-space:nowrap}}
 .header-kicker{display:flex;align-items:center;justify-content:space-between;gap:10px}.mobile-collection-link{display:none}
 @media(max-width:720px){.collection-panel{scroll-margin-top:70px}.mobile-collection-link{display:inline-flex;font-size:10px;color:var(--orange);padding:0;white-space:nowrap}.discovery-header>div:first-child{width:100%}}
+
+/* A draggable grip on the collection/results divider. */
+.panel-resizer{display:none}
+@media(min-width:721px){
+  .workspace{--collection-default-width:326px;grid-template-columns:var(--collection-width,var(--collection-default-width)) 0 minmax(0,1fr)}
+  .panel-resizer{display:flex;align-items:center;justify-content:center;align-self:start;position:sticky;top:88px;height:calc(100dvh - 88px);width:16px;margin-left:-8px;z-index:20;cursor:col-resize;touch-action:none;outline:none}
+  .panel-resizer::before{content:'';position:absolute;top:0;bottom:0;width:2px;background:transparent;transition:background .15s}
+  .panel-resizer>span{position:relative;width:5px;height:36px;border:1px solid white;border-radius:5px;background:#bdc5b5;box-shadow:0 0 0 1px #dfe4d8;transition:background .15s,box-shadow .15s}
+  .panel-resizer:hover::before,.resizing-panels .panel-resizer::before{background:#e9674240}
+  .panel-resizer:hover>span,.panel-resizer:focus-visible>span,.resizing-panels .panel-resizer>span{background:var(--orange);box-shadow:0 0 0 3px #e9674226}
+}
+@media(min-width:721px) and (max-width:1200px){.workspace{--collection-default-width:300px}}
+@media(min-width:721px) and (max-width:960px){.workspace{--collection-default-width:282px}.panel-resizer{top:76px;height:calc(100dvh - 76px)}}
+.resizing-panels,.resizing-panels *{cursor:col-resize!important;user-select:none!important}
