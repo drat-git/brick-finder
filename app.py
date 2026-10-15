@@ -153,7 +153,7 @@ def show_more():
     st.session_state.result_page += 1
 
 
-st.markdown('<div class="eyebrow">BRICK FINDER / A NEW BUILD STARTS HERE</div>', unsafe_allow_html=True)
+st.markdown('<div class="eyebrow">BRICK FINDER</div>', unsafe_allow_html=True)
 st.markdown('<div class="hero">Your bricks.<br><span>More possibilities.</span></div>', unsafe_allow_html=True)
 st.markdown('<div class="intro">Choose the LEGO sets you own. Discover other official sets you have pieces for, see exactly what is missing, and find their building instructions.</div>', unsafe_allow_html=True)
 
