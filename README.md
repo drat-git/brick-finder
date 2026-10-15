@@ -4,6 +4,18 @@ Find other official LEGO sets you have pieces for. Select owned sets, combine th
 
 The app runs entirely from a bundled catalog. No Rebrickable account, API key, or login is needed by visitors.
 
+## Local frontend concept
+
+A separate redesigned interface is available for comparison with the Streamlit app:
+
+```bash
+python -m brickfinder.web --port 8502
+```
+
+Open `http://127.0.0.1:8502`. The frontend is in `frontend/`; its local Python API reuses the same catalog, quantity-aware matcher, and piece breakdowns. No extra packages or frontend build step are needed. This preview is a local concept, not a replacement deployment; the existing `app.py` remains available with the original run command below. Collections in the concept last for the browser tab's session.
+
+The pre-redesign UI is saved on local branch `codex/ui-before-redesign` at commit `ef27fb1`. The redesign lives on `codex/frontend-redesign`; nothing has been pushed for this concept.
+
 ## Run locally
 
 Use Python 3.13. From the project directory:

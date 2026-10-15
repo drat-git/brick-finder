@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f8f8f5">
+  <meta name="description" content="Discover official LEGO builds hiding in the sets you already own.">
+  <title>Brick Finder — More builds. Same bricks.</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#discovery">Skip to builds</a>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Brick Finder home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>brick<span>finder</span><span class="beta-tag">PLAY AGAIN.</span></a>
+    <nav aria-label="Main navigation"><button class="text-button" id="how-button">How it works <span aria-hidden="true">↗</span></button><span class="nav-rule"></span><button class="catalog-button" id="catalog-button"><span class="status-dot"></span><span id="catalog-count">Opening catalog</span></button></nav>
+  </header>
+  <main class="workspace">
+    <aside class="collection-panel" aria-labelledby="collection-heading">
+      <div class="panel-heading"><div><span class="eyebrow">THE STARTING POINT</span><h1 id="collection-heading">Your collection<span class="collection-count" id="collection-count">0</span></h1></div><button class="icon-button" id="clear-button" aria-label="Clear collection" title="Clear collection" hidden></button></div>
+      <p class="panel-description">Start with the sets you already own.</p>
+      <div class="search-area">
+        <label class="search-box" for="set-search"><span id="search-icon" aria-hidden="true"></span><input id="set-search" type="search" placeholder="Set name or number" aria-label="Search sets by name or number" autocomplete="off" aria-controls="search-results" aria-expanded="false"><kbd>/</kbd></label>
+        <div class="search-results" id="search-results" aria-label="Matching sets" hidden></div>
+      </div>
+      <div id="collection-list" class="collection-list"></div>
+      <div class="collection-footer">
+        <div class="inventory-summary" id="inventory-summary"><span><strong id="set-total">0</strong> sets in collection</span><span><strong id="piece-total">0</strong> pieces</span></div>
+        <button class="primary-button find-button" id="find-button" disabled><span id="find-label">Find my next build</span><span id="find-arrow" aria-hidden="true">↗</span></button>
+        <div class="color-options"><span>Match colors</span><div class="segmented" role="group" aria-label="Match colors"><button data-mode="exact" aria-pressed="true">Exact</button><button data-mode="flexible" aria-pressed="false">Flexible</button></div></div>
+        <p class="color-description" id="color-description">Same pieces. Same colors. Ready to build.</p>
+      </div>
+      <details class="examples" id="examples"><summary>No sets handy? Try an example <span aria-hidden="true">+</span></summary><div id="example-list"></div><p class="quiet">An example replaces your current collection.</p></details>
+      <div class="collection-note"><span id="privacy-icon" aria-hidden="true"></span><span>No account. No uploads.<br>Just your bricks and a little possibility.</span></div>
+    </aside>
+    <section class="discovery" id="discovery" aria-labelledby="discovery-heading" tabindex="-1">
+      <div class="discovery-header"><div><div class="header-kicker"><span class="eyebrow">MORE BUILDS. SAME BRICKS.</span><button id="edit-collection" class="mobile-collection-link">↑ Your collection</button></div><h2 id="discovery-heading">Find your next <span>“I made that.”</span></h2><p id="discovery-subtitle">There’s more hiding in your collection than you think.</p></div><span class="catalog-stamp"><span id="stamp-icon" aria-hidden="true"></span><span>Official sets.<br>New possibilities.</span></span></div>
+      <div class="results-toolbar" id="results-toolbar"><div class="result-tabs"><button id="complete-tab" class="active">Buildable now <span id="result-count">—</span></button><button id="almost-tab">Almost there</button></div><div class="toolbar-actions"><select id="sort" aria-label="Sort builds"><option value="match">Best match</option><option value="pieces">Most pieces</option></select><button class="filter-button" id="filters-button" aria-expanded="false"><span id="filter-icon" aria-hidden="true"></span>Filters<span class="filter-dot" id="filter-dot" hidden></span></button></div></div>
+      <div class="filters-panel" id="filters-panel" hidden><div><label for="completion">Minimum completion <output id="completion-value">100%</output></label><input type="range" id="completion" min="0" max="100" value="100"></div><div><label>Required pieces</label><div class="piece-range"><label class="sr-only" for="pieces-min">Minimum pieces</label><input id="pieces-min" type="number" min="20" max="1000" value="20"><span>to</span><label class="sr-only" for="pieces-max">Maximum pieces</label><input id="pieces-max" type="number" min="20" max="1000" value="1000"></div></div><button class="text-button" id="reset-filters">Reset filters</button></div>
+      <div class="results-note" id="results-note" hidden></div>
+      <div id="results" class="results-content" aria-live="polite" aria-busy="false"></div>
+      <button class="secondary-button load-more" id="load-more" hidden>Show more builds <span aria-hidden="true">↓</span></button>
+      <footer class="discovery-footer"><span>Catalog data by <a href="https://rebrickable.com/downloads/" target="_blank" rel="noopener noreferrer">Rebrickable</a>.</span><span>Made for builders, by a builder <span class="tiny-brick" aria-hidden="true">▰</span></span></footer>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <dialog id="detail-dialog" class="detail-dialog"><button class="dialog-close icon-button" aria-label="Close details" data-close-dialog></button><div id="detail-content"></div></dialog>
+  <dialog id="info-dialog" class="info-dialog"><button class="dialog-close icon-button" aria-label="Close information" data-close-dialog></button><div id="info-content"></div></dialog>
+  <dialog id="clear-dialog" class="clear-dialog"><span class="eyebrow">A FRESH START</span><h2>Clear your collection?</h2><p>This removes the sets you’ve added here. You can always add them again.</p><div class="dialog-actions"><button class="secondary-button" data-close-dialog>Keep my sets</button><button class="primary-button" id="confirm-clear">Clear collection</button></div></dialog>
+  <noscript><p class="noscript">Please enable JavaScript to explore your collection and find builds.</p></noscript>
+</body>
+</html>
