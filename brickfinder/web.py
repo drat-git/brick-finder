@@ -190,7 +190,7 @@ def main():
     args = parser.parse_args()
     service = FinderService(Catalog(unpack_catalog()))
     with ThreadingHTTPServer(("127.0.0.1", args.port), handler_for(service)) as server:
-        print(f"Brick Finder redesign: http://127.0.0.1:{args.port}", flush=True)
+        print(f"Rebuilt: http://127.0.0.1:{args.port}", flush=True)
         try:
             server.serve_forever()
         except KeyboardInterrupt:

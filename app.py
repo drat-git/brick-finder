@@ -11,7 +11,7 @@ from brickfinder.catalog import Catalog, unpack_catalog
 from brickfinder.component import COMPONENT_KEY, RESPONSE_KEY, component_response
 from brickfinder.web import FRONTEND, FinderService
 
-st.set_page_config(page_title="Brick Finder — More builds. Same bricks.", page_icon="🧱", layout="wide", initial_sidebar_state="collapsed")
+st.set_page_config(page_title="Rebuilt — More builds. Same bricks.", page_icon="🧱", layout="wide", initial_sidebar_state="collapsed")
 
 st.markdown("""
 <style>
@@ -40,5 +40,5 @@ def respond_to_frontend():
     st.session_state[RESPONSE_KEY] = component_response(service, st.session_state[COMPONENT_KEY])
 
 
-frontend = declare_component("brickfinder", path=str(FRONTEND))
+frontend = declare_component("rebuilt", path=str(FRONTEND))
 frontend(response=st.session_state.get(RESPONSE_KEY), key=COMPONENT_KEY, on_change=respond_to_frontend, default=None)

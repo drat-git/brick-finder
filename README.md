@@ -1,6 +1,6 @@
-# Brick Finder
+# Rebuilt
 
-Find other official LEGO sets you have pieces for. Select owned sets, combine their inventories, compare against the catalog, and inspect exact shortages or color substitutions.
+Rebuilt finds other official LEGO sets you have pieces for. Select owned sets, combine their inventories, compare against the catalog, and inspect exact shortages or color substitutions.
 
 The app runs entirely from a bundled catalog. No Rebrickable account, API key, or login is needed by visitors.
 

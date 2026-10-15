@@ -279,7 +279,7 @@ async function openBuild(code) {
 }
 
 function showHow() {
-  $('#info-content').innerHTML = `<span class="eyebrow">LESS SCROLLING. MORE BUILDING.</span><h2>Your bricks have more to give.</h2><div class="how-step"><span>01</span><div><h3>Start with what you own.</h3><p>Search for complete LEGO sets you’re happy to take apart. Add more than one copy if you have it.</p></div></div><div class="how-step"><span>02</span><div><h3>Find what you can build.</h3><p>We combine those inventories and compare them with official sets. Exact colors and fully complete builds are the default.</p></div></div><div class="how-step"><span>03</span><div><h3>Make something new.</h3><p>Explore the piece breakdown and open LEGO’s instructions. Flexible colors open up more options; Almost there shows builds needing extra pieces.</p></div></div><p>Matches use exact part IDs and quantities. Printed parts and mold variants remain distinct. Each suggestion uses the same available collection independently.</p>`;
+  $('#info-content').innerHTML = `<span class="eyebrow">LESS SCROLLING. MORE BUILDING.</span><h2>What is Rebuilt?</h2><p>Rebuilt helps you turn the sets you own into something new. Add your collection to discover official builds you can make with the pieces you already have.</p><div class="how-step"><span>01</span><div><h3>Start with what you own.</h3><p>Search for complete LEGO sets you’re happy to take apart. Add more than one copy if you have it.</p></div></div><div class="how-step"><span>02</span><div><h3>Find what you can build.</h3><p>We combine those inventories and compare them with official sets. Exact colors and fully complete builds are the default.</p></div></div><div class="how-step"><span>03</span><div><h3>Make something new.</h3><p>Explore the piece breakdown and open LEGO’s instructions. Flexible colors open up more options; Almost there shows builds needing extra pieces.</p></div></div><p>Matches use exact part IDs and quantities. Printed parts and mold variants remain distinct. Each suggestion uses the same available collection independently.</p>`;
   openDialog($('#info-dialog'));
 }
 
@@ -353,7 +353,7 @@ document.addEventListener('error', event => {if(event.target.tagName==='IMG'&&!e
 
 async function init() {
   if (location.protocol === 'file:') {
-    document.body.innerHTML = `<main class="empty-results"><span class="eyebrow">BRICK FINDER</span><h1>Open the running preview.</h1><p>This HTML file needs the local app server to load the catalog and find builds.</p><div class="empty-actions"><a class="primary-button" href="http://127.0.0.1:8502/">Open Brick Finder ↗</a></div></main>`;
+    document.body.innerHTML = `<main class="empty-results"><span class="eyebrow">REBUILT</span><h1>Open the running preview.</h1><p>This HTML file needs the local app server to load the catalog and find builds.</p><div class="empty-actions"><a class="primary-button" href="http://127.0.0.1:8502/">Open Rebuilt ↗</a></div></main>`;
     return;
   }
   $('#search-icon').innerHTML=icon('search');$('#privacy-icon').innerHTML=icon('shield');$('#stamp-icon').innerHTML=icon('brick');$('#filter-icon').innerHTML=icon('sliders');$('#clear-button').innerHTML=icon('trash');
