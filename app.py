@@ -25,10 +25,31 @@ h1,h2,h3 {letter-spacing:-.035em;}
 .intro {color:#516469;font-size:1.05rem;max-width:680px;line-height:1.6;margin-bottom:1.3rem;}
 .step {color:#006D77;font-size:.76rem;font-weight:750;letter-spacing:.13em;margin-bottom:.4rem;}
 .result-label {font-weight:700;color:#006D77;}
-.selected-set-name {display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;}
+.selected-set-name {display:flex;align-items:center;justify-content:center;gap:.45rem;flex-wrap:wrap;text-align:center;}
 .copy-count {font-size:.8rem;font-weight:500;color:#516469;background:#EEEDE5;padding:.1rem .4rem;border-radius:5px;}
+[class*="st-key-selected_set_"] {position:relative;padding:1.1rem 2.25rem 1rem;text-align:center;}
+[class*="st-key-selected_set_"] p {text-align:center;}
+[class*="st-key-details_"] {align-self:center;}
+[class*="st-key-details_"] button {color:#006D77;font-size:.85rem;min-height:1.9rem;padding:.1rem .5rem;}
+[class*="st-key-selected_set_"] [class*="st-key-remove_"] {position:absolute;top:.4rem;right:.4rem;width:auto;opacity:0;transition:opacity .15s ease;}
+[class*="st-key-selected_set_"]:hover [class*="st-key-remove_"],
+[class*="st-key-selected_set_"]:focus-within [class*="st-key-remove_"] {opacity:1;}
+[class*="st-key-remove_"] button {width:1.8rem;min-width:1.8rem;height:1.8rem;min-height:1.8rem;padding:0;border:0;border-radius:50%;color:#516469;}
+[class*="st-key-remove_"] button::before {content:"×";font-size:1.35rem;line-height:1;}
+[class*="st-key-remove_"] button p {position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;}
+[class*="st-key-remove_"] button:hover {color:#006D77;background:#EEEDE5;}
+[class*="st-key-remove_"] button:focus-visible {outline:2px solid #006D77;outline-offset:2px;}
+@media (hover:none), (pointer:coarse) {
+    [class*="st-key-selected_set_"] {padding:1.3rem 3.25rem 1rem;}
+    [class*="st-key-selected_set_"] [class*="st-key-remove_"] {opacity:1;}
+    [class*="st-key-remove_"] button {width:2.75rem;min-width:2.75rem;height:2.75rem;min-height:2.75rem;}
+}
+@media (prefers-reduced-motion:reduce) {
+    [class*="st-key-selected_set_"] [class*="st-key-remove_"] {transition:none;}
+}
 [data-testid="stMetric"] {background:#EEEDE5;padding:1rem;border-radius:12px;}
 [data-testid="stImage"] img {border-radius:10px;max-height:180px;object-fit:contain;}
+.st-key-set_details [data-testid="stImage"] img {max-height:340px;}
 [data-testid="stVerticalBlockBorderWrapper"] {border-radius:14px;}
 .placeholder {height:150px;display:flex;align-items:center;justify-content:center;background:#EEEDE5;border-radius:10px;font-size:2rem;}
 </style>
@@ -98,6 +119,32 @@ def confirm_clear_collection():
             st.rerun()
 
 
+@st.dialog("Set details", width="large")
+def show_set_details(code):
+    lego_set = catalog.sets[code]
+    with st.container(key="set_details"):
+        st.subheader(lego_set.name)
+        picture, info = st.columns([1.15, 1], gap="large")
+        with picture:
+            if lego_set.safe_image_url:
+                st.image(lego_set.safe_image_url, caption=lego_set.name, width="stretch")
+            else:
+                st.markdown('<div class="placeholder" aria-label="Set image unavailable">🧱</div>',
+                            unsafe_allow_html=True)
+                st.caption("Set image unavailable.")
+        with info:
+            st.markdown(f"**Set number:** {lego_set.set_num}")
+            st.markdown(f"**Year released:** {lego_set.year}")
+            st.markdown(f"**Theme:** {lego_set.family}")
+            st.markdown(f"**Pieces:** {lego_set.num_parts:,}")
+            st.markdown(f"**Copies in collection:** {st.session_state.collection[code]}")
+            if lego_set.category != "Building sets":
+                st.markdown(f"**Category:** {lego_set.category}")
+            st.link_button("Building instructions ↗", lego_set.instructions_url)
+        if st.button("Close", key="close_set_details"):
+            st.rerun()
+
+
 def reset_page():
     st.session_state.result_page = 1
 
@@ -110,8 +157,7 @@ st.markdown('<div class="eyebrow">BRICK FINDER / A NEW BUILD STARTS HERE</div>',
 st.markdown('<div class="hero">Your bricks.<br><span>More possibilities.</span></div>', unsafe_allow_html=True)
 st.markdown('<div class="intro">Choose the LEGO sets you own. Discover other official sets you have pieces for, see exactly what is missing, and find their building instructions.</div>', unsafe_allow_html=True)
 
-with st.container(border=True):
-    st.markdown("**No sets handy? Try an example collection.**")
+with st.expander("**No sets handy? Try an example collection.**", expanded=False):
     buttons = st.columns(3)
     for column, name in zip(buttons, EXAMPLE_COLLECTIONS):
         with column:
@@ -145,14 +191,17 @@ with left:
         st.markdown("#### Selected sets")
         for code, quantity in list(st.session_state.collection.items()):
             lego_set = catalog.sets[code]
-            with st.container(border=True):
+            with st.container(border=True, key=f"selected_set_{code}"):
                 badge = f'<span class="copy-count">x{quantity}</span>' if quantity > 1 else ""
                 st.markdown(f'<div class="selected-set-name"><strong>{escape(lego_set.name)}</strong>{badge}</div>',
                             unsafe_allow_html=True)
                 st.caption(f"{code} · {lego_set.num_parts:,} pieces")
                 if lego_set.category != "Building sets":
                     st.caption(lego_set.category)
-                st.button("Remove", key=f"remove_{code}", on_click=remove_set, args=(code,), width="stretch")
+                if st.button("Show details", key=f"details_{code}", type="tertiary"):
+                    show_set_details(code)
+                st.button(f"Remove {lego_set.name}", key=f"remove_{code}", on_click=remove_set, args=(code,),
+                          type="tertiary", help="Remove this set from your collection.")
         if st.button("Clear collection"):
             st.session_state.show_clear_confirmation = True
         if st.session_state.show_clear_confirmation:
@@ -165,17 +214,18 @@ with right:
     st.subheader("See what your pieces can do")
     collection = dict(st.session_state.collection)
     metric_cols = st.columns(2)
-    metric_cols[0].metric("Set copies", sum(collection.values()))
+    metric_cols[0].metric("Sets in collection", sum(collection.values()))
     metric_cols[1].metric("Available pieces", f"{sum(catalog.sets[c].num_parts * n for c, n in collection.items()):,}")
 
-    mode_label = st.radio("Match colors", ["Flexible colors", "Exact colors"], horizontal=True,
+    find_builds = st.button("Find builds", type="primary", disabled=not collection, width="stretch")
+    mode_label = st.radio("Match colors", ["Flexible colors", "Exact colors"], index=1, horizontal=True,
                           key="matching_mode", on_change=invalidate_results)
     mode = "flexible" if mode_label == "Flexible colors" else "exact"
     if mode == "flexible":
         st.caption("Use the same part IDs in any color. Printed parts and mold variants still need to match exactly.")
     else:
         st.caption("Every counted piece must have the required part ID and color. Exact matches can be scarce for small collections.")
-    if st.button("Find builds", type="primary", disabled=not collection, width="stretch"):
+    if find_builds:
         with st.spinner("Comparing your pieces with the catalog…"):
             started = time.perf_counter()
             st.session_state.results = recommend(catalog, collection, mode)
@@ -184,7 +234,7 @@ with right:
 
     filter_cols = st.columns(2)
     with filter_cols[0]:
-        minimum = st.slider("Minimum completion (%)", min_value=0, max_value=100, value=80,
+        minimum = st.slider("Minimum completion (%)", min_value=0, max_value=100, value=100,
                             step=1, key="minimum", on_change=reset_page)
     with filter_cols[1]:
         sizes = st.slider("Required pieces", min_value=20, max_value=1000, value=(20, 1000),

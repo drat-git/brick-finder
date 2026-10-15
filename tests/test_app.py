@@ -17,6 +17,8 @@ class AppTests(unittest.TestCase):
         app = AppTest.from_file(ROOT / "app.py", default_timeout=30).run()
         self.assertFalse(app.exception)
         self.assertTrue(button(app, "Find builds").disabled)
+        self.assertEqual(app.radio(key="matching_mode").value, "Exact colors")
+        self.assertEqual(app.slider(key="minimum").value, 100)
         button(app, "Example 1").click().run()
         self.assertFalse(app.exception)
         expected_collection = dict.fromkeys(EXAMPLE_COLLECTIONS["Example 1"], 1)
@@ -24,6 +26,21 @@ class AppTests(unittest.TestCase):
         button(app, "Find builds").click().run()
         self.assertFalse(app.exception)
         self.assertTrue(app.session_state["results"][0].complete)
+        results_by_code = {m.lego_set.set_num: m for m in app.session_state["results"]}
+        self.assertGreater(len(app.checkbox), 0)
+        for checkbox in app.checkbox:
+            code = checkbox.key.removeprefix("breakdown_exact_")
+            match = results_by_code[code]
+            self.assertEqual(match.mode, "exact")
+            self.assertEqual(match.missing, 0)
+            self.assertEqual(match.exact_matched, match.required)
+        app.checkbox[0].check().run()
+        self.assertTrue(any("No pieces are missing" in c.value for c in app.caption))
+        self.assertFalse(any("Suggested color changes" in m.value for m in app.markdown))
+        app.radio(key="matching_mode").set_value("Flexible colors").run()
+        self.assertIsNone(app.session_state["results"])
+        button(app, "Find builds").click().run()
+        self.assertFalse(app.exception)
         complete_count = sum(m.complete for m in app.session_state["results"])
         self.assertGreaterEqual(complete_count, 2)
         color_example = next(m for m in app.session_state["results"][:20]
@@ -33,9 +50,11 @@ class AppTests(unittest.TestCase):
         self.assertFalse(app.exception)
         self.assertGreater(len(app.dataframe), table_count)
         self.assertTrue(any("Color" in c.label or "piece" in c.label for c in app.checkbox))
-        app.slider(key="minimum").set_value(100).run()
         self.assertEqual(len(app.checkbox), min(complete_count, 20))
         self.assertTrue(app.get("link_button"))
+        app.slider(key="minimum").set_value(80).run()
+        self.assertEqual(app.slider(key="minimum").value, 80)
+        app.slider(key="minimum").set_value(100).run()
         app.radio[0].set_value("Exact colors").run()
         self.assertIsNone(app.session_state["results"])
         button(app, "Find builds").click().run()
@@ -72,6 +91,37 @@ class AppTests(unittest.TestCase):
                 self.assertIsNone(app.session_state["results"])
                 button(app, "Find builds").click().run()
                 self.assertTrue(app.session_state["results"][0].complete)
+                self.assertFalse(app.exception)
+
+    def test_selected_set_details_show_the_right_set_without_changing_results(self):
+        app = AppTest.from_file(ROOT / "app.py", default_timeout=30).run()
+        button(app, "Example 1").click().run()
+        app.text_input[0].set_value("76042").run()
+        button(app, "Add to collection").click().run()
+        button(app, "Find builds").click().run()
+        collection = dict(app.session_state["collection"])
+        results = app.session_state["results"]
+        for code, name, year, theme, pieces, copies in (
+            ("6864-1", "Batmobile and the Two-Face Chase", 2012, "Super Heroes DC", "532", 1),
+            ("76042-1", "The SHIELD Helicarrier", 2015, "Super Heroes Marvel", "2,996", 2),
+        ):
+            with self.subTest(code=code):
+                app.button(key=f"details_{code}").click().run()
+                self.assertFalse(app.exception)
+                dialog = app.get("dialog")[0]
+                self.assertTrue(dialog.proto.dialog.is_open)
+                self.assertEqual(dialog.proto.dialog.title, "Set details")
+                self.assertEqual(dialog.get("subheader")[0].value, name)
+                self.assertEqual(dialog.get("imgs")[0].proto.imgs[0].url,
+                                 f"https://cdn.rebrickable.com/media/sets/{code}.jpg")
+                details = [m.value for m in dialog.get("markdown")]
+                for field, value in (("Set number", code), ("Year released", year),
+                                     ("Theme", theme), ("Pieces", pieces), ("Copies in collection", copies)):
+                    self.assertIn(f"**{field}:** {value}", details)
+                app.button(key="close_set_details").click().run()
+                self.assertFalse(any(d.proto.dialog.is_open for d in app.get("dialog")))
+                self.assertEqual(app.session_state["collection"], collection)
+                self.assertIs(app.session_state["results"], results)
                 self.assertFalse(app.exception)
 
     def test_search_add_duplicate_and_no_results(self):

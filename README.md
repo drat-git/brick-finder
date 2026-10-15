@@ -28,7 +28,7 @@ Owned quantities are multiplied by the number of set copies, then combined. Reco
 - **Complete:** only zero missing pieces qualifies. A rounded partial percentage never displays as 100%.
 - **Color allocation:** reserve all exact-color matches first, then allocate remaining colors to deficits. A piece can be used only once within a recommendation.
 
-The interface defaults to flexible colors, 80% completion, and 20–1,000-piece recommendations. Each search-and-add adds one copy and clears the search. Duplicate sets stay in one selected entry with an `x2`, `x3`, etc. label; single copies have no count label. Removing an entry removes all its copies. Clearing the collection requires confirmation. Selected owned sets are excluded from results. Collection changes invalidate previous results; display filters do not rerun the matcher.
+The interface defaults to exact colors, 100% completion, and 20–1,000-piece recommendations, so the initial results contain every required part in its original color. The color selector sits below Find builds; users can choose flexible colors or lower the completion threshold to explore more results. Each search-and-add adds one copy and clears the search. Duplicate sets stay in one selected entry with an `x2`, `x3`, etc. label; single copies have no count label. Show details opens a popup with the selected set's image, basic information, collection quantity, and instruction link. Removing an entry removes all its copies. Clearing the collection requires confirmation. Selected owned sets are excluded from results. Collection changes invalidate previous results; display filters do not rerun the matcher.
 
 ## Data and coverage
 
