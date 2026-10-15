@@ -14,11 +14,12 @@ const paths = {
   swap:'<path d="M4 7h15m-4-4 4 4-4 4M20 17H5m4-4-4 4 4 4"/>',
 };
 const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name] || paths.brick}</svg>`;
-const photo = (set, extra = '') => `<img src="${escapeHTML(set.image || '/favicon.svg')}" alt="${escapeHTML(set.name)}" ${extra} loading="lazy">`;
+const photo = (set, extra = '') => `<img src="${escapeHTML(set.image || './favicon.svg')}" alt="${escapeHTML(set.name)}" ${extra} loading="lazy">`;
 const state = {catalog:null, collection:new Map(), mode:'exact', minimum:100, sizes:[20,1000], tab:'ready', sort:'match', page:1, results:null, loading:false, searched:false};
 let searchTimer, searchRequest, matchRequest, requestVersion = 0, modalVersion = 0, toastTimer, searchItems = [];
 
 async function api(path, body, signal) {
+  if (window.brickfinderTransport) return window.brickfinderTransport(path, body, signal);
   const response = await fetch(path, body === undefined ? {signal} : {
     method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body), signal,
   });
@@ -348,7 +349,7 @@ $$('dialog').forEach(dialog => {
   dialog.addEventListener('click', event => {if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
   dialog.addEventListener('close', () => {modalVersion++;});
 });
-document.addEventListener('error', event => {if(event.target.tagName==='IMG'&&!event.target.src.endsWith('/favicon.svg')){event.target.src='/favicon.svg';event.target.alt='Set photo unavailable';}},true);
+document.addEventListener('error', event => {if(event.target.tagName==='IMG'&&!event.target.src.endsWith('/favicon.svg')){event.target.src='./favicon.svg';event.target.alt='Set photo unavailable';}},true);
 
 async function init() {
   if (location.protocol === 'file:') {

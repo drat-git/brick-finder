@@ -146,7 +146,7 @@ def handler_for(service):
             elif parsed.path == "/api/search":
                 query = parse_qs(parsed.query).get("q", [""])[0][:200]
                 self.send_json({"sets": [set_data(s) for s in service.catalog.search(query, limit=8)]})
-            elif parsed.path in ("/", "/index.html", "/app.css", "/app.js", "/favicon.svg"):
+            elif parsed.path in ("/", "/index.html", "/app.css", "/app.js", "/streamlit.js", "/favicon.svg"):
                 super().do_GET()
             else:
                 self.send_json({"error": "Page not found."}, 404)

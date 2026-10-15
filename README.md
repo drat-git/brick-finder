@@ -4,17 +4,19 @@ Find other official LEGO sets you have pieces for. Select owned sets, combine th
 
 The app runs entirely from a bundled catalog. No Rebrickable account, API key, or login is needed by visitors.
 
-## Local frontend concept
+## Frontend
 
-A separate redesigned interface is available for comparison with the Streamlit app:
+The redesigned interface runs in Streamlit, including Streamlit Community Cloud. It uses the same HTML, CSS, JavaScript, catalog, and matcher as the standalone local preview. Streamlit's component API connects the frontend to Python; no separate API server or frontend build is needed on the hosted app.
+
+For frontend development, the standalone preview is still available:
 
 ```bash
 python -m brickfinder.web --port 8502
 ```
 
-Open `http://127.0.0.1:8502`. The frontend is in `frontend/`; its local Python API reuses the same catalog, quantity-aware matcher, and piece breakdowns. No extra packages or frontend build step are needed. This preview is a local concept, not a replacement deployment; the existing `app.py` remains available with the original run command below. Collections in the concept last for the browser tab's session.
+Open `http://127.0.0.1:8502`. The frontend is in `frontend/`; the standalone server uses HTTP for the same requests that the deployed app sends through Streamlit. Collections last for the browser tab's session.
 
-The pre-redesign UI is saved on local branch `codex/ui-before-redesign` at commit `ef27fb1`. The redesign lives on `codex/frontend-redesign`; nothing has been pushed for this concept.
+The previous Streamlit UI remains recoverable from Git history at commit `ef27fb1`.
 
 ## Run locally
 
@@ -40,7 +42,7 @@ Owned quantities are multiplied by the number of set copies, then combined. Reco
 - **Complete:** only zero missing pieces qualifies. A rounded partial percentage never displays as 100%.
 - **Color allocation:** reserve all exact-color matches first, then allocate remaining colors to deficits. A piece can be used only once within a recommendation.
 
-The interface defaults to exact colors, 100% completion, and 20–1,000-piece recommendations, so the initial results contain every required part in its original color. The color selector sits below Find builds; users can choose flexible colors or lower the completion threshold to explore more results. Each search-and-add adds one copy and clears the search. Duplicate sets stay in one selected entry with an `x2`, `x3`, etc. label; single copies have no count label. Show details opens a popup with the selected set's image, basic information, collection quantity, and instruction link. Removing an entry removes all its copies. Clearing the collection requires confirmation. Selected owned sets are excluded from results. Collection changes invalidate previous results; display filters do not rerun the matcher.
+The interface defaults to exact colors, 100% completion, and 20–1,000-piece recommendations, so the initial results contain every required part in its original color. The color selector sits below Find my next build; users can choose flexible colors or use Almost there to explore builds needing extra pieces. Each search-and-add adds one copy and clears the search. Duplicate sets stay in one selected entry with quantity controls. Clicking a selected set's name or image opens its details and instruction link. Removing an entry removes all its copies. Clearing the collection requires confirmation. Selected owned sets are excluded from results. Collection changes invalidate previous results; display filters reuse cached matches.
 
 ## Data and coverage
 
@@ -56,7 +58,7 @@ Catalog prepared from the user's Rebrickable downloads on October 14, 2026:
 | Synthetic reference records excluded | 131 |
 | Compressed database | 11.6 MB |
 
-All source themes qualify without a theme allowlist. This includes Harry Potter, Minecraft, Disney, Jurassic World, Lord of the Rings, Marvel, DC, DUPLO, and specialty systems alongside the original themes. The app's Catalog & assumptions section shows selectable and recommendation counts by category and theme.
+All source themes qualify without a theme allowlist. This includes Harry Potter, Minecraft, Disney, Jurassic World, Lord of the Rings, Marvel, DC, DUPLO, and specialty systems alongside the original themes. The catalog button shows selectable and recommendation counts by category; full category and theme coverage is recorded in `data/catalog_info.json`.
 
 Owned sets/items have no year or piece-count limits and require a valid, nonempty inventory. Recommendations remain limited to 2000–2026 and 20–1,000 pieces. Source identifiers of any length, alphanumeric promotional IDs, magazine sets, and set variants are supported; there is no four-/five-digit or `-1` restriction. Set variants are separate source entries; inventory versions are alternative inventories for the same entry.
 
@@ -91,10 +93,11 @@ Importing and benchmarking are explicit development steps. The running app never
 
 ```bash
 python -m unittest discover -s tests -v
+node --test tests/test_transport.cjs
 python scripts/benchmark.py
 ```
 
-Tests cover quantities, duplicate sets, color allocation, printed parts, ranking, rounded percentages, version selection, nested inventories, spare exclusion, invalid inventories, read-only catalog access, expanded themes and identifier formats, recommendation boundaries, category/exclusion accounting, complete example builds in both color modes, and the Streamlit collection/search/results flow.
+Tests cover quantities, duplicate sets, color allocation, printed parts, ranking, rounded percentages, version selection, nested inventories, spare exclusion, invalid inventories, read-only catalog access, expanded themes and identifier formats, recommendation boundaries, category/exclusion accounting, complete example builds in both color modes, Streamlit request handling, stable component identity, and browser transport queueing/cancellation.
 
 Local measurements on Python 3.13.16 / Apple Silicon: the first flexible search including candidate loading took approximately 1.07 seconds; subsequent flexible searches approximately 0.25 seconds; exact searches approximately 0.08 seconds. These are local measurements, not a hosted latency guarantee. Reproduce them with the benchmark script; recorded results are in `data/demo_results.json`.
 
@@ -111,7 +114,7 @@ Collections are defined once in `brickfinder/examples.py` and shared by the UI a
 1. Push the app, package, tests, configuration, dependency file, and generated compressed catalog to GitHub. Do not push raw CSVs, virtual environments, caches, or credentials.
 2. In [Streamlit Community Cloud](https://share.streamlit.io/), select **Create app**, the repository's `main` branch, and `app.py`.
 3. In **Advanced settings**, choose **Python 3.13**. No secrets are required.
-4. Deploy, then verify a fresh browser session: load Example 1, find builds, open a piece breakdown, switch to exact colors, and follow an instruction link.
+4. Deploy, then verify a fresh browser session: load Example 1, find builds in exact colors, open a piece breakdown, switch to flexible colors, and follow an instruction link. `app.py` serves the redesigned frontend directly as a Streamlit component; do not deploy `frontend/index.html` as a separate app.
 5. Make the deployed app viewable publicly if Community Cloud initially creates it as private.
 
 GitHub Actions runs the tests on Python 3.13. To roll back, revert the relevant app/catalog commit in GitHub and redeploy the previous working state. Runtime exceptions appear in Streamlit's app logs.
