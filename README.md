@@ -133,7 +133,7 @@ python scripts/benchmark.py
 python scripts/benchmark_planner.py --output data/planner_results.json
 ```
 
-Firebase integration and Security Rules checks require Node.js 22+ and Java 21+:
+Firebase integration and Security Rules checks require Node.js 24.12+ and Java 21+:
 
 ```bash
 npm ci --ignore-scripts

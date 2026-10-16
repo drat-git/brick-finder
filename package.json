@@ -10,5 +10,8 @@
     "@firebase/rules-unit-testing": "6.0.0",
     "firebase": "13.0.0",
     "firebase-tools": "15.34.0"
+  },
+  "engines": {
+    "node": ">=24.12.0"
   }
 }
