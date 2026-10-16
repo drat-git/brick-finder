@@ -11,11 +11,12 @@ const paths = {
   shield:'<path d="M12 3 4 6v6c0 5 8 9 8 9s8-4 8-9V6l-8-3Z"/><path d="m8 12 3 3 5-6"/>',
   sliders:'<path d="M3 7h7m5 0h6M3 17h3m5 0h10"/><circle cx="12" cy="7" r="2"/><circle cx="8" cy="17" r="2"/>',
   arrow:'<path d="M5 12h14m-5-5 5 5-5 5"/>',
+  shuffle:'<path d="m3 7 3 0c5 0 7 10 12 10h3m-4-4 4 4-4 4M3 17h3c1.5 0 2.8-.9 4-2.3M14 9.3C15.2 7.9 16.5 7 18 7h3m-4-4 4 4-4 4"/>',
   swap:'<path d="M4 7h15m-4-4 4 4-4 4M20 17H5m4-4-4 4 4 4"/>',
 };
 const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name] || paths.brick}</svg>`;
 const photo = (set, extra = '') => `<img src="${escapeHTML(set.image || './favicon.svg')}" alt="${escapeHTML(set.name)}" ${extra} loading="lazy">`;
-const state = {catalog:null, collection:new Map(), mode:'exact', minimum:100, sizes:[20,1000], tab:'ready', sort:'match', page:1, results:null, loading:false, searched:false, document:null, session:null, plan:null};
+const state = {catalog:null, collection:new Map(), mode:'exact', minimum:100, sizes:[20,1000], tab:'ready', sort:'match', page:1, results:null, loading:false, searched:false, inspirationLoading:false, document:null, session:null, plan:null};
 let searchTimer, searchRequest, matchRequest, requestVersion = 0, modalVersion = 0, toastTimer, searchItems = [];
 
 function setupPanelResize() {
@@ -164,6 +165,35 @@ async function loadExample(index) {
   if(example) await navigateDraft({kind:'example',name:example.name});
 }
 
+function inspirationCards(sets) {
+  return sets.map(set => `
+    <button class="inspiration-card" data-featured="${escapeHTML(set.code)}" aria-label="Explore ${escapeHTML(set.name)}">
+      <div class="inspiration-image">${photo(set)}</div><div class="inspiration-info"><strong>${escapeHTML(set.name)}</strong><small>${escapeHTML(set.theme)} · ${number(set.parts)} pieces</small><span>Explore set ↗</span></div>
+    </button>`).join('');
+}
+
+async function shuffleInspiration() {
+  if (state.inspirationLoading || !state.catalog) return;
+  state.inspirationLoading = true;
+  const button = $('#shuffle-inspiration');
+  button.disabled = true;
+  button.setAttribute('aria-busy', 'true');
+  try {
+    const query = new URLSearchParams();
+    state.catalog.featured.forEach(set => query.append('exclude', set.code));
+    const data = await api(`/api/inspiration?${query}`);
+    state.catalog.featured = data.sets;
+    const grid = $('.inspiration-grid');
+    if (grid) grid.innerHTML = inspirationCards(data.sets);
+  } catch (error) {
+    toast('Couldn’t refresh inspiration. Please try again.');
+  } finally {
+    state.inspirationLoading = false;
+    const current = $('#shuffle-inspiration');
+    if (current) {current.disabled = false;current.setAttribute('aria-busy', 'false');}
+  }
+}
+
 function renderWelcome() {
   const featured = state.catalog?.featured || [];
   const count = totals().copies;
@@ -186,11 +216,8 @@ function renderWelcome() {
         <div class="step-item"><span class="step-number">02</span><div><strong>Find a new possibility</strong><p>We match the pieces you own.</p></div></div>
         <div class="step-item"><span class="step-number">03</span><div><strong>Make it yours</strong><p>Grab the instructions. Get building.</p></div></div>
       </div>
-      <div class="section-label"><h3>A little inspiration</h3><span>REAL SETS. FRESH IDEAS.</span></div>
-      <div class="inspiration-grid">${featured.map(set => `
-        <button class="inspiration-card" data-featured="${escapeHTML(set.code)}" aria-label="Explore ${escapeHTML(set.name)}">
-          <div class="inspiration-image">${photo(set)}</div><div class="inspiration-info"><strong>${escapeHTML(set.name)}</strong><small>${escapeHTML(set.theme)} · ${number(set.parts)} pieces</small><span>Explore set ↗</span></div>
-        </button>`).join('')}</div>
+      <div class="section-label"><div class="inspiration-heading"><h3>A little inspiration</h3><button id="shuffle-inspiration" class="icon-button inspiration-shuffle" type="button" aria-label="Randomize inspiration" title="Show different sets" aria-busy="${state.inspirationLoading}" ${state.inspirationLoading ? 'disabled' : ''}>${icon('shuffle')}</button></div><span>REAL SETS. FRESH IDEAS.</span></div>
+      <div class="inspiration-grid">${inspirationCards(featured)}</div>
       <p class="sample-disclaimer">These are ideas from the catalog, not matches yet. Add your collection to see what you can actually build.</p>
     </div>`;
 }
@@ -368,6 +395,7 @@ document.addEventListener('click', event => {
     else if(item){const copies=state.document.copies.filter(c=>c.set_num===code);if(copies.length===1)editInventory({action:'remove_copy',copy_id:copies[0].id}).catch(inventoryError);else{openSet(item.set);toast('Choose the physical copy to remove below.');}}
   }
   if (target.matches('[data-set-detail], [data-set-photo]')) openSet(state.collection.get(target.dataset.setDetail || target.dataset.setPhoto)?.set);
+  if (target.matches('#shuffle-inspiration')) shuffleInspiration();
   if (target.matches('[data-featured]')) openSet(state.catalog.featured.find(s => s.code === target.dataset.featured));
   if (target.matches('[data-own-set]')) {
     const set=state.collection.get(target.dataset.ownSet)?.set || state.catalog.featured.find(s => s.code === target.dataset.ownSet);

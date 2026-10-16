@@ -67,6 +67,17 @@ class RedesignServiceTests(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.service.breakdown({"collection": self.collection, "code": "76042-1"})
 
+    def test_inspiration_samples_real_builds_without_repeats_or_current_sets(self):
+        first = self.service.bootstrap()["featured"]
+        current = [s["code"] for s in first]
+        sets = self.service.inspiration(current)["sets"]
+        codes = {s["code"] for s in sets}
+        self.assertEqual(len(codes), 3)
+        self.assertTrue(codes.isdisjoint(current))
+        self.assertTrue(all(self.service.catalog.sets[code].candidate for code in codes))
+        self.assertTrue(all(s["image"].startswith("https://cdn.rebrickable.com/") for s in sets))
+        self.assertEqual(set(self.service.__dict__), {"catalog"})
+
     def test_catalog_examples_and_empty_collection(self):
         data = self.service.bootstrap()
         self.assertEqual(len(data["examples"]), 3)

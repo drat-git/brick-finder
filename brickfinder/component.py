@@ -31,6 +31,8 @@ def component_response(service, request, session=None):
             raise ValueError("Choose a valid app action.")
         if route.path == "/api/catalog" and body is None:
             data = service.bootstrap()
+        elif route.path == "/api/inspiration" and body is None:
+            data = service.inspiration(parse_qs(route.query).get("exclude", []))
         elif route.path == "/api/search" and body is None:
             query = parse_qs(route.query).get("q", [""])[0][:200]
             data = {"sets": [set_data(s) for s in service.catalog.search(query, limit=8)]}

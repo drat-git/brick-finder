@@ -42,7 +42,10 @@ class AppTests(unittest.TestCase):
 
     def test_catalog_search_and_collection_use_the_shared_service(self):
         catalog = self.request("/api/catalog")
-        self.assertEqual(catalog["data"], self.service.bootstrap())
+        expected = self.service.bootstrap()
+        self.assertEqual({k:v for k,v in catalog["data"].items() if k != "featured"},
+                         {k:v for k,v in expected.items() if k != "featured"})
+        self.assertEqual(len(catalog["data"]["featured"]), 3)
         self.assertEqual(len(catalog["data"]["examples"]), 3)
         search = self.request("/api/search?q=31124", request_id="search-2")
         self.assertEqual(search["id"], "search-2")
@@ -51,6 +54,16 @@ class AppTests(unittest.TestCase):
         owned = self.request("/api/collection", body)
         self.assertEqual(owned["data"], self.service.collection_data(body))
         self.assertEqual(owned["data"]["copies"], 2)
+
+    def test_inspiration_refresh_excludes_the_displayed_sets_without_a_private_session(self):
+        first = self.request("/api/catalog")["data"]["featured"]
+        query = "&".join(f"exclude={s['code']}" for s in first)
+        response = self.request(f"/api/inspiration?{query}", request_id="shuffle-1")
+        self.assertEqual(response["id"], "shuffle-1")
+        self.assertNotIn("error", response)
+        sets = response["data"]["sets"]
+        self.assertEqual(len(sets), 3)
+        self.assertTrue({s["code"] for s in sets}.isdisjoint(s["code"] for s in first))
 
     def test_hosted_defaults_and_piece_details_are_complete_in_exact_colors(self):
         body = {"collection": self.collection}

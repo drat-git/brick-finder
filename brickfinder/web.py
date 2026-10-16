@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from random import sample
 from http.cookies import SimpleCookie
 from threading import RLock
 from time import monotonic
@@ -138,6 +139,11 @@ class FinderService:
             return self.breakdown(body,session)
         raise ValueError("This app action is not available.")
 
+    def inspiration(self, exclude=()):
+        excluded = set(exclude[:3])
+        pool = [s for s in self.catalog.candidates if s.set_num not in excluded and s.safe_image_url]
+        return {"sets": [set_data(s) for s in sample(pool, min(3, len(pool)))]}
+
     def bootstrap(self):
         themes = ("Superheroes", "City", "A little of everything")
         return {
@@ -146,8 +152,7 @@ class FinderService:
                 {"name": name, "theme": theme, "sets": [set_data(self.catalog.sets[c]) for c in codes]}
                 for (name, codes), theme in zip(EXAMPLE_COLLECTIONS.items(), themes)
             ],
-            "featured": [set_data(self.catalog.sets[c]) for c in ("31147-1", "31134-1", "40725-1")
-                         if c in self.catalog.sets],
+            "featured": self.inspiration()["sets"],
             "coverage": self.catalog.metadata,
         }
 
@@ -235,6 +240,8 @@ def handler_for(service):
             parsed = urlsplit(self.path)
             if parsed.path == "/api/catalog":
                 self.send_json(service.bootstrap())
+            elif parsed.path == "/api/inspiration":
+                self.send_json(service.inspiration(parse_qs(parsed.query).get("exclude", [])))
             elif parsed.path == "/api/parts":
                 self.send_json(service.part_search(parse_qs(parsed.query).get("q",[""])[0][:200]))
             elif parsed.path == "/api/search":
