@@ -64,6 +64,19 @@ dialog{border:1px solid var(--line);border-radius:19px;padding:34px;background:v
 @media(min-width:721px) and (max-width:960px){.workspace{--collection-default-width:282px}.panel-resizer{top:76px;height:calc(100dvh - 76px)}}
 .resizing-panels,.resizing-panels *{cursor:col-resize!important;user-select:none!important}
 
+/* Streamlit disables iframe page scrolling; keep scrolling inside the app. */
+html,body{height:100%}
+html{overflow:hidden}
+body{overflow-y:auto}
+@media(min-width:721px){
+  body{overflow:hidden}
+  .workspace{height:calc(100dvh - 88px);min-height:0}
+  .collection-panel,.panel-resizer{top:0;height:100%}
+  .discovery{min-height:0;overflow-y:auto;scrollbar-width:thin}
+  .discovery>*{flex-shrink:0}
+}
+@media(min-width:721px) and (max-width:960px){.workspace{height:calc(100dvh - 76px)}}
+
 /* Adjacent help actions and a readable technical explanation. */
 .topbar{gap:20px}
 .topbar nav{gap:18px}
