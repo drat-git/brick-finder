@@ -11,22 +11,33 @@
   <link rel="stylesheet" href="./app.css">
   <script src="./streamlit.js" defer></script>
   <script src="./app.js" defer></script>
+  <script src="./inventory.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#discovery">Skip to builds</a>
   <header class="topbar">
     <a class="brand" href="#" aria-label="Rebuilt home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Rebuilt</a>
-    <nav aria-label="Main navigation"><button class="text-button" id="how-button">What is Rebuilt? <span aria-hidden="true">↗</span></button><span class="nav-rule"></span><button class="catalog-button" id="catalog-button"><span class="status-dot"></span><span id="catalog-count">Opening catalog</span></button></nav>
+    <nav aria-label="Main navigation">
+      <div class="help-buttons">
+        <button class="text-button" id="how-button">What is Rebuilt? <span aria-hidden="true">↗</span></button>
+        <button class="technical-button" id="technical-button" aria-haspopup="dialog" aria-controls="technical-dialog">How does it work?</button>
+      </div>
+      <span class="nav-rule" aria-hidden="true"></span>
+      <button class="catalog-button" id="catalog-button"><span class="status-dot"></span><span id="catalog-count">Opening catalog</span></button>
+    </nav>
   </header>
   <main class="workspace">
     <aside class="collection-panel" id="collection-panel" aria-labelledby="collection-heading">
       <div class="panel-heading"><div><span class="eyebrow">THE STARTING POINT</span><h1 id="collection-heading">Your collection<span class="collection-count" id="collection-count">0</span></h1></div><button class="icon-button" id="clear-button" aria-label="Clear collection" title="Clear collection" hidden></button></div>
       <p class="panel-description">Start with the sets you already own.</p>
+      <div class="draft-bar"><span id="draft-summary">Untitled collection</span><button class="text-button" id="manage-collections">Manage ↗</button></div>
+      <div id="inventory-issues" class="inventory-notice" role="status" hidden></div>
       <div class="search-area">
         <label class="search-box" for="set-search"><span id="search-icon" aria-hidden="true"></span><input id="set-search" type="search" placeholder="Set name or number" aria-label="Search sets by name or number" autocomplete="off" aria-controls="search-results" aria-expanded="false"><kbd>/</kbd></label>
         <div class="search-results" id="search-results" aria-label="Matching sets" hidden></div>
       </div>
       <div id="collection-list" class="collection-list"></div>
+      <button class="loose-entry-button secondary-button" id="manage-loose">Loose parts <span id="loose-count">0</span> ↗</button>
       <div class="collection-footer">
         <div class="inventory-summary" id="inventory-summary"><span><strong id="set-total">0</strong> sets in collection</span><span><strong id="piece-total">0</strong> pieces</span></div>
         <button class="primary-button find-button" id="find-button" disabled><span id="find-label">Find my next build</span><span id="find-arrow" aria-hidden="true">↗</span></button>
@@ -34,7 +45,7 @@
         <p class="color-description" id="color-description">Same pieces. Same colors. Ready to build.</p>
       </div>
       <details class="examples" id="examples"><summary>No sets handy? Try an example <span aria-hidden="true">+</span></summary><div id="example-list"></div><p class="quiet">An example replaces your current collection.</p></details>
-      <div class="collection-note"><span id="privacy-icon" aria-hidden="true"></span><span>No account. No uploads.<br>Just your bricks and a little possibility.</span></div>
+      <div class="collection-note"><span id="privacy-icon" aria-hidden="true"></span><span>Guest editing. Optional cloud saves.<br>Your bricks, tracked your way.</span></div>
     </aside>
     <div class="panel-resizer" id="panel-resizer" role="separator" aria-label="Resize collection panel" aria-orientation="vertical" aria-controls="collection-panel" aria-valuemin="260" aria-valuemax="520" aria-valuenow="326" tabindex="0" title="Drag to resize. Use Left and Right arrows, or double-click to reset."><span aria-hidden="true"></span></div>
     <section class="discovery" id="discovery" aria-labelledby="discovery-heading" tabindex="-1">
@@ -50,7 +61,52 @@
   <div class="toast" id="toast" role="status" hidden></div>
   <dialog id="detail-dialog" class="detail-dialog"><button class="dialog-close icon-button" aria-label="Close details" data-close-dialog></button><div id="detail-content"></div></dialog>
   <dialog id="info-dialog" class="info-dialog"><button class="dialog-close icon-button" aria-label="Close information" data-close-dialog></button><div id="info-content"></div></dialog>
-  <dialog id="clear-dialog" class="clear-dialog"><span class="eyebrow">A FRESH START</span><h2>Clear your collection?</h2><p>This removes the sets you’ve added here. You can always add them again.</p><div class="dialog-actions"><button class="secondary-button" data-close-dialog>Keep my sets</button><button class="primary-button" id="confirm-clear">Clear collection</button></div></dialog>
+  <dialog id="technical-dialog" class="technical-dialog" aria-labelledby="technical-heading" aria-describedby="technical-subtitle">
+    <button class="dialog-close icon-button" aria-label="Close technical explanation" data-close-dialog autofocus></button>
+    <h2 id="technical-heading" class="modal-title">How does it work?</h2>
+    <p id="technical-subtitle" class="technical-subtitle">A look under the hood of Rebuilt.</p>
+    <section aria-labelledby="technical-stack">
+      <h3 id="technical-stack">The idea and stack</h3>
+      <p>I built Rebuilt to answer a simple question: what else can I make from the LEGO sets I own? It combines their inventories and compares the pieces with other official sets. The interface uses HTML, CSS, and JavaScript. Python handles inventory processing and matching, SQLite holds the prepared catalog, and Streamlit hosts the interface and connects it to Python.</p>
+    </section>
+    <section aria-labelledby="technical-data">
+      <h3 id="technical-data">Preparing the data</h3>
+      <p>A separate import step turns downloaded Rebrickable CSVs into a bundled database. It selects the latest inventory version for each set, expands nested sets and minifigures into individual pieces, and excludes spares. It validates references and checks expanded piece totals against the listed counts; invalid inventories are excluded. Searches use this prepared snapshot, without scraping Rebrickable or needing a live API key.</p>
+    </section>
+    <section aria-labelledby="technical-controls">
+      <h3 id="technical-controls">What happens when you use the controls</h3>
+      <ul class="technical-controls">
+        <li><strong>Search:</strong> waits briefly while you type, then queries the catalog for matching names or set numbers.</li>
+        <li><strong>Add / quantity controls:</strong> track each physical copy independently, subtract its missing pieces, and add loose parts. Collection changes invalidate previous results.</li>
+        <li><strong>Remove / clear / examples:</strong> remove sets, confirm clearing the collection, or replace it with a sample collection after resolving unsaved edits.</li>
+        <li><strong>Find my next build:</strong> sends the collection to Python, which aggregates available pieces and compares candidate inventories.</li>
+        <li><strong>Exact / Flexible:</strong> match part IDs plus colors, or combine colors for the same part ID. Printed parts and mold variants stay distinct.</li>
+        <li><strong>Buildable now / Almost there:</strong> show complete inventories or partial matches. Almost there starts at 80% completion.</li>
+        <li><strong>Filters / sorting / Show more:</strong> adjust displayed results using cached matches. Show more adds batches of 18.</li>
+        <li><strong>View build:</strong> retrieves missing-piece details and, when applicable, suggested color substitutions.</li>
+        <li><strong>Building instructions:</strong> opens LEGO’s official instruction page.</li>
+        <li><strong>Divider:</strong> changes the collection panel’s width without affecting matching.</li>
+      </ul>
+    </section>
+    <section aria-labelledby="technical-matching">
+      <h3 id="technical-matching">How the matching works</h3>
+      <p class="technical-formula"><strong>Completion = matched required pieces ÷ total required pieces × 100</strong></p>
+      <p>Each part contributes the smaller of its available and required quantities. If you have two pieces and a build needs three, that contributes two matches and leaves one missing. Extra copies of another part cannot fill that gap.</p>
+      <p>The default ranking puts completion first, then fewer missing pieces, then larger builds. A build is complete only when its missing quantity is zero. For flexible-color suggestions, exact colors are reserved first; each remaining piece can be allocated only once within that recommendation.</p>
+    </section>
+    <section aria-labelledby="technical-limits">
+      <h3 id="technical-limits">Design choices and limitations</h3>
+      <p>The hosted frontend communicates through Streamlit’s component bridge. The standalone development preview uses HTTP requests to the same Python service. A private draft lives in your active server session. Optional Firebase email/password accounts save named collections in Firestore. Refreshing requires signing in again; passwords and tokens are never saved in browser storage.</p>
+      <p>New copies start complete. Missing adjustments reduce each copy independently, and loose parts add extra pieces. Keep assembled protects a copy from the planner while its pieces still contribute to recommendations. Each recommendation is evaluated independently against the same collection, so you may not be able to build several at once. Inventory matching does not verify assembly geometry, and instruction availability varies.</p>
+    </section>
+    <section><h3>Saving and planning</h3><p>Save is explicit, with revision checks to prevent overwriting a newer collection. Save as creates new collection and copy IDs. The planner minimizes physical copies dismantled, then color substitutions, using OR-Tools CP-SAT. It checks source capacities and every required quantity. A five-second search may return a complete best plan without proving minimum dismantling. Planning never consumes or reserves pieces.</p></section>
+  </dialog>
+  <dialog id="collection-dialog" class="info-dialog" aria-labelledby="collections-heading"><button class="dialog-close icon-button" aria-label="Close collections" data-close-dialog></button><div id="collections-content"></div></dialog>
+  <dialog id="account-dialog" class="info-dialog" aria-labelledby="account-heading"><button class="dialog-close icon-button" aria-label="Close account" data-close-dialog></button><div id="account-content"></div></dialog>
+  <dialog id="loose-dialog" class="info-dialog" aria-labelledby="loose-heading"><button class="dialog-close icon-button" aria-label="Close loose parts" data-close-dialog></button><h2 id="loose-heading" class="modal-title">Your loose parts</h2><p class="detail-explanation">Extra pieces outside your set copies. Missing pieces never turn into loose parts.</p><label class="field-label" for="loose-search">Search by part ID or name</label><input class="inventory-input" id="loose-search" type="search" autocomplete="off" placeholder="Try 3001 or brick"><div id="loose-search-results"></div><div id="loose-entries"></div><p class="form-message" id="loose-message" role="status"></p></dialog>
+  <dialog id="navigation-dialog" class="clear-dialog" aria-labelledby="navigation-heading"><h2 id="navigation-heading">Unsaved changes</h2><p>Save this draft before continuing?</p><p id="navigation-note"></p><p class="form-message" id="navigation-message" role="status"></p><div class="dialog-actions"><button class="secondary-button" data-navigation="cancel">Cancel</button><button class="secondary-button" data-navigation="discard">Discard</button><button class="primary-button" id="navigation-save" data-navigation="save">Save</button></div></dialog>
+  <dialog id="delete-saved-dialog" class="clear-dialog" aria-labelledby="delete-heading"><h2 id="delete-heading">Delete saved collection?</h2><p>This permanently removes the cloud copy. Your current pieces remain in a new local draft.</p><p class="form-message" id="delete-message" role="status"></p><div class="dialog-actions"><button class="secondary-button" data-close-dialog>Cancel</button><button class="primary-button" id="confirm-delete-saved">Delete saved collection</button></div></dialog>
+  <dialog id="clear-dialog" class="clear-dialog"><span class="eyebrow">A FRESH START</span><h2>Clear your collection?</h2><p>This empties the current draft, including all physical copies and loose parts. It does not delete the cloud collection.</p><div class="dialog-actions"><button class="secondary-button" data-close-dialog>Keep my sets</button><button class="primary-button" id="confirm-clear">Clear collection</button></div></dialog>
   <noscript><p class="noscript">Please enable JavaScript to explore your collection and find builds.</p></noscript>
 </body>
 </html>

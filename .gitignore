@@ -10,3 +10,7 @@ rebrickable_downloads/
 rebrickable_data_info.png
 data/*.sqlite
 artifacts/
+node_modules/
+.firebase/
+*-debug.log
+firebase-debug.log*

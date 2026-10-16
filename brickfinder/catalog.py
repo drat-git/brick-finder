@@ -74,6 +74,8 @@ def unpack_catalog(archive: Path = ROOT / "data/catalog.sqlite.gz", cache: Path 
 class Catalog:
     def __init__(self, database: Path):
         self.database = database.resolve()
+        with self.database.open("rb") as handle:
+            self.fingerprint = hashlib.file_digest(handle, "sha256").hexdigest()
         with closing(self.connect()) as connection:
             self.metadata = {key: json.loads(value) for key, value in connection.execute("SELECT key,value FROM metadata")}
             if self.metadata.get("schema_version") != 2:
@@ -118,6 +120,9 @@ class Catalog:
         return result
 
     def aggregate(self, collection: dict[str, int]) -> Counter:
+        from brickfinder.inventory import CollectionState, available_inventory
+        if isinstance(collection, CollectionState):
+            return available_inventory(self, collection)
         available = Counter()
         for code, quantity in collection.items():
             if isinstance(quantity, bool) or not isinstance(quantity, int) or quantity < 1:

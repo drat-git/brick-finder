@@ -32,6 +32,7 @@
     item.finish = (error, data) => {
       if (item.settled) return;
       item.settled = true;
+      if(item.request.body && 'password' in item.request.body) item.request.body.password='';
       signal?.removeEventListener('abort', abort);
       error ? reject(error) : resolve(data);
     };
@@ -49,7 +50,7 @@
       const item = active;
       active = null;
       clearTimeout(item.timer);
-      item.finish(response.error ? new Error(response.error) : null, response.data);
+      item.finish(response.error ? Object.assign(new Error(response.error),{code:response.code}) : null, response.data);
     }
     pump();
   });

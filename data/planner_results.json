@@ -1,0 +1,184 @@
+{
+  "python": "3.13.16",
+  "architecture": "arm64",
+  "catalog_fingerprint": "e13f69154e9404538a6039ba7de92c6d04eb777240d6c3ef32fd3d7a7ec8558f",
+  "time_limit_seconds": 5,
+  "results": [
+    {
+      "collection": "Example 1",
+      "target": "30162-1",
+      "mode": "exact",
+      "greedy_copies": 6,
+      "optimized_copies": 6,
+      "greedy_seconds": 0.001383,
+      "optimized_seconds": 0.031716,
+      "substitutions": 0,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 1",
+      "target": "DALLAS-1",
+      "mode": "flexible",
+      "greedy_copies": 1,
+      "optimized_copies": 1,
+      "greedy_seconds": 0.001645,
+      "optimized_seconds": 0.015034,
+      "substitutions": 68,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 1",
+      "target": "6411320-1",
+      "mode": "flexible",
+      "greedy_copies": 2,
+      "optimized_copies": 2,
+      "greedy_seconds": 0.00152,
+      "optimized_seconds": 0.005817,
+      "substitutions": 63,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 1",
+      "target": "COLUMBUS-1",
+      "mode": "flexible",
+      "greedy_copies": 1,
+      "optimized_copies": 1,
+      "greedy_seconds": 0.0014,
+      "optimized_seconds": 0.006756,
+      "substitutions": 41,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 2",
+      "target": "7499-1",
+      "mode": "exact",
+      "greedy_copies": 1,
+      "optimized_copies": 1,
+      "greedy_seconds": 0.001642,
+      "optimized_seconds": 0.001793,
+      "substitutions": 0,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 2",
+      "target": "60205-1",
+      "mode": "exact",
+      "greedy_copies": 1,
+      "optimized_copies": 1,
+      "greedy_seconds": 0.001433,
+      "optimized_seconds": 0.001574,
+      "substitutions": 0,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 2",
+      "target": "30478-1",
+      "mode": "flexible",
+      "greedy_copies": 5,
+      "optimized_copies": 5,
+      "greedy_seconds": 0.003027,
+      "optimized_seconds": 0.013902,
+      "substitutions": 28,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 2",
+      "target": "TRUCAPAM-1",
+      "mode": "flexible",
+      "greedy_copies": 4,
+      "optimized_copies": 4,
+      "greedy_seconds": 0.002655,
+      "optimized_seconds": 0.012198,
+      "substitutions": 26,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 2",
+      "target": "30550-1",
+      "mode": "flexible",
+      "greedy_copies": 5,
+      "optimized_copies": 5,
+      "greedy_seconds": 0.003265,
+      "optimized_seconds": 0.011494,
+      "substitutions": 45,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 3",
+      "target": "6422233-1",
+      "mode": "exact",
+      "greedy_copies": 1,
+      "optimized_copies": 1,
+      "greedy_seconds": 0.001333,
+      "optimized_seconds": 0.001919,
+      "substitutions": 0,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 3",
+      "target": "6422237-1",
+      "mode": "exact",
+      "greedy_copies": 1,
+      "optimized_copies": 1,
+      "greedy_seconds": 0.001048,
+      "optimized_seconds": 0.001376,
+      "substitutions": 0,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 3",
+      "target": "6422236-1",
+      "mode": "exact",
+      "greedy_copies": 1,
+      "optimized_copies": 1,
+      "greedy_seconds": 0.001144,
+      "optimized_seconds": 0.001625,
+      "substitutions": 0,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 3",
+      "target": "8465934-1",
+      "mode": "flexible",
+      "greedy_copies": 5,
+      "optimized_copies": 5,
+      "greedy_seconds": 0.002016,
+      "optimized_seconds": 0.006936,
+      "substitutions": 91,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 3",
+      "target": "e1a1404-1",
+      "mode": "flexible",
+      "greedy_copies": 5,
+      "optimized_copies": 5,
+      "greedy_seconds": 0.001824,
+      "optimized_seconds": 0.006584,
+      "substitutions": 91,
+      "status": "optimal"
+    },
+    {
+      "collection": "Example 3",
+      "target": "5006291-1",
+      "mode": "flexible",
+      "greedy_copies": 4,
+      "optimized_copies": 4,
+      "greedy_seconds": 0.00198,
+      "optimized_seconds": 0.004755,
+      "substitutions": 88,
+      "status": "optimal"
+    },
+    {
+      "collection": "Greedy failure",
+      "target": "T",
+      "mode": "exact",
+      "greedy_copies": 3,
+      "optimized_copies": 2,
+      "greedy_seconds": 0.000111,
+      "optimized_seconds": 0.000468,
+      "substitutions": 0,
+      "status": "optimal"
+    }
+  ]
+}

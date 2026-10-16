@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from typing import Literal
 
 from brickfinder.catalog import Catalog, LegoSet
+from brickfinder.inventory import CollectionState, available_inventory
 
 Mode = Literal["exact", "flexible"]
 
@@ -57,17 +58,17 @@ class Match:
         return f"{100 if complete else min(round(self.exact_percent, 1), 99.9):.1f}%"
 
 
-def recommend(catalog: Catalog, collection: dict[str, int], mode: Mode = "flexible") -> list[Match]:
+def recommend(catalog: Catalog, collection: CollectionState | dict[str, int], mode: Mode = "flexible") -> list[Match]:
     if mode not in ("exact", "flexible"):
         raise ValueError("Unknown matching mode")
     if not collection:
         return []
-    available = catalog.aggregate(collection)
+    available = available_inventory(catalog, collection)
     flexible_available = by_part(available)
     inventories = catalog.candidate_inventories()
     result = []
     for lego_set in catalog.candidates:
-        if lego_set.set_num in collection:
+        if lego_set.set_num in (collection.counts if isinstance(collection, CollectionState) else collection):
             continue
         required = inventories[lego_set.set_num]
         total = sum(required.values())
@@ -84,8 +85,8 @@ def filter_matches(matches: list[Match], minimum: float, sizes: tuple[int, int])
     return [m for m in matches if m.percent >= minimum and sizes[0] <= m.required <= sizes[1]]
 
 
-def shortage_rows(catalog: Catalog, collection: dict[str, int], match: Match) -> list[dict]:
-    available = catalog.aggregate(collection)
+def shortage_rows(catalog: Catalog, collection: CollectionState | dict[str, int], match: Match) -> list[dict]:
+    available = available_inventory(catalog, collection)
     required = catalog.inventory(match.lego_set.set_num)
     rows = []
     if match.mode == "exact":
@@ -109,11 +110,11 @@ def shortage_rows(catalog: Catalog, collection: dict[str, int], match: Match) ->
     return sorted(rows, key=lambda row: (-row["Missing"], row["Part ID"]))
 
 
-def color_change_rows(catalog: Catalog, collection: dict[str, int], match: Match) -> list[dict]:
+def color_change_rows(catalog: Catalog, collection: CollectionState | dict[str, int], match: Match) -> list[dict]:
     """Allocate exact colors first, then each leftover piece at most once."""
     if match.mode != "flexible":
         return []
-    remaining = catalog.aggregate(collection)
+    remaining = available_inventory(catalog, collection)
     required = catalog.inventory(match.lego_set.set_num)
     deficits = []
     for (part, color), count in sorted(required.items()):

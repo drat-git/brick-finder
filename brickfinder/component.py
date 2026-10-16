@@ -6,12 +6,13 @@ import json
 from urllib.parse import parse_qs, urlsplit
 
 from brickfinder.web import set_data
+from brickfinder.firebase_store import CloudError, RevisionConflict
 
 COMPONENT_KEY = "brickfinder_frontend"
 RESPONSE_KEY = "brickfinder_response"
 
 
-def component_response(service, request):
+def component_response(service, request, session=None):
     """Return one correlated response without storing a visitor's collection."""
     request_id = request.get("id") if isinstance(request, dict) else None
     try:
@@ -33,6 +34,10 @@ def component_response(service, request):
         elif route.path == "/api/search" and body is None:
             query = parse_qs(route.query).get("q", [""])[0][:200]
             data = {"sets": [set_data(s) for s in service.catalog.search(query, limit=8)]}
+        elif route.path == "/api/parts" and body is None:
+            data = service.part_search(parse_qs(route.query).get("q",[""])[0][:200])
+        elif session is not None and body is not None:
+            data = service.dispatch(route.path,body,session)
         elif route.path == "/api/collection" and body is not None:
             data = service.collection_data(body)
         elif route.path == "/api/recommend" and body is not None:
@@ -42,5 +47,10 @@ def component_response(service, request):
         else:
             raise ValueError("This app action is not available.")
         return {"id": request_id, "data": data}
-    except (ValueError, TypeError, KeyError) as error:
+    except RevisionConflict as error:
+        return {"id":request_id,"error":str(error),"code":"revision_conflict"}
+    except (ValueError, TypeError, KeyError, CloudError) as error:
         return {"id": request_id, "error": str(error)}
+    finally:
+        if isinstance(request,dict) and isinstance(request.get("body"),dict):
+            request["body"].pop("password",None)

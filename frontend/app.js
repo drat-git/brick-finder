@@ -15,7 +15,7 @@ const paths = {
 };
 const icon = name => `<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">${paths[name] || paths.brick}</svg>`;
 const photo = (set, extra = '') => `<img src="${escapeHTML(set.image || './favicon.svg')}" alt="${escapeHTML(set.name)}" ${extra} loading="lazy">`;
-const state = {catalog:null, collection:new Map(), mode:'exact', minimum:100, sizes:[20,1000], tab:'ready', sort:'match', page:1, results:null, loading:false, searched:false};
+const state = {catalog:null, collection:new Map(), mode:'exact', minimum:100, sizes:[20,1000], tab:'ready', sort:'match', page:1, results:null, loading:false, searched:false, document:null, session:null, plan:null};
 let searchTimer, searchRequest, matchRequest, requestVersion = 0, modalVersion = 0, toastTimer, searchItems = [];
 
 function setupPanelResize() {
@@ -90,7 +90,7 @@ async function api(path, body, signal) {
     method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(body), signal,
   });
   const data = await response.json();
-  if (!response.ok) throw new Error(data.error || 'Something went wrong. Please try again.');
+  if (!response.ok) throw Object.assign(new Error(data.error || 'Something went wrong. Please try again.'), {code:data.code});
   return data;
 }
 
@@ -105,11 +105,12 @@ function collectionBody() {
 }
 
 function persist() {
-  try {sessionStorage.setItem('brickfinder-redesign-collection', JSON.stringify(collectionBody()));} catch {}
+  // Private collection data and authentication stay out of browser storage.
+  try {sessionStorage.removeItem('brickfinder-redesign-collection');} catch {}
 }
 
 function totals() {
-  return [...state.collection.values()].reduce((sum, item) => ({copies:sum.copies+item.quantity, pieces:sum.pieces+item.quantity*item.set.parts}), {copies:0,pieces:0});
+  return state.session ? {copies:state.session.copies,pieces:state.session.pieces} : {copies:0,pieces:0};
 }
 
 function collectionChanged() {
@@ -117,11 +118,9 @@ function collectionChanged() {
   persist(); renderCollection(); renderToolbar(); renderWelcome();
 }
 
-function addSet(set) {
-  const existing = state.collection.get(set.code);
-  state.collection.set(set.code, {set, quantity:(existing?.quantity || 0)+1});
-  collectionChanged(); hideSearch(); $('#set-search').value = '';
-  toast(existing ? `Added another copy of ${set.name}.` : `${set.name} added to your collection.`);
+async function addSet(set) {
+  try {await editInventory({action:'add_set',code:set.code});hideSearch();$('#set-search').value='';toast(`${set.name} added to your collection.`);}
+  catch(error){inventoryError(error);}
 }
 
 function renderCollection() {
@@ -129,10 +128,12 @@ function renderCollection() {
   $('#collection-count').textContent = copies;
   $('#set-total').textContent = number(copies);
   $('#piece-total').textContent = number(pieces);
-  $('#clear-button').hidden = !copies;
-  $('#find-button').disabled = !copies || state.loading;
+  const hasPieces=Boolean(copies || state.document?.loose.length);
+  $('#clear-button').hidden = !hasPieces;
+  $('#find-button').disabled = !hasPieces || state.loading || Boolean(state.session?.issues.length);
   $('#find-label').textContent = state.loading ? 'Finding your next build…' : 'Find my next build';
   $('#find-arrow').textContent = state.loading ? '⋯' : '↗';
+  renderDraftStatus();
   $('#collection-list').innerHTML = copies ? [...state.collection.values()].map(({set, quantity}) => `
     <article class="owned-row" data-owned="${escapeHTML(set.code)}">
       ${photo(set, `data-set-photo="${escapeHTML(set.code)}"`)}
@@ -158,12 +159,9 @@ function renderExamples() {
     </button>`).join('');
 }
 
-function loadExample(index) {
-  const example = state.catalog.examples[index];
-  if (!example) return;
-  state.collection = new Map(example.sets.map(set => [set.code, {set,quantity:1}]));
-  collectionChanged();
-  toast(`${example.name} loaded. You’re ready to find builds.`);
+async function loadExample(index) {
+  const example=state.catalog.examples[index];
+  if(example) await navigateDraft({kind:'example',name:example.name});
 }
 
 function renderWelcome() {
@@ -237,7 +235,7 @@ function renderResults() {
 }
 
 async function findBuilds(scrollToResults = false) {
-  if (!state.collection.size) return;
+  if (!state.document || (!state.document.copies.length && !state.document.loose.length)) return;
   matchRequest?.abort(); matchRequest = new AbortController(); const version = ++requestVersion;
   state.loading = true; state.searched = true; renderCollection();
   $('#results').setAttribute('aria-busy', 'true'); $('#load-more').hidden = true;
@@ -261,6 +259,7 @@ async function findBuilds(scrollToResults = false) {
 
 function changeMode(mode) {
   state.mode = mode; state.page = 1; renderToolbar();
+  state.plan=null;
   if (state.searched) findBuilds();
 }
 
@@ -311,7 +310,7 @@ function openSet(set) {
       <button class="primary-button" data-own-set="${escapeHTML(set.code)}">${quantity ? 'Add another copy' : 'I own this set'} ${icon('arrow')}</button>
       <p class="detail-explanation">${quantity ? 'Opening these details doesn’t change your collection or matches.' : 'This is a catalog example. Add the sets you own to check what you can build.'}</p>
       <a class="text-button" href="${escapeHTML(set.instructions)}" target="_blank" rel="noopener noreferrer" style="margin-top:14px">Building instructions ↗</a>
-    </div></div>`;
+    </div></div>${physicalCopyMarkup(set.code)}`;
   $('#detail-content').dataset.setCode = set.code;
   openDialog($('#detail-dialog'));
 }
@@ -338,6 +337,7 @@ async function openBuild(code) {
         <a class="primary-button" href="${escapeHTML(m.instructions)}" target="_blank" rel="noopener noreferrer">Building instructions ↗</a>
       </div></div>
       <section class="detail-pieces"><h3>${data.shortages.length ? 'The pieces you still need' : 'Every required piece accounted for.'}</h3><p>${data.shortages.length ? `${number(m.missing)} missing pieces are listed below.` : m.mode === 'flexible' && data.substitutions.length ? 'You have all the required part IDs. Use the color swaps below to build with your collection.' : 'Your collection covers the full inventory in the original colors.'}</p>${pieceTable(data.shortages)}</section>
+      <section class="detail-pieces"><h3>Choose copies to dismantle</h3><p>Protected copies count toward recommendations. The planner uses unprotected copies and loose parts.</p><button class="primary-button" data-plan-build="${escapeHTML(code)}">Plan this build ↗</button><div id="plan-output" aria-live="polite"></div></section>
       ${data.substitutions.length ? `<section class="detail-pieces"><h3>A different color palette</h3><p>Original colors are reserved first. Each remaining piece is allocated once in these suggested swaps.</p>${pieceTable(data.substitutions)}</section>` : ''}`;
   } catch (error) {
     if (version === modalVersion) $('#detail-content').innerHTML = `<h2 class="modal-title">Couldn’t open this build.</h2><p class="detail-explanation">${escapeHTML(error.message)}</p><button class="secondary-button" data-build="${escapeHTML(code)}">Try again</button>`;
@@ -361,9 +361,11 @@ document.addEventListener('click', event => {
   if (!target) {if (!event.target.closest('.search-area')) hideSearch(); return;}
   if (target.matches('[data-add-search]')) {const set=searchItems[Number(target.dataset.addSearch)];if(set)addSet(set);$('#set-search').focus();}
   if (target.matches('[data-example]')) loadExample(Number(target.dataset.example));
-  if (target.matches('[data-remove]')) {state.collection.delete(target.dataset.remove);collectionChanged();}
+  if (target.matches('[data-remove]')) editInventory({action:'remove_set',code:target.dataset.remove}).catch(inventoryError);
   if (target.matches('[data-quantity]')) {
-    const item=state.collection.get(target.dataset.quantity); if(item){item.quantity+=Number(target.dataset.delta);if(item.quantity<1)state.collection.delete(target.dataset.quantity);collectionChanged();const next=$$('[data-quantity]').find(b=>b.dataset.quantity===target.dataset.quantity&&b.dataset.delta===target.dataset.delta);(next||$('#set-search')).focus({preventScroll:true});}
+    const code=target.dataset.quantity,item=state.collection.get(code);
+    if(item&&Number(target.dataset.delta)>0) addSet(item.set);
+    else if(item){const copies=state.document.copies.filter(c=>c.set_num===code);if(copies.length===1)editInventory({action:'remove_copy',copy_id:copies[0].id}).catch(inventoryError);else{openSet(item.set);toast('Choose the physical copy to remove below.');}}
   }
   if (target.matches('[data-set-detail], [data-set-photo]')) openSet(state.collection.get(target.dataset.setDetail || target.dataset.setPhoto)?.set);
   if (target.matches('[data-featured]')) openSet(state.catalog.featured.find(s => s.code === target.dataset.featured));
@@ -395,7 +397,7 @@ document.addEventListener('keydown', event => {
   if(event.key==='/'&&!event.ctrlKey&&!event.metaKey&&!event.altKey&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)&&!$('dialog[open]')){event.preventDefault();$('#set-search').focus();}
 });
 $('#clear-button').addEventListener('click', () => openDialog($('#clear-dialog')));
-$('#confirm-clear').addEventListener('click', () => {state.collection.clear();$('#clear-dialog').close();collectionChanged();toast('A fresh start. Your collection is clear.');});
+$('#confirm-clear').addEventListener('click', async () => {try{await editInventory({action:'clear'});$('#clear-dialog').close();toast('Your draft is clear.');}catch(error){inventoryError(error);}});
 $('#complete-tab').addEventListener('click', () => changeTab('ready'));
 $('#almost-tab').addEventListener('click', () => changeTab('almost'));
 $('#filters-button').addEventListener('click', () => {$('#filters-panel').hidden=!$('#filters-panel').hidden;$('#filters-button').setAttribute('aria-expanded',String(!$('#filters-panel').hidden));});
@@ -410,6 +412,7 @@ $('#reset-filters').addEventListener('click', resetFilters);
 $('#sort').addEventListener('change', () => {state.sort=$('#sort').value;state.page=1;if(state.searched)findBuilds();});
 $('#load-more').addEventListener('click', () => {state.page++;findBuilds();});
 $('#how-button').addEventListener('click', showHow);
+$('#technical-button').addEventListener('click', () => openDialog($('#technical-dialog')));
 $('#catalog-button').addEventListener('click', showCatalog);
 $$('dialog').forEach(dialog => {
   dialog.addEventListener('click', event => {if(event.target===dialog){const r=dialog.getBoundingClientRect();if(event.clientX<r.left||event.clientX>r.right||event.clientY<r.top||event.clientY>r.bottom)dialog.close();}});
@@ -429,12 +432,10 @@ async function init() {
   try {
     state.catalog=await api('/api/catalog');
     $('#catalog-count').textContent=`${number(state.catalog.candidates)} builds to discover`;
-    let saved;try{saved=JSON.parse(sessionStorage.getItem('brickfinder-redesign-collection')||'{}');}catch{saved={};}
-    if(Object.keys(saved||{}).length){try{const restored=await api('/api/collection',{collection:saved});state.collection=new Map(restored.sets.map(({quantity,...set})=>[set.code,{set,quantity}]));}catch{try{sessionStorage.removeItem('brickfinder-redesign-collection');}catch{}}}
+    applySession(await api('/api/session',{fresh:true}));
     renderExamples();renderCollection();renderWelcome();
   } catch(error) {
     $('#catalog-count').textContent='Catalog unavailable';
     $('#results').innerHTML=`<div class="empty-results"><h3>Let’s get the catalog open.</h3><p>${escapeHTML(error.message)}</p><div class="empty-actions"><button class="primary-button" onclick="location.reload()">Try again</button></div></div>`;
   }
 }
-init();

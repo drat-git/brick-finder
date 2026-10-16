@@ -82,3 +82,16 @@ test('backend errors and connection timeouts let visitors retry', async () => {
   h.render({id:'session-3',data:{ok:true}});
   assert.deepEqual(await retry, {ok:true});
 });
+
+
+test('credential requests are scrubbed after response and conflict codes survive the bridge', async () => {
+  const h=harness();h.render();
+  const credentials={email:'person@example.com',password:'private-password'};
+  const login=h.window.brickfinderTransport('/api/auth',credentials);
+  h.render({id:'session-1',data:{email:'person@example.com'}});
+  await login;
+  assert.equal(credentials.password,'');
+  const save=h.window.brickfinderTransport('/api/save',{});
+  h.render({id:'session-2',error:'Newer revision exists',code:'revision_conflict'});
+  await assert.rejects(save,{code:'revision_conflict'});
+});

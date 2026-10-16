@@ -1,0 +1,14 @@
+{
+  "name": "rebuilt-tests",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --test tests/test_transport.cjs",
+    "test:rules": "node --test tests/test_rules.mjs"
+  },
+  "devDependencies": {
+    "@firebase/rules-unit-testing": "6.0.0",
+    "firebase": "13.0.0",
+    "firebase-tools": "15.34.0"
+  }
+}

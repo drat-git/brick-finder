@@ -8,6 +8,9 @@ from brickfinder.catalog import Catalog, unpack_catalog
 from brickfinder.component import COMPONENT_KEY, RESPONSE_KEY, component_response
 from brickfinder.examples import EXAMPLE_COLLECTIONS
 from brickfinder.web import FinderService
+from brickfinder.session import UserSession
+from brickfinder.firebase_store import FirebaseConfig
+from tests.fakes import MemoryAuth,MemoryRepository
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -87,6 +90,36 @@ class AppTests(unittest.TestCase):
                 response = component_response(self.service, request)
                 self.assertIn("error", response)
                 self.assertEqual(response["id"], request.get("id") if isinstance(request, dict) else None)
+
+    def test_new_inventory_and_plan_routes_use_private_session(self):
+        session=UserSession(self.service.catalog)
+        def request(path,body):
+            return component_response(self.service,{"id":"inventory-1","path":path,"body":body},session)
+        added=request('/api/edit',{'action':'add_set','code':'31124-1'})['data']
+        self.assertEqual(added['copies'],1)
+        self.assertTrue(added['dirty'])
+        self.assertNotIn('auth',added)
+        original=session.draft.collection.payload()
+        request('/api/navigate',{'action':{'kind':'new'}})
+        self.assertIsNotNone(session.draft.pending)
+        request('/api/navigate',{'decision':'cancel'})
+        self.assertEqual(session.draft.collection.payload(),original)
+        result=request('/api/plan',{'code':'31124-1','mode':'exact'})['data']
+        self.assertEqual(result['status'],'optimal')
+        self.assertEqual(result['dismantling_count'],1)
+        self.assertEqual(set(self.service.__dict__),{'catalog'})
+
+    def test_auth_component_scrubs_password_and_never_returns_tokens(self):
+        repository=MemoryRepository()
+        session=UserSession(self.service.catalog,FirebaseConfig('demo-rebuilt','public'),
+            auth_factory=lambda *a,**kw:MemoryAuth(),repository_factory=lambda auth:repository)
+        request={'id':'auth-1','path':'/api/auth','body':{'email':'person@example.com','password':'private-password'}}
+        response=component_response(self.service,request,session)
+        self.assertNotIn('error',response)
+        self.assertNotIn('password',request['body'])
+        self.assertNotIn('private-password',json.dumps(response))
+        self.assertNotIn('token',json.dumps(response).lower())
+        self.assertEqual(response['data']['email'],'person@example.com')
 
 
 if __name__ == "__main__":

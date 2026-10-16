@@ -20,4 +20,12 @@ jobs:
           node-version: '22'
       - run: node --check frontend/app.js
       - run: node --check frontend/streamlit.js
+      - run: node --check frontend/inventory.js
       - run: node --test tests/test_transport.cjs
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - run: npm ci --ignore-scripts
+      - name: Firebase emulator persistence and security rules
+        run: npx firebase emulators:exec --only auth,firestore --project demo-rebuilt "node --test tests/test_rules.mjs && python -m unittest tests.test_firebase_emulator -v"
