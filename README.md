@@ -54,7 +54,7 @@ Open a set’s existing details dialog to manage individual copies. Missing quan
 
 ## Firebase configuration
 
-The dedicated Firebase project is **`rebuilt-4c9a4`**. Its `(default)` database uses **Standard edition in `us-east1`**, with the free tier active. Email/password sign-in is enabled, and the repository’s ownership Rules and indexes are deployed. `.firebaserc` selects this project. The local `.streamlit/secrets.toml` contains its Web API configuration and is ignored by Git. Application hosting remains separate; the app has not been published. Guest features still work without configuration.
+The dedicated Firebase project is **`rebuilt-4c9a4`**. Its `(default)` database uses **Standard edition in `us-east1`**, with the free tier active. Email/password sign-in is enabled, and the repository’s ownership Rules and indexes are deployed. `.firebaserc` selects this project. The local `.streamlit/secrets.toml` contains its Web API configuration and is ignored by Git. The app is hosted at [brick-finder.streamlit.app](https://brick-finder.streamlit.app/), using `main` and `app.py`. Community Cloud needs the same two Firebase values under the app’s Settings → Secrets; the ignored local file is not uploaded by Git. Guest features still work without configuration.
 
 To configure another environment or deploy the application:
 
@@ -161,7 +161,7 @@ The recorded planner benchmark (`data/planner_results.json`) measured 15 bundled
 ## Deploy
 
 1. Push the app, package, tests, configuration, dependency file, and generated compressed catalog to GitHub. Do not push raw CSVs, virtual environments, caches, or credentials.
-2. In [Streamlit Community Cloud](https://share.streamlit.io/), select **Create app**, the repository's `main` branch, and `app.py`.
+2. The existing app is [brick-finder.streamlit.app](https://brick-finder.streamlit.app/). Updates to `main` rebuild it automatically. For a new deployment, choose **Create app** in [Streamlit Community Cloud](https://share.streamlit.io/), the repository's `main` branch, and `app.py`.
 3. In **Advanced settings**, choose **Python 3.13**. Guest mode needs no secrets. Optional cloud saves require the dedicated Firebase setup and configuration above.
 4. Deploy, then verify a fresh browser session: load Example 1, find builds in exact colors, open a piece breakdown, switch to flexible colors, and follow an instruction link. `app.py` serves the redesigned frontend directly as a Streamlit component; do not deploy `frontend/index.html` as a separate app.
 5. Make the deployed app viewable publicly if Community Cloud initially creates it as private.
