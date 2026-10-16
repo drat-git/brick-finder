@@ -27,12 +27,13 @@ st.markdown("""
 
 
 @st.cache_resource(show_spinner=False)
-def load_service(database):
-    return FinderService(Catalog(database))
+def load_catalog(database):
+    return Catalog(database)
 
 
 try:
-    service = load_service(unpack_catalog())
+    # Recreate the lightweight service so code updates cannot reuse an old class.
+    service = FinderService(load_catalog(unpack_catalog()))
 except (OSError, ValueError, sqlite3.Error) as error:
     st.error(f"We couldn't open the set catalog. {error}")
     st.stop()
