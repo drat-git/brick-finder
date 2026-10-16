@@ -62,44 +62,101 @@
   <dialog id="detail-dialog" class="detail-dialog"><button class="dialog-close icon-button" aria-label="Close details" data-close-dialog></button><div id="detail-content"></div></dialog>
   <dialog id="info-dialog" class="info-dialog"><button class="dialog-close icon-button" aria-label="Close information" data-close-dialog></button><div id="info-content"></div></dialog>
   <dialog id="technical-dialog" class="technical-dialog" aria-labelledby="technical-heading" aria-describedby="technical-subtitle">
-    <button class="dialog-close icon-button" aria-label="Close technical explanation" data-close-dialog autofocus></button>
-    <h2 id="technical-heading" class="modal-title">How does it work?</h2>
-    <p id="technical-subtitle" class="technical-subtitle">A look under the hood of Rebuilt.</p>
-    <section aria-labelledby="technical-stack">
-      <h3 id="technical-stack">The idea and stack</h3>
-      <p>I built Rebuilt to answer a simple question: what else can I make from the LEGO sets I own? It combines their inventories and compares the pieces with other official sets. The interface uses HTML, CSS, and JavaScript. Python handles inventory processing and matching, SQLite holds the prepared catalog, and Streamlit hosts the interface and connects it to Python.</p>
+    <div class="technical-toolbar"><button class="dialog-close icon-button" aria-label="Close technical explanation" data-close-dialog autofocus></button></div>
+    <header class="technical-intro">
+      <span class="eyebrow">REBUILT / PRODUCT &amp; ENGINEERING</span>
+      <h2 id="technical-heading" class="modal-title">How Rebuilt works</h2>
+      <p id="technical-subtitle" class="technical-subtitle">I built Rebuilt around two questions: what can I make with the LEGO pieces I own, and which sets would I need to take apart?</p>
+      <p class="technical-lead">The interesting work is in the constraints: incomplete sets, duplicate copies, color choices, and builds you want to keep assembled. Here’s how the product and the system handle them.</p>
+    </header>
+    <dl class="technical-stats" aria-label="Project at a glance">
+      <div><dt>Build candidates</dt><dd>10,116</dd><span>in the bundled catalog snapshot</span></div>
+      <div><dt>Matching modes</dt><dd>2</dd><span>original colors or flexible colors</span></div>
+      <div><dt>Planner priority</dt><dd>Fewer sets</dd><span>then fewer color substitutions</span></div>
+    </dl>
+
+    <section aria-labelledby="technical-architecture-heading">
+      <div class="technical-section-label">01 / ARCHITECTURE</div>
+      <h3 id="technical-architecture-heading">One app, with clear boundaries.</h3>
+      <p>I chose a custom HTML, CSS, and JavaScript interface with a Python backend hosted in Streamlit. That keeps matching and optimization in one deployment while giving me control over the product’s layout and interactions.</p>
+      <figure class="technical-architecture" aria-labelledby="technical-architecture-caption">
+        <div class="architecture-node architecture-browser"><span class="architecture-label">INTERFACE</span><strong>Browser</strong><span>HTML · CSS · JavaScript</span></div>
+        <div class="architecture-bridge"><span aria-hidden="true">↕</span> Streamlit component messages</div>
+        <div class="architecture-node architecture-service"><span class="architecture-label">APPLICATION</span><strong>Python + Streamlit</strong><span>Request validation · matching · private session state</span></div>
+        <div class="architecture-branches">
+          <div class="architecture-node"><span class="architecture-label">EACH SEARCH</span><strong>SQLite catalog</strong><span>Prepared, read-only public data</span></div>
+          <div class="architecture-node architecture-planner"><span class="architecture-label">ONE CHOSEN BUILD</span><strong>OR-Tools CP-SAT</strong><span>Choose copies and allocate pieces</span></div>
+          <div class="architecture-node"><span class="architecture-label">OPTIONAL ACCOUNT</span><strong>Firebase Auth + Firestore</strong><span>Sign-in and saved collections</span></div>
+        </div>
+        <figcaption id="technical-architecture-caption">Discovery uses the bundled catalog. The optimizer runs on demand, and cloud storage is only needed for saved collections.</figcaption>
+      </figure>
+      <p>Public catalog data can be cached across visitors. Private drafts, sign-in tokens, and result caches are isolated per visitor. Bridge requests are queued so Streamlit reruns cannot overwrite an action that is still in flight.</p>
     </section>
-    <section aria-labelledby="technical-data">
-      <h3 id="technical-data">Preparing the data</h3>
-      <p>A separate import step turns downloaded Rebrickable CSVs into a bundled database. It selects the latest inventory version for each set, expands nested sets and minifigures into individual pieces, and excludes spares. It validates references and checks expanded piece totals against the listed counts; invalid inventories are excluded. Searches use this prepared snapshot, without scraping Rebrickable or needing a live API key.</p>
+
+    <section aria-labelledby="technical-inventory-heading">
+      <div class="technical-section-label">02 / DATA MODEL</div>
+      <h3 id="technical-inventory-heading">Get the inventory right first.</h3>
+      <p>An import pipeline turns Rebrickable CSVs into SQLite. It selects the latest inventory versions, expands nested sets and minifigures into parts, removes spares, and checks references and piece totals. Invalid inventories are excluded. A prepared snapshot makes searches repeatable and avoids live API quotas; adding newer sets requires rebuilding that snapshot.</p>
+      <p>Each physical copy has its own ID, missing-piece adjustments, and protection setting. Two copies of the same set can be in different conditions. Loose pieces add to the collection separately.</p>
+      <p class="technical-formula"><strong>Available pieces = catalog pieces − missing pieces + loose pieces</strong><span>Subtract missing pieces per copy, combine the copies, then add loose stock.</span></p>
     </section>
-    <section aria-labelledby="technical-controls">
-      <h3 id="technical-controls">What happens when you use the controls</h3>
-      <ul class="technical-controls">
-        <li><strong>Search:</strong> waits briefly while you type, then queries the catalog for matching names or set numbers.</li>
-        <li><strong>Add / quantity controls:</strong> track each physical copy independently, subtract its missing pieces, and add loose parts. Collection changes invalidate previous results.</li>
-        <li><strong>Remove / clear / examples:</strong> remove sets, confirm clearing the collection, or replace it with a sample collection after resolving unsaved edits.</li>
-        <li><strong>Find my next build:</strong> sends the collection to Python, which aggregates available pieces and compares candidate inventories.</li>
-        <li><strong>Exact / Flexible:</strong> match part IDs plus colors, or combine colors for the same part ID. Printed parts and mold variants stay distinct.</li>
-        <li><strong>Buildable now / Almost there:</strong> show complete inventories or partial matches. Almost there starts at 80% completion.</li>
-        <li><strong>Filters / sorting / Show more:</strong> adjust displayed results using cached matches. Show more adds batches of 18.</li>
-        <li><strong>View build:</strong> retrieves missing-piece details and, when applicable, suggested color substitutions.</li>
-        <li><strong>Building instructions:</strong> opens LEGO’s official instruction page.</li>
-        <li><strong>Divider:</strong> changes the collection panel’s width without affecting matching.</li>
-      </ul>
+
+    <section aria-labelledby="technical-matching-heading">
+      <div class="technical-section-label">03 / MATCHING</div>
+      <h3 id="technical-matching-heading">Match quantities, with clear color rules.</h3>
+      <p><strong>Find my next build</strong> compares the collection with each candidate’s parts list. For every required part, Python counts the smaller of the available and required quantities. Owning extra wheels cannot make up for a missing window.</p>
+      <div class="technical-modes">
+        <div><h4>Exact colors</h4><p>Match both part ID and color. This is the default because “ready to build” should mean the pieces match the original design.</p></div>
+        <div><h4>Flexible colors</h4><p>Match the same part across colors. Original-color pieces are allocated first, and each remaining piece can be used only once.</p></div>
+      </div>
+      <p>Completion is matched quantity divided by required quantity. Results rank by completion, fewer missing pieces, then build size. Only zero missing pieces earns 100%; rounding can never turn an incomplete inventory into a complete one. Printed parts and different molds keep their own IDs.</p>
     </section>
-    <section aria-labelledby="technical-matching">
-      <h3 id="technical-matching">How the matching works</h3>
-      <p class="technical-formula"><strong>Completion = matched required pieces ÷ total required pieces × 100</strong></p>
-      <p>Each part contributes the smaller of its available and required quantities. If you have two pieces and a build needs three, that contributes two matches and leaves one missing. Extra copies of another part cannot fill that gap.</p>
-      <p>The default ranking puts completion first, then fewer missing pieces, then larger builds. A build is complete only when its missing quantity is zero. For flexible-color suggestions, exact colors are reserved first; each remaining piece can be allocated only once within that recommendation.</p>
+
+    <section aria-labelledby="technical-planning-heading">
+      <div class="technical-section-label">04 / OPTIMIZATION</div>
+      <h3 id="technical-planning-heading">A possible build still needs a practical plan.</h3>
+      <p>Recommendations show what the collection can make. <strong>Plan this build</strong> answers which physical copies to dismantle. Protected copies are excluded from the plan, and loose pieces can reduce the number of sets needed.</p>
+      <figure class="technical-planner-example" aria-labelledby="technical-planner-caption">
+        <div class="planner-target"><span class="architecture-label">A SMALL TEST CASE</span><strong>Target: 2 × X + 2 × Y</strong><span>X and Y are two distinct part IDs.</span></div>
+        <div class="planner-sources" aria-label="Available set copies">
+          <div><strong>Set A</strong><span class="fixture-pieces"><span class="fixture-x">X</span><span class="fixture-y">Y</span></span></div>
+          <div><strong>Set B</strong><span class="fixture-pieces"><span class="fixture-x">X</span><span class="fixture-x">X</span></span></div>
+          <div><strong>Set C</strong><span class="fixture-pieces"><span class="fixture-y">Y</span><span class="fixture-y">Y</span></span></div>
+        </div>
+        <div class="planner-comparison">
+          <div><span>One greedy path</span><strong>A → B → C</strong><span>3 copies dismantled</span></div>
+          <div class="planner-optimum"><span>Proven optimal</span><strong>B + C</strong><span>2 copies dismantled</span></div>
+        </div>
+        <figcaption id="technical-planner-caption">A greedy tie-break can pick A first and still need B and C. Searching the combinations finds the two-copy solution. This fixture is included in the planner tests.</figcaption>
+      </figure>
+      <p>I use OR-Tools CP-SAT, a constraint solver, to minimize copies dismantled first and color substitutions second. The model must fulfill every required quantity without exceeding any source’s capacity. A separate validation step checks the resulting picking list.</p>
+      <details class="technical-model">
+        <summary>The optimization model</summary>
+        <p>Each copy has a yes/no selection variable. Integer variables allocate pieces from selected copies and loose stock to the target. If the target needs N pieces, the cost is <code>(N + 1) × copies + color substitutions</code>. That weighting makes one fewer dismantled copy more valuable than any possible improvement in colors.</p>
+        <p>A deterministic greedy plan provides a starting solution and a complete fallback. The solver uses a fixed seed, one worker, and a five-second search budget. Model preparation and validation happen outside that search budget.</p>
+      </details>
+      <p class="technical-decision"><strong>Product decision:</strong> expensive optimization happens after choosing a build. If the search times out, the app can show a validated complete plan, labeled “minimum not proven.” It only claims a minimum when the solver proves it.</p>
     </section>
-    <section aria-labelledby="technical-limits">
-      <h3 id="technical-limits">Design choices and limitations</h3>
-      <p>The hosted frontend communicates through Streamlit’s component bridge. The standalone development preview uses HTTP requests to the same Python service. A private draft lives in your active server session. Optional Firebase email/password accounts save named collections in Firestore. Refreshing requires signing in again; passwords and tokens are never saved in browser storage.</p>
-      <p>New copies start complete. Missing adjustments reduce each copy independently, and loose parts add extra pieces. Keep assembled protects a copy from the planner while its pieces still contribute to recommendations. Each recommendation is evaluated independently against the same collection, so you may not be able to build several at once. Inventory matching does not verify assembly geometry, and instruction availability varies.</p>
+
+    <section aria-labelledby="technical-saving-heading">
+      <div class="technical-section-label">05 / PERSISTENCE</div>
+      <h3 id="technical-saving-heading">Guest first. Save deliberately.</h3>
+      <p>Discovery works without an account. Optional email/password sign-in uses Firebase Auth; Firestore Security Rules restrict saved collections to their owner. App requests carry the user’s ID token, with no privileged Admin SDK in the application.</p>
+      <p>A save commits the full collection snapshot and its unique name reservation atomically. Revision checks reject stale writes so an older session cannot silently overwrite newer work. This favors consistent collection saves over cloud queries for individual pieces; snapshots are capped at 750 kB.</p>
+      <p>Private state and tokens stay in server memory. Refreshing ends sign-in, so returning users sign in and load explicitly. If Firebase storage is unavailable, the active draft is preserved and matching continues from the bundled catalog.</p>
     </section>
-    <section><h3>Saving and planning</h3><p>Save is explicit, with revision checks to prevent overwriting a newer collection. Save as creates new collection and copy IDs. The planner minimizes physical copies dismantled, then color substitutions, using OR-Tools CP-SAT. It checks source capacities and every required quantity. A five-second search may return a complete best plan without proving minimum dismantling. Planning never consumes or reserves pieces.</p></section>
+
+    <section aria-labelledby="technical-evidence-heading">
+      <div class="technical-section-label">06 / VALIDATION &amp; LIMITS</div>
+      <h3 id="technical-evidence-heading">Make the claims testable.</h3>
+      <div class="technical-evidence">
+        <div><strong>40 generated cases</strong><p>Planner results checked against exhaustive search in both color modes, including loose stock and protected copies.</p><a href="https://github.com/drat-git/brick-finder/blob/main/tests/test_planner.py" target="_blank" rel="noopener noreferrer">See the tests ↗</a></div>
+        <div><strong>15 catalog targets</strong><p>All minimums proven in 1–32 ms in the recorded local benchmark. This small sample is not a guarantee for every collection or hosted request.</p><a href="https://github.com/drat-git/brick-finder/blob/main/data/planner_results.json" target="_blank" rel="noopener noreferrer">See the measurements ↗</a></div>
+      </div>
+      <p>Tests also cover quantity accounting, double-counting, stale saves, and cross-account access. GitHub Actions runs Python, browser-transport, and Firebase emulator checks. The live save → sign out → sign in → load flow is verified separately.</p>
+      <p>The boundary is a parts-list comparison: Rebuilt does not simulate assembly geometry. Recommendations share the same available inventory and are evaluated independently, so several suggestions may compete for the same pieces. Plans are advisory; they never consume or reserve stock.</p>
+    </section>
+    <footer class="technical-source"><span>Source, validation cases, and reproducible benchmarks.</span><a class="text-button" href="https://github.com/drat-git/brick-finder" target="_blank" rel="noopener noreferrer">Explore the source ↗</a></footer>
   </dialog>
   <dialog id="collection-dialog" class="info-dialog" aria-labelledby="collections-heading"><button class="dialog-close icon-button" aria-label="Close collections" data-close-dialog></button><div id="collections-content"></div></dialog>
   <dialog id="account-dialog" class="info-dialog" aria-labelledby="account-heading"><button class="dialog-close icon-button" aria-label="Close account" data-close-dialog></button><div id="account-content"></div></dialog>
